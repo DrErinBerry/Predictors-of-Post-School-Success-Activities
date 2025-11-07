@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cluster 1 Interactive Reflection Activities</title>
+    <style>
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+        .save-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .save-indicator.show {
+            opacity: 1;
+        }
+        body {
+            font-family: -apple-system, Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+        .activity-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 900px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+        .activity-title {
+            color: #667eea;
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .status-badge {
+            padding: 8px 16px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .scenario-box {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #0066cc;
+        }
+        .warning-box {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #ffc107;
+        }
+        .question-label {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="text"], input[type="email"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .time-estimate {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .bullet-list {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        .bullet-list li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- AUTO-SAVE INDICATOR -->
+<div id="save-indicator" class="save-indicator" role="status" aria-live="polite" aria-atomic="true">
+    <span aria-hidden="true">✓</span> Auto-saved
+</div>
+
+<!-- AUTO-SAVE INFO BANNER -->
+<section role="region" aria-labelledby="autosave-heading" style="background: #d1ecf1; border: 2px solid #bee5eb; padding: 15px; border-radius: 10px; margin-bottom: 20px; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <h2 id="autosave-heading" style="color: #0c5460; margin-top: 0; font-size: 1.2em;">
+    <span aria-hidden="true">💾</span> Auto-Save Enabled
+  </h2>
+  <p style="color: #0c5460; margin: 5px 0;">Your work is automatically saved to your browser as you type! You can safely leave and return later. Your progress will be restored when you come back to this page on the same browser.</p>
+  <p style="color: #0c5460; margin: 5px 0; font-size: 14px;"><strong>Note:</strong> Auto-save only works on THIS browser on THIS device. Switching browsers or devices will start fresh.</p>
+  <button onclick="clearSavedData()" style="background: #17a2b8; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 14px; margin-top: 5px;" aria-label="Clear all saved work and start over">
+    <span aria-hidden="true">🗑️</span> Clear My Saved Work & Start Over
+  </button>
+</section>
+
+<!-- PROGRESS INDICATOR BAR -->
+<section role="region" aria-labelledby="progress-heading" style="position: sticky; top: 0; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; z-index: 100; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <h2 id="progress-heading" style="color: #667eea; margin-top: 0; font-size: 1.3em;">
+    <span aria-hidden="true">📊</span> Your Progress
+  </h2>
+  <div style="background: #e0e0e0; height: 30px; border-radius: 15px; overflow: hidden;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Overall completion progress">
+    <div id="progress-bar" style="background: linear-gradient(90deg, #667eea, #764ba2); width: 0%; height: 100%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+      0%
+    </div>
+  </div>
+  <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px;">
+    <span><span aria-hidden="true">✓</span> Completed: <strong id="completed-count" aria-live="polite">0</strong> of 5</span>
+    <span><span aria-hidden="true">📧</span> Email ready when all complete</span>
+  </div>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 1: PROGRAM STRENGTHS -->
+<!-- ========================================= -->
+<section id="activity-1" class="activity-section" role="region" aria-labelledby="activity-1-title">
+  <div class="activity-header">
+    <h3 id="activity-1-title" class="activity-title">Activity 1: Program Strengths Reflection</h3>
+    <span id="status-1" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 3-5 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> This brief reflection helps you identify your program's current strengths.
+  </div>
+  
+  <label for="response-1" class="question-label">Which of the five predictors is strongest in your current program?</label>
+  <p style="margin-bottom: 10px;">Choose one:</p>
+  
+  <select id="response-1" onchange="autoSave(); updateProgress(1)" style="margin-bottom: 20px;" aria-required="true">
+    <option value="">Select your strongest predictor...</option>
+    <option value="Interagency Collaboration"><span aria-hidden="true">🤝</span> Interagency Collaboration</option>
+    <option value="Parental Involvement"><span aria-hidden="true">👨‍👩‍👧</span> Parental Involvement</option>
+    <option value="Transition Program"><span aria-hidden="true">🎯</span> Transition Program</option>
+    <option value="Youth Support"><span aria-hidden="true">🌐</span> Youth Support</option>
+    <option value="Parent Expectations"><span aria-hidden="true">⭐</span> Parent Expectations</option>
+  </select>
+  
+  <label for="response-1-details" class="question-label">Why is this your strongest predictor? (optional)</label>
+  <textarea id="response-1-details" onkeyup="autoSave(); updateProgress(1)" placeholder="Briefly explain..." aria-describedby="response-1-hint"></textarea>
+  <span id="response-1-hint" class="sr-only">This field is optional. Provide a brief explanation of why you selected this predictor as your strongest.</span>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 2: SCENARIO ANALYSIS -->
+<!-- ========================================= -->
+<section id="activity-2" class="activity-section" role="region" aria-labelledby="activity-2-title">
+  <div class="activity-header">
+    <h3 id="activity-2-title" class="activity-title">Activity 2: Interagency Collaboration Scenario Analysis</h3>
+    <span id="status-2" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 5-7 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Read the scenario below and provide your analysis.
+  </div>
+  
+  <div class="scenario-box" role="article" aria-labelledby="scenario-2-heading">
+    <h4 id="scenario-2-heading" style="color: #0066cc; margin-top: 0;">
+      <span aria-hidden="true">📋</span> Scenario:
+    </h4>
+    <p>Your district has <strong>informal relationships with several agencies</strong> but no formal agreements. Students often <strong>don't learn about Vocational Rehabilitation (VR) services until after graduation</strong>.</p>
+  </div>
+  
+  <label for="response-2" class="question-label">What three specific actions would you recommend to improve interagency collaboration?</label>
+  <p style="margin-bottom: 10px;">Be specific about WHO should be involved and WHAT should happen.</p>
+  
+  <textarea id="response-2" onkeyup="autoSave(); updateProgress(2)" placeholder="Type your three recommendations here..." aria-required="true" aria-describedby="response-2-hint"></textarea>
+  <span id="response-2-hint" class="sr-only">Provide at least 20 characters describing three specific recommendations for improving interagency collaboration.</span>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 3: OVERCOMING BARRIERS -->
+<!-- ========================================= -->
+<section id="activity-3" class="activity-section" role="region" aria-labelledby="activity-3-title">
+  <div class="activity-header">
+    <h3 id="activity-3-title" class="activity-title">Activity 3: Overcoming Barriers to Parental Involvement</h3>
+    <span id="status-3" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 5-7 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Identify a barrier to parent involvement and develop a strategy to address it.
+  </div>
+  
+  <div style="background: #f0f8ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <h4 style="margin-top: 0; color: #333;">Common Barriers Include:</h4>
+    <ul class="bullet-list">
+      <li>Time conflicts and scheduling issues</li>
+      <li>Transportation challenges</li>
+      <li>Language and communication barriers</li>
+      <li>Past negative experiences with schools</li>
+      <li>Cultural differences in views of disability/independence</li>
+      <li>Lack of understanding about transition process</li>
+      <li>Other barriers you've identified</li>
+    </ul>
+  </div>
+  
+  <label for="response-3" class="question-label">Choose ONE barrier that affects your program and describe a specific strategy to address it</label>
+  <p style="margin-bottom: 10px;">Include:</p>
+  <ul class="bullet-list">
+    <li><strong>Barrier:</strong> [name it]</li>
+    <li><strong>Strategy:</strong> [describe specific actions]</li>
+    <li><strong>Who will implement:</strong> [roles/people]</li>
+    <li><strong>Timeline:</strong> [when]</li>
+  </ul>
+  
+  <textarea id="response-3" onkeyup="autoSave(); updateProgress(3)" placeholder="Barrier: 
+
+Strategy: 
+
+Who will implement: 
+
+Timeline: " aria-required="true" aria-describedby="response-3-hint"></textarea>
+  <span id="response-3-hint" class="sr-only">Provide at least 20 characters describing one barrier, your strategy to address it, who will implement it, and the timeline.</span>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 4: NETWORK MAPPING -->
+<!-- ========================================= -->
+<section id="activity-4" class="activity-section" role="region" aria-labelledby="activity-4-title">
+  <div class="activity-header">
+    <h3 id="activity-4-title" class="activity-title">Activity 4: Student Support Network Mapping</h3>
+    <span id="status-4" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 7-10 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Map the support network for one student and identify gaps.
+  </div>
+  
+  <div class="warning-box" role="alert">
+    <strong><span aria-hidden="true">⚠️</span> IMPORTANT CONFIDENTIALITY NOTE:</strong> Use student INITIALS ONLY. Use role titles (e.g., "mother," "VR counselor," "teacher") rather than names of support people.
+  </div>
+  
+  <label for="student-initials" class="question-label">Student Initials (first and last only):</label>
+  <input type="text" id="student-initials" onkeyup="autoSave(); updateProgress(4)" placeholder="e.g., J.D." maxlength="5" style="width: 150px; margin-bottom: 20px;" aria-required="true" aria-describedby="initials-hint">
+  <span id="initials-hint" class="sr-only">Enter first and last initials only, such as J.D. Maximum 5 characters.</span>
+  
+  <label for="response-4-supports" class="question-label">List current supports by role:</label>
+  <p style="margin-bottom: 10px;">Example format:</p>
+  <ul class="bullet-list">
+    <li>Family: mother, grandmother</li>
+    <li>School: special ed teacher, counselor</li>
+    <li>Agencies: VR counselor</li>
+    <li>Community: church youth leader</li>
+  </ul>
+  
+  <textarea id="response-4-supports" onkeyup="autoSave(); updateProgress(4)" placeholder="Your response:
+
+Family: 
+School: 
+Agencies: 
+Community: " aria-required="true" aria-describedby="supports-hint"></textarea>
+  <span id="supports-hint" class="sr-only">List the student's current supports organized by category: Family, School, Agencies, and Community. Provide at least 10 characters.</span>
+  
+  <label for="response-4-gaps" class="question-label">What are 2-3 gaps in this student's support network?</label>
+  <p style="margin-bottom: 10px;">List the gaps:</p>
+  
+  <textarea id="response-4-gaps" onkeyup="autoSave(); updateProgress(4)" placeholder="Gap 1: 
+
+Gap 2: 
+
+Gap 3: " aria-required="true" aria-describedby="gaps-hint"></textarea>
+  <span id="gaps-hint" class="sr-only">Identify 2 to 3 gaps in the student's support network. Provide at least 10 characters.</span>
+  
+  <label for="response-4-action" class="question-label">Action plan for ONE gap:</label>
+  <p style="margin-bottom: 10px;">Include:</p>
+  <ul class="bullet-list">
+    <li>What connection will you facilitate?</li>
+    <li>Who will make it?</li>
+    <li>When?</li>
+    <li>How?</li>
+  </ul>
+  
+  <textarea id="response-4-action" onkeyup="autoSave(); updateProgress(4)" placeholder="What connection: 
+
+Who will make it: 
+
+When: 
+
+How: " aria-required="true" aria-describedby="action-hint"></textarea>
+  <span id="action-hint" class="sr-only">Provide an action plan for addressing one gap. Include what connection will be facilitated, who will make it, when, and how. Provide at least 10 characters.</span>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 5: PROGRAM SELF-ASSESSMENT -->
+<!-- ========================================= -->
+<section id="activity-5" class="activity-section" role="region" aria-labelledby="activity-5-title">
+  <div class="activity-header">
+    <h3 id="activity-5-title" class="activity-title">Activity 5: Program Self-Assessment and Action Planning</h3>
+    <span id="status-5" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 8-10 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Rate your program on each predictor and identify an improvement action.
+  </div>
+  
+  <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <h4 style="margin-top: 0;">Rating Scale:</h4>
+    <ul class="bullet-list">
+      <li><strong>1</strong> = Minimal implementation</li>
+      <li><strong>2</strong> = Emerging practices</li>
+      <li><strong>3</strong> = Developing systems</li>
+      <li><strong>4</strong> = Established processes</li>
+      <li><strong>5</strong> = Exemplary implementation</li>
+    </ul>
+  </div>
+  
+  <fieldset style="border: 2px solid #e0e0e0; border-radius: 8px; padding: 20px; margin: 20px 0;">
+    <legend class="question-label">Rate your program on each predictor (1-5):</legend>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+      <label for="rating-1" style="font-weight: bold;">Interagency Collaboration:</label>
+      <select id="rating-1" onchange="autoSave(); updateProgress(5)" style="width: 80px; padding: 8px;" aria-required="true">
+        <option value="">--</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+      <label for="rating-2" style="font-weight: bold;">Parental Involvement:</label>
+      <select id="rating-2" onchange="autoSave(); updateProgress(5)" style="width: 80px; padding: 8px;" aria-required="true">
+        <option value="">--</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+      <label for="rating-3" style="font-weight: bold;">Transition Program:</label>
+      <select id="rating-3" onchange="autoSave(); updateProgress(5)" style="width: 80px; padding: 8px;" aria-required="true">
+        <option value="">--</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+      <label for="rating-4" style="font-weight: bold;">Youth Support:</label>
+      <select id="rating-4" onchange="autoSave(); updateProgress(5)" style="width: 80px; padding: 8px;" aria-required="true">
+        <option value="">--</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+      <label for="rating-5" style="font-weight: bold;">Parent Expectations:</label>
+      <select id="rating-5" onchange="autoSave(); updateProgress(5)" style="width: 80px; padding: 8px;" aria-required="true">
+        <option value="">--</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+  </fieldset>
+  
+  <label for="response-5" class="question-label">Based on your ratings, what ONE specific action will you take this month to improve your lowest-scoring predictor?</label>
+  <p style="margin-bottom: 10px;">Include:</p>
+  <ul class="bullet-list">
+    <li><strong>Predictor to improve:</strong></li>
+    <li><strong>Specific action:</strong></li>
+    <li><strong>Who:</strong></li>
+    <li><strong>When:</strong></li>
+    <li><strong>Success measure:</strong></li>
+  </ul>
+  
+  <textarea id="response-5" onkeyup="autoSave(); updateProgress(5)" placeholder="Predictor to improve: 
+
+Specific action: 
+
+Who: 
+
+When: 
+
+Success measure: " aria-required="true" aria-describedby="response-5-hint"></textarea>
+  <span id="response-5-hint" class="sr-only">Describe one specific action you will take to improve your lowest-scoring predictor. Include the predictor, specific action, who will do it, when, and how you'll measure success. Provide at least 20 characters.</span>
+</section>
+
+<!-- ========================================= -->
+<!-- EMAIL SECTION (appears when complete) -->
+<!-- ========================================= -->
+<section id="email-section" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px; margin: 30px auto; max-width: 900px; color: white;" role="region" aria-labelledby="email-heading">
+  <h3 id="email-heading" style="color: white; margin-top: 0;">
+    <span aria-hidden="true">🎉</span> All Activities Complete!
+  </h3>
+  <p>Great work! Enter your email address below to receive a copy of all your responses.</p>
+  
+  <div style="background: white; padding: 20px; border-radius: 5px;">
+    <label for="user-email" style="color: #333; font-weight: bold; display: block; margin-bottom: 10px;">Your Email Address:</label>
+    <input type="email" id="user-email" placeholder="your.email@example.com" style="width: 100%; max-width: 400px; padding: 12px; border: 2px solid #667eea; border-radius: 5px; font-size: 16px;" aria-required="true">
+    
+    <button onclick="emailResponses()" style="background: #28a745; color: white; border: none; padding: 15px 30px; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px;" aria-label="Email my responses to me">
+      <span aria-hidden="true">📧</span> Email My Responses to Me
+    </button>
+  </div>
+  
+  <p style="margin-top: 20px; font-size: 14px;"><span aria-hidden="true">💡</span> <strong>Tip:</strong> Your email program will open with all responses pre-filled. Just click Send!</p>
+</section>
+
+<!-- ========================================= -->
+<!-- COMPLETION MESSAGE -->
+<!-- ========================================= -->
+<section id="completion-message" style="display: none; background: #d4edda; border: 2px solid #c3e6cb; padding: 20px; border-radius: 10px; margin: 20px auto; max-width: 900px;" role="alert" aria-labelledby="completion-heading">
+  <h3 id="completion-heading" style="color: #155724; margin-top: 0;">
+    <span aria-hidden="true">✅</span> Email Sent!
+  </h3>
+  <p style="color: #155724;">Check your inbox for your responses. Now complete the graded module quiz to earn your professional development credit.</p>
+  <p style="color: #155724;"><strong>Next Steps:</strong></p>
+  <ul style="color: #155724;">
+    <li>Review your emailed responses</li>
+    <li>Complete the Cluster One Assessment Quiz</li>
+    <li>Implement your action plan</li>
+    <li>Share your learning with colleagues!</li>
+  </ul>
+</section>
+
+<!-- ACCESSIBILITY NOTE -->
+<section role="contentinfo" aria-labelledby="accessibility-heading" style="background: #f0f4ff; padding: 20px; border-radius: 10px; margin: 30px auto; border: 2px solid #667eea; max-width: 900px;">
+  <h3 id="accessibility-heading" style="color: #667eea; margin-top: 0;">
+    <span aria-hidden="true">♿</span> Accessibility Information
+  </h3>
+  
+  <h4 style="color: #667eea; font-size: 1.1em; margin-top: 20px;">Screen Reader Optimization</h4>
+  <p>This interactive workbook has been optimized for screen reader accessibility and includes:</p>
+  <ul>
+    <li><strong>ARIA labels and roles</strong> for all interactive elements and sections</li>
+    <li><strong>Semantic HTML structure</strong> with proper heading hierarchy</li>
+    <li><strong>Form field labels and hints</strong> clearly associated with inputs</li>
+    <li><strong>Status updates</strong> announced via live regions for progress and auto-save</li>
+    <li><strong>Keyboard accessibility</strong> for all interactive elements</li>
+    <li><strong>Descriptive button labels</strong> providing clear action context</li>
+  </ul>
+  
+  <h4 style="color: #667eea; font-size: 1.1em; margin-top: 20px;">Alternative Format Available</h4>
+  <p><strong>Word Document Version:</strong> A fully accessible Word document version of these activities is available for learners who prefer downloadable formats or need additional assistive technology support. Contact your instructor to request this format.</p>
+</section>
+
+<!-- ========================================= -->
+<!-- JAVASCRIPT FOR FUNCTIONALITY -->
+<!-- ========================================= -->
+<script>
+// Track completion status for each activity
+let completionStatus = {
+  1: false,
+  2: false,
+  3: false,
+  4: false,
+  5: false
+};
+
+// AUTO-SAVE FUNCTIONALITY
+function autoSave() {
+  const saveData = {
+    'response-1': document.getElementById('response-1').value,
+    'response-1-details': document.getElementById('response-1-details').value,
+    'response-2': document.getElementById('response-2').value,
+    'response-3': document.getElementById('response-3').value,
+    'student-initials': document.getElementById('student-initials').value,
+    'response-4-supports': document.getElementById('response-4-supports').value,
+    'response-4-gaps': document.getElementById('response-4-gaps').value,
+    'response-4-action': document.getElementById('response-4-action').value,
+    'rating-1': document.getElementById('rating-1').value,
+    'rating-2': document.getElementById('rating-2').value,
+    'rating-3': document.getElementById('rating-3').value,
+    'rating-4': document.getElementById('rating-4').value,
+    'rating-5': document.getElementById('rating-5').value,
+    'response-5': document.getElementById('response-5').value,
+    'timestamp': new Date().toISOString()
+  };
+  
+  try {
+    localStorage.setItem('cluster1_autosave', JSON.stringify(saveData));
+    showSaveIndicator();
+  } catch (e) {
+    console.error('Auto-save failed:', e);
+  }
+}
+
+function showSaveIndicator() {
+  const indicator = document.getElementById('save-indicator');
+  indicator.classList.add('show');
+  setTimeout(() => {
+    indicator.classList.remove('show');
+  }, 2000);
+}
+
+function restoreSavedData() {
+  try {
+    const savedData = localStorage.getItem('cluster1_autosave');
+    if (savedData) {
+      const data = JSON.parse(savedData);
+      
+      for (let key in data) {
+        if (key !== 'timestamp') {
+          const element = document.getElementById(key);
+          if (element) {
+            element.value = data[key];
+          }
+        }
+      }
+      
+      updateProgress(1);
+      updateProgress(2);
+      updateProgress(3);
+      updateProgress(4);
+      updateProgress(5);
+      
+      if (data.timestamp) {
+        const date = new Date(data.timestamp);
+        const banner = document.createElement('div');
+        banner.setAttribute('role', 'alert');
+        banner.style.cssText = 'background: #d4edda; border: 2px solid #c3e6cb; padding: 15px; border-radius: 10px; margin: 20px auto; max-width: 900px; text-align: center;';
+        banner.innerHTML = `<strong style="color: #155724;">✓ Your previous work was restored!</strong><br><span style="color: #155724; font-size: 14px;">Last saved: ${date.toLocaleString()}</span>`;
+        document.body.insertBefore(banner, document.body.firstChild);
+        
+        setTimeout(() => {
+          banner.style.transition = 'opacity 0.5s';
+          banner.style.opacity = '0';
+          setTimeout(() => banner.remove(), 500);
+        }, 5000);
+      }
+    }
+  } catch (e) {
+    console.error('Failed to restore saved data:', e);
+  }
+}
+
+function clearSavedData() {
+  if (confirm('Are you sure you want to clear all your saved work and start over? This cannot be undone.')) {
+    try {
+      localStorage.removeItem('cluster1_autosave');
+      
+      document.getElementById('response-1').value = '';
+      document.getElementById('response-1-details').value = '';
+      document.getElementById('response-2').value = '';
+      document.getElementById('response-3').value = '';
+      document.getElementById('student-initials').value = '';
+      document.getElementById('response-4-supports').value = '';
+      document.getElementById('response-4-gaps').value = '';
+      document.getElementById('response-4-action').value = '';
+      document.getElementById('rating-1').value = '';
+      document.getElementById('rating-2').value = '';
+      document.getElementById('rating-3').value = '';
+      document.getElementById('rating-4').value = '';
+      document.getElementById('rating-5').value = '';
+      document.getElementById('response-5').value = '';
+      
+      for (let i = 1; i <= 5; i++) {
+        completionStatus[i] = false;
+        updateProgress(i);
+      }
+      
+      alert('All saved work has been cleared. Starting fresh!');
+      window.scrollTo(0, 0);
+    } catch (e) {
+      console.error('Failed to clear saved data:', e);
+      alert('There was an error clearing your saved work. Please try refreshing the page.');
+    }
+  }
+}
+
+function updateProgress(activityNum) {
+  let isComplete = false;
+  
+  switch(activityNum) {
+    case 1:
+      const selection = document.getElementById('response-1').value;
+      isComplete = selection && selection !== '';
+      break;
+    case 2:
+      const text2 = document.getElementById('response-2').value;
+      isComplete = text2 && text2.trim().length > 20;
+      break;
+    case 3:
+      const text3 = document.getElementById('response-3').value;
+      isComplete = text3 && text3.trim().length > 20;
+      break;
+    case 4:
+      const initials = document.getElementById('student-initials').value;
+      const supports = document.getElementById('response-4-supports').value;
+      const gaps = document.getElementById('response-4-gaps').value;
+      const action = document.getElementById('response-4-action').value;
+      isComplete = initials && supports.trim().length > 10 && gaps.trim().length > 10 && action.trim().length > 10;
+      break;
+    case 5:
+      const hasRatings = document.getElementById('rating-1').value && 
+                        document.getElementById('rating-2').value &&
+                        document.getElementById('rating-3').value &&
+                        document.getElementById('rating-4').value &&
+                        document.getElementById('rating-5').value;
+      const text5 = document.getElementById('response-5').value;
+      isComplete = hasRatings && text5 && text5.trim().length > 20;
+      break;
+  }
+  
+  completionStatus[activityNum] = isComplete;
+  
+  const statusElement = document.getElementById('status-' + activityNum);
+  if (isComplete) {
+    statusElement.innerHTML = '<span aria-hidden="true">✓</span> Complete';
+    statusElement.style.background = '#28a745';
+    statusElement.style.color = 'white';
+  } else {
+    const hasAnyInput = checkHasInput(activityNum);
+    if (hasAnyInput) {
+      statusElement.innerHTML = '<span aria-hidden="true">⏳</span> In Progress';
+      statusElement.style.background = '#ffc107';
+      statusElement.style.color = '#333';
+    } else {
+      statusElement.innerHTML = '<span aria-hidden="true">⭕</span> Not Started';
+      statusElement.style.background = '#e0e0e0';
+      statusElement.style.color = '#666';
+    }
+  }
+  
+  updateOverallProgress();
+}
+
+function checkHasInput(activityNum) {
+  switch(activityNum) {
+    case 1:
+      return document.getElementById('response-1').value !== '' ||
+             document.getElementById('response-1-details').value.trim() !== '';
+    case 2:
+      return document.getElementById('response-2').value.trim() !== '';
+    case 3:
+      return document.getElementById('response-3').value.trim() !== '';
+    case 4:
+      return document.getElementById('student-initials').value !== '' ||
+             document.getElementById('response-4-supports').value.trim() !== '' ||
+             document.getElementById('response-4-gaps').value.trim() !== '' ||
+             document.getElementById('response-4-action').value.trim() !== '';
+    case 5:
+      return document.getElementById('rating-1').value !== '' ||
+             document.getElementById('rating-2').value !== '' ||
+             document.getElementById('rating-3').value !== '' ||
+             document.getElementById('rating-4').value !== '' ||
+             document.getElementById('rating-5').value !== '' ||
+             document.getElementById('response-5').value.trim() !== '';
+  }
+  return false;
+}
+
+function updateOverallProgress() {
+  const completed = Object.values(completionStatus).filter(v => v === true).length;
+  const percentage = (completed / 5) * 100;
+  
+  const progressBar = document.getElementById('progress-bar');
+  progressBar.style.width = percentage + '%';
+  progressBar.textContent = Math.round(percentage) + '%';
+  progressBar.setAttribute('aria-valuenow', Math.round(percentage));
+  
+  document.getElementById('completed-count').textContent = completed;
+  
+  if (completed === 5) {
+    document.getElementById('email-section').style.display = 'block';
+    document.getElementById('email-section').scrollIntoView({ behavior: 'smooth' });
+  } else {
+    document.getElementById('email-section').style.display = 'none';
+  }
+}
+
+function emailResponses() {
+  const email = document.getElementById('user-email').value;
+  
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  
+  const responses = `
+CLUSTER ONE: COLLABORATIVE SYSTEMS FOR YOUTH SUPPORT
+My Reflection Activity Responses
+Generated: ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
+
+========================================
+ACTIVITY 1: PROGRAM STRENGTHS REFLECTION
+========================================
+Strongest Predictor: ${document.getElementById('response-1').value}
+Explanation: ${document.getElementById('response-1-details').value || 'Not provided'}
+
+========================================
+ACTIVITY 2: INTERAGENCY COLLABORATION SCENARIO
+========================================
+${document.getElementById('response-2').value}
+
+========================================
+ACTIVITY 3: OVERCOMING BARRIERS TO PARENTAL INVOLVEMENT
+========================================
+${document.getElementById('response-3').value}
+
+========================================
+ACTIVITY 4: STUDENT SUPPORT NETWORK MAPPING
+========================================
+Student Initials: ${document.getElementById('student-initials').value}
+
+Current Supports:
+${document.getElementById('response-4-supports').value}
+
+Gaps Identified:
+${document.getElementById('response-4-gaps').value}
+
+Action Plan:
+${document.getElementById('response-4-action').value}
+
+========================================
+ACTIVITY 5: PROGRAM SELF-ASSESSMENT & ACTION PLANNING
+========================================
+Ratings:
+- Interagency Collaboration: ${document.getElementById('rating-1').value}
+- Parental Involvement: ${document.getElementById('rating-2').value}
+- Transition Program: ${document.getElementById('rating-3').value}
+- Youth Support: ${document.getElementById('rating-4').value}
+- Parent Expectations: ${document.getElementById('rating-5').value}
+
+Action Plan:
+${document.getElementById('response-5').value}
+
+========================================
+NEXT STEPS
+========================================
+✓ Save this email for your records
+✓ Complete the Cluster One Assessment Quiz
+✓ Implement your action plans
+✓ Track your progress over time
+
+Remember: Small steps lead to big changes in student outcomes!
+`;
+
+  const subject = encodeURIComponent('My Cluster One Module Responses - ' + new Date().toLocaleDateString());
+  const body = encodeURIComponent(responses);
+  const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+  
+  window.location.href = mailtoLink;
+  
+  document.getElementById('completion-message').style.display = 'block';
+  document.getElementById('completion-message').scrollIntoView({ behavior: 'smooth' });
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  restoreSavedData();
+  
+  if (!localStorage.getItem('cluster1_autosave')) {
+    for (let i = 1; i <= 5; i++) {
+      updateProgress(i);
+    }
+  }
+});
+
+window.addEventListener('beforeunload', function(e) {
+  const hasInput = Object.values(completionStatus).some(status => status === true);
+  const allComplete = Object.values(completionStatus).every(status => status === true);
+  
+  if (hasInput && !allComplete) {
+    e.preventDefault();
+    e.returnValue = 'You have incomplete activities. Your work is auto-saved and will be here when you return to this page.';
+    return e.returnValue;
+  }
+});
+</script>
+
+</body>
+</html>
