@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fit Framework Case Study: Maria's Transition Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .top-banner {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .top-banner h3 {
+            margin: 0 0 10px 0;
+            color: white;
+        }
+        
+        .top-banner ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .top-banner li {
+            margin: 5px 0;
+        }
+        
+        .save-status {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .action-button {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+        
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+        }
+        
+        .action-button.secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
+        }
+        
+        .action-button.secondary:hover {
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.6);
+        }
+        
+        .warning-banner {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .warning-banner strong {
+            color: #856404;
+        }
+        
+        .instructions-box {
+            background: #e7f3ff;
+            border: 2px solid #0066cc;
+            border-left: 5px solid #0066cc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .instructions-box h4 {
+            color: #0066cc;
+            margin-top: 0;
+        }
+        
+        .progress-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .print-hide {
+            /* Hidden when printing */
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            .print-hide {
+                display: none !important;
+            }
+            .toggle-button {
+                display: none;
+            }
+            .answer-content {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        
+        h2 {
+            color: #764ba2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 1.8em;
+        }
+        
+        h3 {
+            color: #667eea;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .icon {
+            font-size: 1.3em;
+            margin-right: 8px;
+        }
+        
+        .framework-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .framework-item {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .framework-item h4 {
+            margin-top: 0;
+        }
+        
+        .case-study-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .profile-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .profile-section h4 {
+            color: #ff6b6b;
+            margin-top: 0;
+        }
+        
+        ul {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+        
+        li {
+            margin: 8px 0;
+            line-height: 1.8;
+        }
+        
+        .analysis-activity {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border: 2px solid #dee2e6;
+        }
+        
+        .predictor-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .checkbox-group {
+            margin: 15px 0;
+        }
+        
+        .checkbox-group label {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .checkbox-group label:hover {
+            background: #e9ecef;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .consider-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        
+        .answer-section {
+            margin: 20px 0;
+        }
+        
+        .toggle-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .toggle-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .toggle-button:active {
+            transform: translateY(0);
+        }
+        
+        .answer-content {
+            display: none;
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #0066cc;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .answer-content.show {
+            display: block;
+        }
+        
+        .answer-label {
+            font-weight: bold;
+            color: #0066cc;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .response-area {
+            margin: 20px 0;
+        }
+        
+        .response-area textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        
+        .response-area textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .key-takeaway {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 5px solid #ff6b9d;
+        }
+        
+        .reflection-box {
+            background: #f0f4f8;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px dashed #667eea;
+        }
+        
+        .quiz-section {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 5px solid #e17055;
+        }
+        
+        .quiz-question {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .quiz-options {
+            margin: 15px 0;
+        }
+        
+        .quiz-options label {
+            display: block;
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quiz-options label:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .quiz-options input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        .feedback {
+            display: none;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .note {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .highlight {
+            background: #fff9e6;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- TOP INSTRUCTIONS & WARNINGS -->
+        <div class="top-banner print-hide">
+            <h3>📋 How to Use This Interactive Activity</h3>
+            <ul>
+                <li><strong>Your responses are auto-saved</strong> to your browser as you type</li>
+                <li>You can <strong>email your completed responses</strong> to yourself</li>
+                <li>You can <strong>print or save as PDF</strong> for your records</li>
+                <li>Work at your own pace - your progress will be saved</li>
+            </ul>
+        </div>
+        
+        <div class="warning-banner print-hide">
+            <strong>⚠️ IMPORTANT - Save Limitations:</strong>
+            <ul style="margin: 10px 0 0 20px;">
+                <li>Responses are saved in <strong>THIS browser on THIS device only</strong></li>
+                <li>Clearing browser data/cache will delete your saved responses</li>
+                <li>Using a different browser or device? Your responses won't transfer</li>
+                <li>Private/Incognito mode? Responses will be lost when you close the window</li>
+                <li><strong>For permanent records:</strong> Email yourself or save as PDF when complete</li>
+            </ul>
+        </div>
+        
+        <div class="save-status" id="saveStatus">✓ Responses auto-saved</div>
+        
+        <div class="action-buttons print-hide">
+            <button class="action-button" onclick="emailResponses()">📧 Email My Responses</button>
+            <button class="action-button secondary" onclick="window.print()">🖨️ Print/Save as PDF</button>
+            <button class="action-button secondary" onclick="clearAllResponses()">🗑️ Clear All Responses</button>
+        </div>
+        
+        <div class="progress-container print-hide">
+            <h4>Your Progress</h4>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar">0%</div>
+            </div>
+            <p style="margin-top: 10px; color: #666;"><span id="completedFields">0</span> of <span id="totalFields">0</span> responses completed</p>
+        </div>
+        
+        <div class="instructions-box print-hide">
+            <h4>🌐 Need an Accessible Version?</h4>
+            <p><strong>For screen readers or alternative formats:</strong></p>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>All interactive elements have proper labels</li>
+                <li>Use Tab key to navigate between fields</li>
+                <li>Print/PDF version removes interactive elements for clean text</li>
+                <li>Contact your training coordinator for Word document version if needed</li>
+            </ul>
+        </div>
+        
+        <hr style="margin: 30px 0; border: none; border-top: 2px solid #dee2e6;">
+        
+        <h1>🎯 Case Study Analysis</h1>
+        <div class="subtitle">Applying the "Fit" Framework to Student Scenarios</div>
+        
+        <!-- UNDERSTANDING THE FIT FRAMEWORK -->
+        <section>
+            <h2>Understanding the "Fit" Framework</h2>
+            <p>Before analyzing our case studies, remember the three key considerations for matching predictors to individual students:</p>
+            
+            <div class="framework-box">
+                <div class="framework-item">
+                    <h4><span class="icon">🧑‍🎓</span>1. The Person's Profile as a Learner</h4>
+                    <ul>
+                        <li>How does the student prefer to learn new information or skills?</li>
+                        <li>How do they best apply knowledge and skills to tasks?</li>
+                        <li>What are their strengths and challenges?</li>
+                    </ul>
+                </div>
+                
+                <div class="framework-item">
+                    <h4><span class="icon">🎯</span>2. The Purpose</h4>
+                    <ul>
+                        <li>Is the student learning something new?</li>
+                        <li>Are they applying existing skills to a new situation?</li>
+                        <li>Are they looking to improve performance in a specific area?</li>
+                    </ul>
+                </div>
+                
+                <div class="framework-item">
+                    <h4><span class="icon">🌍</span>3. The Environment or Context</h4>
+                    <ul>
+                        <li>Where will the learning/skill application take place?</li>
+                        <li>Is it in a classroom, workplace, home, or community setting?</li>
+                        <li>Are they participating in academic, vocational, or recreational activities?</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CASE STUDY: MARIA -->
+        <section>
+            <h2><span class="icon">📚</span>Case Study: Maria's Transition Journey</h2>
+            
+            <div class="case-study-box">
+                <div class="profile-section">
+                    <h4>Student Profile</h4>
+                    <p>Maria is a 16-year-old student with autism spectrum disorder who excels in mathematics and pattern recognition. She has strong visual learning skills but struggles with verbal instructions and social interactions. Maria becomes anxious in noisy, unpredictable environments but thrives with routine and clear expectations. She's expressed interest in working with computers and data but has limited work experience.</p>
+                </div>
+                
+                <div class="profile-section">
+                    <h4>Current Situation</h4>
+                    <p>Maria's IEP team is planning her transition services for the next two years. They need to select appropriate predictors that will help her achieve her post-school goal of employment in the technology field while living semi-independently.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ANALYSIS ACTIVITY -->
+        <section>
+            <h2><span class="icon">🤔</span>Analysis Activity</h2>
+            
+            <div class="analysis-activity">
+                <h3>Part 1: Analyze Maria's "Fit" Profile</h3>
+                <p>Based on the case study, identify:</p>
+                
+                <div class="profile-section">
+                    <h4>A. Learner Profile:</h4>
+                    <ul>
+                        <li>Visual learner (strength)</li>
+                        <li>Struggles with verbal instructions</li>
+                        <li>Needs routine and structure</li>
+                        <li>Pattern recognition skills</li>
+                        <li>Limited social comfort</li>
+                    </ul>
+                </div>
+                
+                <div class="profile-section">
+                    <h4>B. Purpose (What Maria needs):</h4>
+                    <ul>
+                        <li>Build employment skills for tech field</li>
+                        <li>Develop independent living skills</li>
+                        <li>Improve social/communication skills for workplace</li>
+                        <li>Gain real work experience</li>
+                    </ul>
+                </div>
+                
+                <div class="profile-section">
+                    <h4>C. Environment/Context Considerations:</h4>
+                    <ul>
+                        <li>Needs quiet, structured settings initially</li>
+                        <li>May need gradual exposure to workplace environments</li>
+                        <li>Home and community practice for living skills</li>
+                        <li>Technology-rich learning environments</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- PART 2: MATCH PREDICTORS -->
+        <section>
+            <h2>Part 2: Match Predictors to Maria's Needs</h2>
+            <p><strong>Instructions:</strong> For each predictor category below, determine if it would be a good "fit" for Maria and explain why using the three considerations.</p>
+            
+            <!-- PREDICTOR 1: PAID WORK EXPERIENCE -->
+            <div class="predictor-card">
+                <h3>1. Paid Work Experience</h3>
+                
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="fit1" value="excellent"> Excellent fit</label>
+                    <label><input type="checkbox" name="fit1" value="good"> Good fit with modifications</label>
+                    <label><input type="checkbox" name="fit1" value="poor"> Poor fit</label>
+                </div>
+                
+                <div class="consider-box">
+                    <strong>Consider:</strong> Would a paid internship at a local tech company be appropriate? What modifications might be needed?
+                </div>
+                
+                <div class="answer-section">
+                    <button class="toggle-button" onclick="toggleAnswer('answer1')">💡 View Suggested Answer</button>
+                    <div id="answer1" class="answer-content">
+                        <span class="answer-label">Good fit with modifications</span>
+                        <ul>
+                            <li><strong>Learner Profile Match:</strong> Aligns with her tech interests and visual/pattern strengths</li>
+                            <li><strong>Purpose Match:</strong> Provides real employment experience in her field of interest</li>
+                            <li><strong>Environment Needs:</strong> Would need to start with a quiet, structured workplace (maybe back-office data entry) before moving to busier environments. Consider part-time hours initially.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PREDICTOR 2: SOCIAL SKILLS TRAINING -->
+            <div class="predictor-card">
+                <h3>2. Social Skills Training</h3>
+                
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="fit2" value="excellent"> Excellent fit</label>
+                    <label><input type="checkbox" name="fit2" value="good"> Good fit with modifications</label>
+                    <label><input type="checkbox" name="fit2" value="poor"> Poor fit</label>
+                </div>
+                
+                <div class="consider-box">
+                    <strong>Consider:</strong> What type of social skills instruction would match Maria's learning style?
+                </div>
+                
+                <div class="answer-section">
+                    <button class="toggle-button" onclick="toggleAnswer('answer2')">💡 View Suggested Answer</button>
+                    <div id="answer2" class="answer-content">
+                        <span class="answer-label">Excellent fit with modifications</span>
+                        <ul>
+                            <li><strong>Learner Profile Match:</strong> Must use visual supports (social stories, video modeling) rather than verbal instruction alone</li>
+                            <li><strong>Purpose Match:</strong> Critical for workplace success and semi-independent living</li>
+                            <li><strong>Environment Needs:</strong> Start in small group or 1:1 settings, practice in controlled environments before generalizing to community</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PREDICTOR 3: COMMUNITY EXPERIENCES -->
+            <div class="predictor-card">
+                <h3>3. Community Experiences</h3>
+                
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="fit3" value="excellent"> Excellent fit</label>
+                    <label><input type="checkbox" name="fit3" value="good"> Good fit with modifications</label>
+                    <label><input type="checkbox" name="fit3" value="poor"> Poor fit</label>
+                </div>
+                
+                <div class="consider-box">
+                    <strong>Consider:</strong> How could community experiences be structured for Maria's success?
+                </div>
+                
+                <div class="answer-section">
+                    <button class="toggle-button" onclick="toggleAnswer('answer3')">💡 View Suggested Answer</button>
+                    <div id="answer3" class="answer-content">
+                        <span class="answer-label">Good fit with modifications</span>
+                        <ul>
+                            <li><strong>Learner Profile Match:</strong> Provide visual schedules and preparation materials before outings</li>
+                            <li><strong>Purpose Match:</strong> Essential for independent living goals</li>
+                            <li><strong>Environment Needs:</strong> Start with quieter community settings (library, small stores during off-peak hours) and gradually increase complexity</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PREDICTOR 4: SELF-DETERMINATION -->
+            <div class="predictor-card">
+                <h3>4. Self-Determination/Self-Advocacy</h3>
+                
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="fit4" value="excellent"> Excellent fit</label>
+                    <label><input type="checkbox" name="fit4" value="good"> Good fit with modifications</label>
+                    <label><input type="checkbox" name="fit4" value="poor"> Poor fit</label>
+                </div>
+                
+                <div class="consider-box">
+                    <strong>Consider:</strong> How can self-advocacy instruction accommodate Maria's communication style?
+                </div>
+                
+                <div class="answer-section">
+                    <button class="toggle-button" onclick="toggleAnswer('answer4')">💡 View Suggested Answer</button>
+                    <div id="answer4" class="answer-content">
+                        <span class="answer-label">Excellent fit with modifications</span>
+                        <ul>
+                            <li><strong>Learner Profile Match:</strong> Use visual supports, written scripts, and technology-assisted communication options</li>
+                            <li><strong>Purpose Match:</strong> Critical for requesting workplace accommodations and living semi-independently</li>
+                            <li><strong>Environment Needs:</strong> Practice in safe settings first, potentially use email/text for advocacy when verbal is challenging</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- PART 3: YOUR RECOMMENDATIONS -->
+        <section>
+            <h2>Part 3: Your Recommendations</h2>
+            <p>Based on your analysis, answer these questions:</p>
+            
+            <div class="response-area">
+                <h4>1. Which TWO predictors would you prioritize for Maria in Year 1? Why?</h4>
+                <textarea data-field-id="priority-predictors" placeholder="Your response..." onkeyup="autoSave()"></textarea>
+            </div>
+            
+            <div class="response-area">
+                <h4>2. What modifications would be essential for Maria's success with these predictors?</h4>
+                <textarea data-field-id="essential-modifications" placeholder="Your response..." onkeyup="autoSave()"></textarea>
+            </div>
+            
+            <div class="response-area">
+                <h4>3. How would you sequence these predictors across her remaining high school years?</h4>
+                <textarea data-field-id="predictor-sequence" placeholder="Your response..." onkeyup="autoSave()"></textarea>
+            </div>
+        </section>
+        
+        <!-- APPLICATION CHALLENGE -->
+        <section>
+            <h2><span class="icon">🎯</span>Application Challenge</h2>
+            <p>Now apply the "fit" framework to one of YOUR students:</p>
+            
+            <div class="analysis-activity">
+                <h4>Step 1: Think of a specific student you work with</h4>
+                
+                <h4>Step 2: Complete their fit profile:</h4>
+                <div class="response-area">
+                    <strong>Learner Profile:</strong>
+                    <textarea data-field-id="student-learner-profile" placeholder="Describe how this student learns best..." onkeyup="autoSave()"></textarea>
+                </div>
+                
+                <div class="response-area">
+                    <strong>Purpose/Goals:</strong>
+                    <textarea data-field-id="student-purpose-goals" placeholder="What does this student need to achieve?" onkeyup="autoSave()"></textarea>
+                </div>
+                
+                <div class="response-area">
+                    <strong>Environment Needs:</strong>
+                    <textarea data-field-id="student-environment-needs" placeholder="What environmental considerations are important?" onkeyup="autoSave()"></textarea>
+                </div>
+                
+                <h4>Step 3: Identify one predictor that would be an excellent fit and explain why:</h4>
+                <div class="response-area">
+                    <textarea data-field-id="student-predictor-fit" placeholder="Your analysis..." onkeyup="autoSave()"></textarea>
+                </div>
+            </div>
+        </section>
+        
+        <!-- KEY TAKEAWAY -->
+        <section>
+            <div class="key-takeaway">
+                <h3><span class="icon">📝</span>Key Takeaway</h3>
+                <p><strong>Remember: Predictors are only as effective as the match between the intervention and the individual student's needs.</strong> The same predictor implemented the same way will not work for every student. Always consider:</p>
+                <ul>
+                    <li>How the student learns best</li>
+                    <li>What they're trying to achieve</li>
+                    <li>Where the learning will happen</li>
+                </ul>
+                <p style="margin-top: 15px;">The "fit" framework ensures we're not just implementing predictors, but implementing the RIGHT predictors in the RIGHT way for each individual student.</p>
+            </div>
+        </section>
+        
+        <!-- REFLECTION QUESTIONS -->
+        <section>
+            <h2><span class="icon">🔄</span>Reflection Questions</h2>
+            
+            <div class="reflection-box">
+                <h4>1. How might Maria's predictor needs change as she progresses through her transition plan?</h4>
+                <textarea data-field-id="reflection-1" style="width: 100%; min-height: 80px; padding: 10px; border: 2px solid #dee2e6; border-radius: 5px; font-family: inherit;" onkeyup="autoSave()"></textarea>
+            </div>
+            
+            <div class="reflection-box">
+                <h4>2. What role should Maria play in determining the "fit" of predictors for her own transition plan?</h4>
+                <textarea data-field-id="reflection-2" style="width: 100%; min-height: 80px; padding: 10px; border: 2px solid #dee2e6; border-radius: 5px; font-family: inherit;" onkeyup="autoSave()"></textarea>
+            </div>
+            
+            <div class="reflection-box">
+                <h4>3. How can teams avoid making assumptions about fit based on disability labels rather than individual profiles?</h4>
+                <textarea data-field-id="reflection-3" style="width: 100%; min-height: 80px; padding: 10px; border: 2px solid #dee2e6; border-radius: 5px; font-family: inherit;" onkeyup="autoSave()"></textarea>
+            </div>
+        </section>
+        
+        <!-- QUIZ SECTION -->
+        <section>
+            <div class="quiz-section">
+                <h2><span class="icon">📊</span>Knowledge Check Quiz</h2>
+                
+                <div class="quiz-question">
+                    <h4>Question 1: According to the fit framework, which of the following is NOT one of the three key considerations for matching predictors to students?</h4>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> a) The person's profile as a learner</label>
+                        <label><input type="radio" name="q1" value="b"> b) The person's disability category</label>
+                        <label><input type="radio" name="q1" value="c"> c) The purpose of the intervention</label>
+                        <label><input type="radio" name="q1" value="d"> d) The environment or context</label>
+                    </div>
+                    <button class="toggle-button" onclick="checkAnswer('q1', 'b', 'feedback1')">Check Answer</button>
+                    <div id="feedback1" class="feedback"></div>
+                </div>
+                
+                <div class="quiz-question">
+                    <h4>Question 2: Maria, a visual learner with autism, needs work experience. Which modification would best match her learner profile?</h4>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> a) Provide verbal instructions only</label>
+                        <label><input type="radio" name="q2" value="b"> b) Place her in a busy, social environment immediately</label>
+                        <label><input type="radio" name="q2" value="c"> c) Use visual schedules and written task lists</label>
+                        <label><input type="radio" name="q2" value="d"> d) Avoid technology-based positions</label>
+                    </div>
+                    <button class="toggle-button" onclick="checkAnswer('q2', 'c', 'feedback2')">Check Answer</button>
+                    <div id="feedback2" class="feedback"></div>
+                </div>
+                
+                <div class="quiz-question">
+                    <h4>Question 3: When determining "fit," the purpose consideration asks: (Select all that apply)</h4>
+                    <div class="quiz-options">
+                        <label><input type="checkbox" name="q3" value="a"> Is the person learning something new?</label>
+                        <label><input type="checkbox" name="q3" value="b"> What is the person's IQ score?</label>
+                        <label><input type="checkbox" name="q3" value="c"> Are they applying skills to a new situation?</label>
+                        <label><input type="checkbox" name="q3" value="d"> Are they looking to improve performance?</label>
+                    </div>
+                    <button class="toggle-button" onclick="checkMultipleAnswer('q3', ['a', 'c', 'd'], 'feedback3')">Check Answer</button>
+                    <div id="feedback3" class="feedback"></div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="note">
+            <strong>💡 Note:</strong> This case study is designed to help you practice applying the fit framework to real student scenarios. Remember that every student is unique, and what works for Maria may need to be adapted for other students with similar profiles.
+        </div>
+    </div>
+    
+    <script>
+        // Constants
+        const STORAGE_KEY = 'fitFrameworkCaseStudy';
+        const SAVE_DELAY = 500; // milliseconds
+        let saveTimeout;
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSavedData();
+            updateProgress();
+            updateFieldCount();
+        });
+        
+        // Auto-save function
+        function autoSave() {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(function() {
+                saveAllData();
+                showSaveStatus();
+                updateProgress();
+            }, SAVE_DELAY);
+        }
+        
+        // Save all form data to localStorage
+        function saveAllData() {
+            const data = {};
+            
+            // Save all textareas
+            document.querySelectorAll('textarea[data-field-id]').forEach(textarea => {
+                data[textarea.dataset.fieldId] = textarea.value;
+            });
+            
+            // Save checkbox selections
+            document.querySelectorAll('input[type="checkbox"][name^="fit"]').forEach(checkbox => {
+                data[checkbox.name + '_' + checkbox.value] = checkbox.checked;
+            });
+            
+            // Save radio selections
+            document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+                data[radio.name] = radio.value;
+            });
+            
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+        
+        // Load saved data from localStorage
+        function loadSavedData() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (!savedData) return;
+            
+            try {
+                const data = JSON.parse(savedData);
+                
+                // Restore textareas
+                document.querySelectorAll('textarea[data-field-id]').forEach(textarea => {
+                    if (data[textarea.dataset.fieldId]) {
+                        textarea.value = data[textarea.dataset.fieldId];
+                    }
+                });
+                
+                // Restore checkboxes
+                document.querySelectorAll('input[type="checkbox"][name^="fit"]').forEach(checkbox => {
+                    const key = checkbox.name + '_' + checkbox.value;
+                    if (data[key] !== undefined) {
+                        checkbox.checked = data[key];
+                    }
+                });
+                
+                // Restore radio buttons
+                document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    if (data[radio.name] === radio.value) {
+                        radio.checked = true;
+                    }
+                });
+                
+            } catch (e) {
+                console.error('Error loading saved data:', e);
+            }
+        }
+        
+        // Show save status message
+        function showSaveStatus() {
+            const status = document.getElementById('saveStatus');
+            status.style.display = 'block';
+            setTimeout(function() {
+                status.style.display = 'none';
+            }, 2000);
+        }
+        
+        // Update progress bar
+        function updateProgress() {
+            const textareas = document.querySelectorAll('textarea[data-field-id]');
+            let completed = 0;
+            
+            textareas.forEach(textarea => {
+                if (textarea.value.trim().length > 0) {
+                    completed++;
+                }
+            });
+            
+            const percentage = Math.round((completed / textareas.length) * 100);
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = percentage + '%';
+            
+            document.getElementById('completedFields').textContent = completed;
+        }
+        
+        // Update field count
+        function updateFieldCount() {
+            const totalFields = document.querySelectorAll('textarea[data-field-id]').length;
+            document.getElementById('totalFields').textContent = totalFields;
+        }
+        
+        // Email responses function
+        function emailResponses() {
+            let emailBody = "FIT FRAMEWORK CASE STUDY: MARIA'S TRANSITION JOURNEY\n";
+            emailBody += "=" .repeat(60) + "\n\n";
+            
+            // Collect all responses
+            const textareas = document.querySelectorAll('textarea[data-field-id]');
+            textareas.forEach(textarea => {
+                if (textarea.value.trim()) {
+                    const label = textarea.closest('.response-area, .reflection-box')?.querySelector('h4, strong')?.textContent || 'Response';
+                    emailBody += label + "\n";
+                    emailBody += "-".repeat(40) + "\n";
+                    emailBody += textarea.value.trim() + "\n\n";
+                }
+            });
+            
+            // Add checkbox selections
+            emailBody += "\nPREDICTOR FIT SELECTIONS:\n";
+            emailBody += "=".repeat(60) + "\n";
+            
+            ['fit1', 'fit2', 'fit3', 'fit4'].forEach((name, index) => {
+                const checked = document.querySelector(`input[name="${name}"]:checked`);
+                if (checked) {
+                    const predictor = ['Paid Work Experience', 'Social Skills Training', 'Community Experiences', 'Self-Determination/Self-Advocacy'][index];
+                    emailBody += predictor + ": " + checked.value + "\n";
+                }
+            });
+            
+            // Add quiz answers
+            emailBody += "\nQUIZ RESPONSES:\n";
+            emailBody += "=".repeat(60) + "\n";
+            
+            ['q1', 'q2'].forEach((name, index) => {
+                const checked = document.querySelector(`input[name="${name}"]:checked`);
+                if (checked) {
+                    emailBody += "Question " + (index + 1) + ": " + checked.value + "\n";
+                }
+            });
+            
+            // Q3 checkboxes
+            const q3Checked = Array.from(document.querySelectorAll('input[name="q3"]:checked'));
+            if (q3Checked.length > 0) {
+                emailBody += "Question 3: " + q3Checked.map(cb => cb.value).join(', ') + "\n";
+            }
+            
+            emailBody += "\n" + "=".repeat(60) + "\n";
+            emailBody += "Completed: " + new Date().toLocaleString() + "\n";
+            
+            // Create mailto link
+            const subject = encodeURIComponent("Fit Framework Case Study - My Responses");
+            const body = encodeURIComponent(emailBody);
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+        
+        // Clear all responses
+        function clearAllResponses() {
+            if (confirm('Are you sure you want to clear ALL your responses? This cannot be undone.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                
+                // Clear all textareas
+                document.querySelectorAll('textarea').forEach(textarea => {
+                    textarea.value = '';
+                });
+                
+                // Clear all checkboxes and radio buttons
+                document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(input => {
+                    input.checked = false;
+                });
+                
+                // Hide all feedback
+                document.querySelectorAll('.feedback').forEach(feedback => {
+                    feedback.style.display = 'none';
+                });
+                
+                updateProgress();
+                alert('All responses have been cleared.');
+            }
+        }
+        
+        // Toggle answer visibility
+        function toggleAnswer(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('show');
+        }
+        
+        // Check single answer quiz question
+        function checkAnswer(questionName, correctAnswer, feedbackId) {
+            const selected = document.querySelector(`input[name="${questionName}"]:checked`);
+            const feedback = document.getElementById(feedbackId);
+            
+            if (!selected) {
+                feedback.textContent = "Please select an answer.";
+                feedback.className = "feedback incorrect";
+                feedback.style.display = "block";
+                return;
+            }
+            
+            if (selected.value === correctAnswer) {
+                feedback.textContent = "✓ Correct! Great job!";
+                feedback.className = "feedback correct";
+            } else {
+                feedback.textContent = "✗ Incorrect. The correct answer is " + correctAnswer + ". Review the fit framework concepts and try again.";
+                feedback.className = "feedback incorrect";
+            }
+            feedback.style.display = "block";
+            autoSave(); // Save quiz response
+        }
+        
+        // Check multiple answer quiz question
+        function checkMultipleAnswer(questionName, correctAnswers, feedbackId) {
+            const selected = Array.from(document.querySelectorAll(`input[name="${questionName}"]:checked`))
+                .map(input => input.value);
+            const feedback = document.getElementById(feedbackId);
+            
+            if (selected.length === 0) {
+                feedback.textContent = "Please select at least one answer.";
+                feedback.className = "feedback incorrect";
+                feedback.style.display = "block";
+                return;
+            }
+            
+            const isCorrect = selected.length === correctAnswers.length && 
+                              selected.every(val => correctAnswers.includes(val));
+            
+            if (isCorrect) {
+                feedback.textContent = "✓ Correct! You identified all the right considerations for 'purpose' in the fit framework.";
+                feedback.className = "feedback correct";
+            } else {
+                feedback.textContent = "✗ Incorrect. The correct answers are: " + correctAnswers.join(", ") + ". The purpose consideration focuses on what the student is trying to accomplish - learning new skills, applying existing skills, or improving performance.";
+                feedback.className = "feedback incorrect";
+            }
+            feedback.style.display = "block";
+            autoSave(); // Save quiz response
+        }
+    </script>
+</body>
+</html>
