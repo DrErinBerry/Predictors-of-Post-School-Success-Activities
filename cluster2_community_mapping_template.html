@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Mapping Template - Cluster 2: Youth Skills</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 4px solid #667eea;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .intro-box {
+            background: #f0f4ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .intro-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .skills-reference {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+            padding: 20px;
+            background: #fff8e1;
+            border-radius: 10px;
+        }
+
+        .skill-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffa726;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .skill-item strong {
+            color: #e65100;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .section {
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-number {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-weight: 500;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .location-entry {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            position: relative;
+        }
+
+        .location-header {
+            background: #667eea;
+            color: white;
+            padding: 15px 20px;
+            margin: -25px -25px 20px -25px;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            font-size: 1.2em;
+        }
+
+        .add-location-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .add-location-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .remove-location-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .remove-location-btn:hover {
+            background: #da190b;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .status-message {
+            text-align: center;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .status-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+        }
+
+        .helper-text {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .info-icon {
+            display: inline-block;
+            background: #2196F3;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            font-size: 0.9em;
+            margin-left: 5px;
+            cursor: help;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            
+            .button-group {
+                display: none;
+            }
+            
+            .add-location-btn,
+            .remove-location-btn {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗺️ Community Mapping Template</h1>
+            <div class="subtitle">Cluster 2: Youth Skills - Identifying Local Practice Sites & Partnerships</div>
+            <div class="subtitle" style="font-size: 1em; color: #999;">Predictors of Post-School Success Training</div>
+        </div>
+
+        <div class="intro-box">
+            <h3>📋 Purpose</h3>
+            <p>This template helps you identify and organize community locations where students can practice the six Youth Skills in authentic, real-world settings. Research shows that skills learned in natural environments with real consequences lead to better generalization and post-school success.</p>
+            <p style="margin-top: 10px;"><strong>Your responses are automatically saved to your browser as you type.</strong></p>
+        </div>
+
+        <div class="skills-reference">
+            <div class="skill-item">
+                <strong>1. Community Experiences</strong>
+                Activities outside school where students apply academic, social, and work behaviors
+            </div>
+            <div class="skill-item">
+                <strong>2. Self-Determination & Self-Advocacy</strong>
+                Understanding needs, making choices, and communicating effectively
+            </div>
+            <div class="skill-item">
+                <strong>3. Goal Setting</strong>
+                Establishing objectives and working toward them systematically
+            </div>
+            <div class="skill-item">
+                <strong>4. Social Skills</strong>
+                Interpersonal interactions, relationships, and workplace behaviors
+            </div>
+            <div class="skill-item">
+                <strong>5. Travel Skills</strong>
+                Independent navigation of community and transportation
+            </div>
+            <div class="skill-item">
+                <strong>6. Technology Skills</strong>
+                Using devices and digital tools for daily living and work
+            </div>
+        </div>
+
+        <!-- Program Information Section -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                Program Information
+            </h2>
+            
+            <div class="form-group">
+                <label for="program-name">School/Program Name:</label>
+                <input type="text" id="program-name" placeholder="Enter your school or program name">
+            </div>
+
+            <div class="form-group">
+                <label for="district-name">District/Organization:</label>
+                <input type="text" id="district-name" placeholder="Enter your district or organization name">
+            </div>
+
+            <div class="form-group">
+                <label for="completed-by">Completed By:</label>
+                <input type="text" id="completed-by" placeholder="Your name">
+            </div>
+
+            <div class="form-group">
+                <label for="date-completed">Date:</label>
+                <input type="text" id="date-completed" placeholder="MM/DD/YYYY">
+            </div>
+
+            <div class="form-group">
+                <label for="geographic-area">Geographic Area Served:</label>
+                <input type="text" id="geographic-area" placeholder="e.g., Northwest Oklahoma City, Rural Creek County">
+                <div class="helper-text">Include rural/urban designation and any transportation considerations</div>
+            </div>
+        </div>
+
+        <!-- Community Locations Section -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-number">2</span>
+                Community Locations & Skill Mapping
+            </h2>
+            
+            <div class="intro-box" style="margin-bottom: 25px;">
+                <p><strong>Instructions:</strong> For each community location you identify, indicate which youth skills can be practiced there. Consider accessibility, transportation options, and partnership potential.</p>
+            </div>
+
+            <div id="locations-container">
+                <!-- Location entries will be added here -->
+            </div>
+
+            <button class="add-location-btn" onclick="addLocation()">
+                <span style="font-size: 1.5em;">+</span> Add Community Location
+            </button>
+        </div>
+
+        <!-- Transportation Planning Section -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                Transportation Planning
+            </h2>
+
+            <div class="form-group">
+                <label for="transport-available">Transportation Resources Available:</label>
+                <textarea id="transport-available" placeholder="e.g., School buses, public transit routes, parent volunteers, district van, walking distance locations"></textarea>
+                <div class="helper-text">List all options for getting students to community locations</div>
+            </div>
+
+            <div class="form-group">
+                <label for="transport-barriers">Transportation Barriers:</label>
+                <textarea id="transport-barriers" placeholder="e.g., Limited public transit in rural area, no weekend bus service, long travel times between locations"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="transport-solutions">Potential Solutions:</label>
+                <textarea id="transport-solutions" placeholder="e.g., Cluster activities at nearby locations, partner with CareerTech for shared transportation, develop walking routes"></textarea>
+            </div>
+        </div>
+
+        <!-- Partnership Development Section -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                Partnership Development
+            </h2>
+
+            <div class="form-group">
+                <label for="current-partners">Current Community Partners:</label>
+                <textarea id="current-partners" placeholder="List organizations/businesses you already work with for transition services"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="potential-partners">Potential New Partners:</label>
+                <textarea id="potential-partners" placeholder="List organizations/businesses you'd like to develop relationships with"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="partnership-approach">Partnership Development Strategy:</label>
+                <textarea id="partnership-approach" placeholder="How will you initiate and maintain these partnerships? What can you offer in exchange for access?"></textarea>
+                <div class="helper-text">Consider: liability insurance, student benefits to business, regular communication, recognition opportunities</div>
+            </div>
+        </div>
+
+        <!-- Implementation Planning Section -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                Implementation Planning
+            </h2>
+
+            <div class="form-group">
+                <label for="priority-skills">Priority Skills for Your Students:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-community" name="priority-skills">
+                        <label for="priority-community">Community Experiences</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-self-det" name="priority-skills">
+                        <label for="priority-self-det">Self-Determination</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-goal" name="priority-skills">
+                        <label for="priority-goal">Goal Setting</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-social" name="priority-skills">
+                        <label for="priority-social">Social Skills</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-travel" name="priority-skills">
+                        <label for="priority-travel">Travel Skills</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="priority-tech" name="priority-skills">
+                        <label for="priority-tech">Technology Skills</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="implementation-timeline">Implementation Timeline:</label>
+                <textarea id="implementation-timeline" placeholder="When will you begin using these community locations? What's your phased rollout plan?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="staff-training">Staff Training Needs:</label>
+                <textarea id="staff-training" placeholder="What training do staff need to effectively facilitate community-based instruction?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="assessment-plan">Skills Assessment Plan:</label>
+                <textarea id="assessment-plan" placeholder="How will you assess student skill development in community settings?"></textarea>
+            </div>
+        </div>
+
+        <!-- Action Steps Section -->
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-number">6</span>
+                Next Steps & Action Items
+            </h2>
+
+            <div class="form-group">
+                <label for="immediate-actions">Immediate Actions (Next 30 Days):</label>
+                <textarea id="immediate-actions" placeholder="What are your first three steps to begin implementing community-based experiences?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="short-term-goals">Short-Term Goals (2-6 Months):</label>
+                <textarea id="short-term-goals" placeholder="What do you want to accomplish in your first semester of implementation?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="long-term-vision">Long-Term Vision (1 Year):</label>
+                <textarea id="long-term-vision" placeholder="What will comprehensive community-based instruction look like in your program one year from now?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="support-needed">Support Needed:</label>
+                <textarea id="support-needed" placeholder="What resources, training, or assistance do you need to be successful?"></textarea>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="saveAsEmail()">
+                📧 Email Completed Template
+            </button>
+            <button class="btn btn-secondary" onclick="window.print()">
+                🖨️ Print Template
+            </button>
+            <button class="btn btn-success" onclick="downloadAsText()">
+                💾 Download as Text File
+            </button>
+        </div>
+
+        <div id="status-message" class="status-message"></div>
+
+        <div class="intro-box" style="margin-top: 40px;">
+            <h3>💡 Implementation Tips</h3>
+            <p><strong>Start Small:</strong> Begin with 2-3 accessible locations and expand gradually</p>
+            <p><strong>Build Relationships:</strong> Strong partnerships take time - invest in communication</p>
+            <p><strong>Document Success:</strong> Track student progress to demonstrate program value</p>
+            <p><strong>Stay Flexible:</strong> Some locations will work better than others - adjust as needed</p>
+            <p><strong>Think Integration:</strong> One community site can address multiple skills simultaneously</p>
+        </div>
+    </div>
+
+    <script>
+        let locationCount = 0;
+        const STORAGE_KEY = 'communityMappingTemplate';
+
+        // Initialize with one location
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSavedData();
+            if (locationCount === 0) {
+                addLocation();
+            }
+            
+            // Auto-save on any input change
+            document.addEventListener('input', autoSave);
+            document.addEventListener('change', autoSave);
+        });
+
+        function addLocation() {
+            locationCount++;
+            const container = document.getElementById('locations-container');
+            
+            const locationDiv = document.createElement('div');
+            locationDiv.className = 'location-entry';
+            locationDiv.id = `location-${locationCount}`;
+            
+            locationDiv.innerHTML = `
+                <div class="location-header">Community Location #${locationCount}</div>
+                ${locationCount > 1 ? `<button class="remove-location-btn" onclick="removeLocation(${locationCount})">✕ Remove</button>` : ''}
+                
+                <div class="form-group">
+                    <label for="location-name-${locationCount}">Location Name:</label>
+                    <input type="text" id="location-name-${locationCount}" placeholder="e.g., Walmart Neighborhood Market, City Library, Local YMCA">
+                </div>
+
+                <div class="form-group">
+                    <label for="location-address-${locationCount}">Address:</label>
+                    <input type="text" id="location-address-${locationCount}" placeholder="Street address and city">
+                </div>
+
+                <div class="form-group">
+                    <label for="location-type-${locationCount}">Location Type:</label>
+                    <select id="location-type-${locationCount}">
+                        <option value="">Select type...</option>
+                        <option value="retail">Retail/Shopping</option>
+                        <option value="recreation">Recreation/Fitness</option>
+                        <option value="library">Library/Educational</option>
+                        <option value="restaurant">Restaurant/Food Service</option>
+                        <option value="government">Government Office</option>
+                        <option value="medical">Medical/Health</option>
+                        <option value="transit">Transportation Hub</option>
+                        <option value="employment">Employment Site</option>
+                        <option value="volunteer">Volunteer Site</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Youth Skills That Can Be Practiced: <span class="info-icon" title="Check all skills that could be addressed at this location">i</span></label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="skill-community-${locationCount}" name="location-${locationCount}-skills">
+                            <label for="skill-community-${locationCount}">Community Experiences</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="skill-selfdet-${locationCount}" name="location-${locationCount}-skills">
+                            <label for="skill-selfdet-${locationCount}">Self-Determination</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="skill-goal-${locationCount}" name="location-${locationCount}-skills">
+                            <label for="skill-goal-${locationCount}">Goal Setting</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="skill-social-${locationCount}" name="location-${locationCount}-skills">
+                            <label for="skill-social-${locationCount}">Social Skills</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="skill-travel-${locationCount}" name="location-${locationCount}-skills">
+                            <label for="skill-travel-${locationCount}">Travel Skills</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="skill-tech-${locationCount}" name="location-${locationCount}-skills">
+                            <label for="skill-tech-${locationCount}">Technology Skills</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="location-activities-${locationCount}">Specific Activities/Learning Opportunities:</label>
+                    <textarea id="location-activities-${locationCount}" placeholder="What will students actually DO at this location? What skills will they practice?"></textarea>
+                    <div class="helper-text">Example: Practice ordering food using touchscreen kiosks, navigate store to find items, use self-checkout</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="location-contact-${locationCount}">Contact Person & Information:</label>
+                    <input type="text" id="location-contact-${locationCount}" placeholder="Name, title, phone number, email">
+                </div>
+
+                <div class="form-group">
+                    <label for="location-accessibility-${locationCount}">Accessibility Features:</label>
+                    <input type="text" id="location-accessibility-${locationCount}" placeholder="e.g., Wheelchair accessible, sensory-friendly hours, quiet spaces available">
+                </div>
+
+                <div class="form-group">
+                    <label for="location-transportation-${locationCount}">Transportation Access:</label>
+                    <select id="location-transportation-${locationCount}">
+                        <option value="">Select option...</option>
+                        <option value="walking">Walking distance from school</option>
+                        <option value="school-bus">School bus accessible</option>
+                        <option value="public-transit">Public transit available</option>
+                        <option value="requires-transport">Requires special transportation</option>
+                        <option value="multiple">Multiple options available</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="location-frequency-${locationCount}">Planned Frequency of Use:</label>
+                    <select id="location-frequency-${locationCount}">
+                        <option value="">Select frequency...</option>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="biweekly">Bi-weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="as-needed">As needed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="location-notes-${locationCount}">Additional Notes/Considerations:</label>
+                    <textarea id="location-notes-${locationCount}" placeholder="Any other important information about using this location"></textarea>
+                </div>
+            `;
+            
+            container.appendChild(locationDiv);
+            showStatus('Location added successfully!', 'success');
+        }
+
+        function removeLocation(id) {
+            const locationDiv = document.getElementById(`location-${id}`);
+            if (locationDiv) {
+                locationDiv.remove();
+                showStatus('Location removed', 'info');
+                autoSave();
+            }
+        }
+
+        function autoSave() {
+            const formData = collectFormData();
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+        }
+
+        function collectFormData() {
+            const data = {
+                programInfo: {
+                    programName: document.getElementById('program-name')?.value || '',
+                    districtName: document.getElementById('district-name')?.value || '',
+                    completedBy: document.getElementById('completed-by')?.value || '',
+                    dateCompleted: document.getElementById('date-completed')?.value || '',
+                    geographicArea: document.getElementById('geographic-area')?.value || ''
+                },
+                transportation: {
+                    available: document.getElementById('transport-available')?.value || '',
+                    barriers: document.getElementById('transport-barriers')?.value || '',
+                    solutions: document.getElementById('transport-solutions')?.value || ''
+                },
+                partnerships: {
+                    current: document.getElementById('current-partners')?.value || '',
+                    potential: document.getElementById('potential-partners')?.value || '',
+                    approach: document.getElementById('partnership-approach')?.value || ''
+                },
+                implementation: {
+                    prioritySkills: {
+                        community: document.getElementById('priority-community')?.checked || false,
+                        selfDet: document.getElementById('priority-self-det')?.checked || false,
+                        goal: document.getElementById('priority-goal')?.checked || false,
+                        social: document.getElementById('priority-social')?.checked || false,
+                        travel: document.getElementById('priority-travel')?.checked || false,
+                        tech: document.getElementById('priority-tech')?.checked || false
+                    },
+                    timeline: document.getElementById('implementation-timeline')?.value || '',
+                    staffTraining: document.getElementById('staff-training')?.value || '',
+                    assessmentPlan: document.getElementById('assessment-plan')?.value || ''
+                },
+                actionSteps: {
+                    immediate: document.getElementById('immediate-actions')?.value || '',
+                    shortTerm: document.getElementById('short-term-goals')?.value || '',
+                    longTerm: document.getElementById('long-term-vision')?.value || '',
+                    support: document.getElementById('support-needed')?.value || ''
+                },
+                locations: []
+            };
+
+            // Collect all location data
+            const locationDivs = document.querySelectorAll('.location-entry');
+            locationDivs.forEach((div) => {
+                const id = div.id.split('-')[1];
+                const location = {
+                    id: id,
+                    name: document.getElementById(`location-name-${id}`)?.value || '',
+                    address: document.getElementById(`location-address-${id}`)?.value || '',
+                    type: document.getElementById(`location-type-${id}`)?.value || '',
+                    skills: {
+                        community: document.getElementById(`skill-community-${id}`)?.checked || false,
+                        selfDet: document.getElementById(`skill-selfdet-${id}`)?.checked || false,
+                        goal: document.getElementById(`skill-goal-${id}`)?.checked || false,
+                        social: document.getElementById(`skill-social-${id}`)?.checked || false,
+                        travel: document.getElementById(`skill-travel-${id}`)?.checked || false,
+                        tech: document.getElementById(`skill-tech-${id}`)?.checked || false
+                    },
+                    activities: document.getElementById(`location-activities-${id}`)?.value || '',
+                    contact: document.getElementById(`location-contact-${id}`)?.value || '',
+                    accessibility: document.getElementById(`location-accessibility-${id}`)?.value || '',
+                    transportation: document.getElementById(`location-transportation-${id}`)?.value || '',
+                    frequency: document.getElementById(`location-frequency-${id}`)?.value || '',
+                    notes: document.getElementById(`location-notes-${id}`)?.value || ''
+                };
+                data.locations.push(location);
+            });
+
+            return data;
+        }
+
+        function loadSavedData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) return;
+
+            try {
+                const data = JSON.parse(saved);
+                
+                // Load program info
+                if (data.programInfo) {
+                    document.getElementById('program-name').value = data.programInfo.programName || '';
+                    document.getElementById('district-name').value = data.programInfo.districtName || '';
+                    document.getElementById('completed-by').value = data.programInfo.completedBy || '';
+                    document.getElementById('date-completed').value = data.programInfo.dateCompleted || '';
+                    document.getElementById('geographic-area').value = data.programInfo.geographicArea || '';
+                }
+
+                // Load transportation
+                if (data.transportation) {
+                    document.getElementById('transport-available').value = data.transportation.available || '';
+                    document.getElementById('transport-barriers').value = data.transportation.barriers || '';
+                    document.getElementById('transport-solutions').value = data.transportation.solutions || '';
+                }
+
+                // Load partnerships
+                if (data.partnerships) {
+                    document.getElementById('current-partners').value = data.partnerships.current || '';
+                    document.getElementById('potential-partners').value = data.partnerships.potential || '';
+                    document.getElementById('partnership-approach').value = data.partnerships.approach || '';
+                }
+
+                // Load implementation
+                if (data.implementation) {
+                    const priorities = data.implementation.prioritySkills || {};
+                    document.getElementById('priority-community').checked = priorities.community || false;
+                    document.getElementById('priority-self-det').checked = priorities.selfDet || false;
+                    document.getElementById('priority-goal').checked = priorities.goal || false;
+                    document.getElementById('priority-social').checked = priorities.social || false;
+                    document.getElementById('priority-travel').checked = priorities.travel || false;
+                    document.getElementById('priority-tech').checked = priorities.tech || false;
+
+                    document.getElementById('implementation-timeline').value = data.implementation.timeline || '';
+                    document.getElementById('staff-training').value = data.implementation.staffTraining || '';
+                    document.getElementById('assessment-plan').value = data.implementation.assessmentPlan || '';
+                }
+
+                // Load action steps
+                if (data.actionSteps) {
+                    document.getElementById('immediate-actions').value = data.actionSteps.immediate || '';
+                    document.getElementById('short-term-goals').value = data.actionSteps.shortTerm || '';
+                    document.getElementById('long-term-vision').value = data.actionSteps.longTerm || '';
+                    document.getElementById('support-needed').value = data.actionSteps.support || '';
+                }
+
+                // Load locations
+                if (data.locations && data.locations.length > 0) {
+                    data.locations.forEach(location => {
+                        addLocation();
+                        const id = locationCount;
+                        
+                        document.getElementById(`location-name-${id}`).value = location.name || '';
+                        document.getElementById(`location-address-${id}`).value = location.address || '';
+                        document.getElementById(`location-type-${id}`).value = location.type || '';
+                        
+                        if (location.skills) {
+                            document.getElementById(`skill-community-${id}`).checked = location.skills.community || false;
+                            document.getElementById(`skill-selfdet-${id}`).checked = location.skills.selfDet || false;
+                            document.getElementById(`skill-goal-${id}`).checked = location.skills.goal || false;
+                            document.getElementById(`skill-social-${id}`).checked = location.skills.social || false;
+                            document.getElementById(`skill-travel-${id}`).checked = location.skills.travel || false;
+                            document.getElementById(`skill-tech-${id}`).checked = location.skills.tech || false;
+                        }
+                        
+                        document.getElementById(`location-activities-${id}`).value = location.activities || '';
+                        document.getElementById(`location-contact-${id}`).value = location.contact || '';
+                        document.getElementById(`location-accessibility-${id}`).value = location.accessibility || '';
+                        document.getElementById(`location-transportation-${id}`).value = location.transportation || '';
+                        document.getElementById(`location-frequency-${id}`).value = location.frequency || '';
+                        document.getElementById(`location-notes-${id}`).value = location.notes || '';
+                    });
+                }
+
+                showStatus('Previous work loaded successfully!', 'info');
+            } catch (e) {
+                console.error('Error loading saved data:', e);
+            }
+        }
+
+        function saveAsEmail() {
+            const data = collectFormData();
+            const emailBody = formatForEmail(data);
+            const subject = encodeURIComponent('Community Mapping Template - Cluster 2: Youth Skills');
+            const body = encodeURIComponent(emailBody);
+            
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+            showStatus('Opening email client...', 'info');
+        }
+
+        function downloadAsText() {
+            const data = collectFormData();
+            const textContent = formatForEmail(data);
+            
+            const blob = new Blob([textContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Community_Mapping_Template_Cluster2.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            showStatus('Template downloaded successfully!', 'success');
+        }
+
+        function formatForEmail(data) {
+            let output = `COMMUNITY MAPPING TEMPLATE
+Cluster 2: Youth Skills - Identifying Local Practice Sites & Partnerships
+Predictors of Post-School Success Training
+
+========================================
+PROGRAM INFORMATION
+========================================
+School/Program: ${data.programInfo.programName}
+District/Organization: ${data.programInfo.districtName}
+Completed By: ${data.programInfo.completedBy}
+Date: ${data.programInfo.dateCompleted}
+Geographic Area: ${data.programInfo.geographicArea}
+
+========================================
+COMMUNITY LOCATIONS
+========================================\n`;
+
+            data.locations.forEach((location, index) => {
+                const skills = [];
+                if (location.skills.community) skills.push('Community Experiences');
+                if (location.skills.selfDet) skills.push('Self-Determination');
+                if (location.skills.goal) skills.push('Goal Setting');
+                if (location.skills.social) skills.push('Social Skills');
+                if (location.skills.travel) skills.push('Travel Skills');
+                if (location.skills.tech) skills.push('Technology Skills');
+
+                output += `\nLOCATION #${index + 1}
+-----------------
+Name: ${location.name}
+Address: ${location.address}
+Type: ${location.type}
+Skills Practiced: ${skills.join(', ')}
+Activities: ${location.activities}
+Contact: ${location.contact}
+Accessibility: ${location.accessibility}
+Transportation: ${location.transportation}
+Frequency: ${location.frequency}
+Notes: ${location.notes}\n`;
+            });
+
+            output += `\n========================================
+TRANSPORTATION PLANNING
+========================================
+Available Resources:
+${data.transportation.available}
+
+Barriers:
+${data.transportation.barriers}
+
+Solutions:
+${data.transportation.solutions}
+
+========================================
+PARTNERSHIP DEVELOPMENT
+========================================
+Current Partners:
+${data.partnerships.current}
+
+Potential Partners:
+${data.partnerships.potential}
+
+Partnership Strategy:
+${data.partnerships.approach}
+
+========================================
+IMPLEMENTATION PLANNING
+========================================
+Priority Skills:
+`;
+
+            const priorities = [];
+            if (data.implementation.prioritySkills.community) priorities.push('Community Experiences');
+            if (data.implementation.prioritySkills.selfDet) priorities.push('Self-Determination');
+            if (data.implementation.prioritySkills.goal) priorities.push('Goal Setting');
+            if (data.implementation.prioritySkills.social) priorities.push('Social Skills');
+            if (data.implementation.prioritySkills.travel) priorities.push('Travel Skills');
+            if (data.implementation.prioritySkills.tech) priorities.push('Technology Skills');
+            output += priorities.join(', ') + '\n';
+
+            output += `
+Implementation Timeline:
+${data.implementation.timeline}
+
+Staff Training Needs:
+${data.implementation.staffTraining}
+
+Assessment Plan:
+${data.implementation.assessmentPlan}
+
+========================================
+NEXT STEPS & ACTION ITEMS
+========================================
+Immediate Actions (Next 30 Days):
+${data.actionSteps.immediate}
+
+Short-Term Goals (2-6 Months):
+${data.actionSteps.shortTerm}
+
+Long-Term Vision (1 Year):
+${data.actionSteps.longTerm}
+
+Support Needed:
+${data.actionSteps.support}
+
+========================================
+Thank you for completing the Community Mapping Template!
+Remember: Skills without practice are just concepts. The magic happens 
+when students apply these skills in real community settings.
+========================================`;
+
+            return output;
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status-message');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message status-${type}`;
+            statusDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

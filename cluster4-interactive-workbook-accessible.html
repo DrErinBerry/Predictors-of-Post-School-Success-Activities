@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cluster 4: Policy - Interactive Reflection Activities</title>
+    <style>
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+        .save-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .save-indicator.show {
+            opacity: 1;
+        }
+        body {
+            font-family: -apple-system, Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+        .activity-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 900px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+        .activity-title {
+            color: #667eea;
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .status-badge {
+            padding: 8px 16px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .scenario-box, .tip-box {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #0066cc;
+        }
+        .question-label {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="text"], input[type="email"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: inherit;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .time-estimate {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .radio-group, .checkbox-group {
+            margin: 15px 0 25px 0;
+        }
+        .radio-option, .checkbox-option {
+            margin: 10px 0;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .radio-group label, .checkbox-group label {
+            display: block;
+            margin: 8px 0;
+            font-weight: normal;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .rating-scale {
+            display: flex;
+            gap: 5px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .rating-scale label {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            border: 2px solid transparent;
+        }
+        .rating-scale label:hover {
+            background: #e8f4fd;
+        }
+        .rating-scale input[type="radio"]:checked + span {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 3px;
+        }
+        .progress-bar-container {
+            background: #e0e0e0;
+            height: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- AUTO-SAVE INDICATOR -->
+<div id="save-indicator" class="save-indicator" role="status" aria-live="polite" aria-atomic="true">
+    <span aria-hidden="true">✓</span> Auto-saved
+</div>
+
+<!-- AUTO-SAVE INFO BANNER -->
+<section role="region" aria-labelledby="autosave-heading" style="background: #d1ecf1; border: 2px solid #bee5eb; padding: 15px; border-radius: 10px; margin-bottom: 20px; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <h2 id="autosave-heading" style="color: #0c5460; margin-top: 0; font-size: 1.2em;">
+    <span aria-hidden="true">💾</span> Auto-Save Enabled
+  </h2>
+  <p style="color: #0c5460; margin: 5px 0;">Your work is automatically saved to your browser as you type! You can safely leave and return later. Your progress will be restored when you come back to this page on the same browser.</p>
+  <p style="color: #0c5460; margin: 5px 0; font-size: 14px;"><strong>Note:</strong> Auto-save only works on THIS browser on THIS device. Switching browsers or devices will start fresh.</p>
+  <button onclick="clearAllSavedData()" style="background: #17a2b8; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 14px; margin-top: 5px;" aria-label="Clear all saved work and start over">
+    <span aria-hidden="true">🗑️</span> Clear My Saved Work & Start Over
+  </button>
+</section>
+
+<!-- PROGRESS INDICATOR BAR -->
+<section role="region" aria-labelledby="progress-heading" style="position: sticky; top: 0; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; z-index: 100; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <h2 id="progress-heading" style="color: #667eea; margin-top: 0; font-size: 1.3em;">
+    <span aria-hidden="true">📊</span> Your Progress
+  </h2>
+  <div class="progress-bar-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Overall completion progress">
+    <div id="progress-bar" class="progress-bar-fill" style="width: 0%">0%</div>
+  </div>
+  <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px;">
+    <span><span aria-hidden="true">✓</span> Completed: <strong id="completed-count" aria-live="polite">0</strong> of 5</span>
+    <span><span aria-hidden="true">📧</span> Email ready when all complete</span>
+  </div>
+</section>
+
+<!-- COMPLETION BANNER -->
+<section id="completion-banner" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; margin: 20px auto; max-width: 900px;" role="alert" aria-live="polite">
+  <h3 style="color: white; margin: 0 0 10px 0;"><span aria-hidden="true">🎉</span> Congratulations! All Activities Completed!</h3>
+  <p style="margin: 0;">You can now email yourself a copy of your responses using the button below.</p>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 1 -->
+<!-- ========================================= -->
+<section id="activity-1" class="activity-section" role="region" aria-labelledby="activity-1-title">
+  <div class="activity-header">
+    <h3 id="activity-1-title" class="activity-title">Activity 1: Policy Impact Assessment</h3>
+    <span id="status-1" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 4-5 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Reflect on how different policy areas impact your students' transition outcomes.
+  </div>
+  
+  <fieldset style="border: none; padding: 0;">
+    <legend class="question-label">Which policy area currently has the MOST impact on your students' post-school success? (Select one)</legend>
+    
+    <div class="radio-group">
+      <label><input type="radio" name="policy-impact" value="ccra" onchange="autoSave(); updateProgress(1)" aria-label="CCRA Requirements and Diploma Status"> CCRA Requirements and Diploma Status</label>
+      <label><input type="radio" name="policy-impact" value="inclusion" onchange="autoSave(); updateProgress(1)" aria-label="Inclusion in General Education"> Inclusion in General Education</label>
+      <label><input type="radio" name="policy-impact" value="program" onchange="autoSave(); updateProgress(1)" aria-label="Program of Study Flexibility"> Program of Study Flexibility</label>
+      <label><input type="radio" name="policy-impact" value="all" onchange="autoSave(); updateProgress(1)" aria-label="All equally important"> All equally important</label>
+    </div>
+  </fieldset>
+  
+  <label for="response-1-example" class="question-label">Explain your choice and provide a specific example:</label>
+  <textarea id="response-1-example" onkeyup="autoSave(); updateProgress(1)" placeholder="Describe how this policy area affects your students..." aria-required="true"></textarea>
+  
+  <label for="response-1-change" class="question-label">What policy change would most benefit your students?</label>
+  <textarea id="response-1-change" onkeyup="autoSave(); updateProgress(1)" placeholder="Describe the policy change you'd advocate for..." aria-required="true"></textarea>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 2 -->
+<!-- ========================================= -->
+<section id="activity-2" class="activity-section" role="region" aria-labelledby="activity-2-title">
+  <div class="activity-header">
+    <h3 id="activity-2-title" class="activity-title">Activity 2: Assessment Decision Scenario Analysis</h3>
+    <span id="status-2" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 5-6 minutes</div>
+  
+  <div class="scenario-box" role="article" aria-labelledby="scenario-2-heading">
+    <h4 id="scenario-2-heading" style="color: #0066cc; margin-top: 0;"><span aria-hidden="true">💡</span> Scenario:</h4>
+    <p>Maria is a 7th-grade student with a significant cognitive disability. Her IEP team is discussing whether she should take the standard state assessments or the alternate assessment (OAAP). This decision will impact her entire educational trajectory.</p>
+  </div>
+  
+  <fieldset style="border: none; padding: 0;">
+    <legend class="question-label">What factors should the team consider? (Check all that apply)</legend>
+    
+    <div class="checkbox-group">
+      <label><input type="checkbox" id="check-2-1" onchange="autoSave(); updateProgress(2)"> Maria's current academic performance levels</label>
+      <label><input type="checkbox" id="check-2-2" onchange="autoSave(); updateProgress(2)"> Post-school goals and family expectations</label>
+      <label><input type="checkbox" id="check-2-3" onchange="autoSave(); updateProgress(2)"> Impact on diploma options</label>
+      <label><input type="checkbox" id="check-2-4" onchange="autoSave(); updateProgress(2)"> Access to general education curriculum</label>
+      <label><input type="checkbox" id="check-2-5" onchange="autoSave(); updateProgress(2)"> ESSA's 1% cap on alternate assessment participation</label>
+      <label><input type="checkbox" id="check-2-6" onchange="autoSave(); updateProgress(2)"> Supports available for standard assessment</label>
+    </div>
+  </fieldset>
+  
+  <label for="response-2-questions" class="question-label">What questions would you ask to ensure an informed decision?</label>
+  <textarea id="response-2-questions" onkeyup="autoSave(); updateProgress(2)" placeholder="List 2-3 key questions for the IEP team..." aria-required="true"></textarea>
+  
+  <label for="response-2-implications" class="question-label">How would you explain the long-term implications to Maria's family?</label>
+  <textarea id="response-2-implications" onkeyup="autoSave(); updateProgress(2)" placeholder="Describe how you'd communicate the impact of this decision..." aria-required="true"></textarea>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 3 -->
+<!-- ========================================= -->
+<section id="activity-3" class="activity-section" role="region" aria-labelledby="activity-3-title">
+  <div class="activity-header">
+    <h3 id="activity-3-title" class="activity-title">Activity 3: Inclusion Practices Self-Assessment</h3>
+    <span id="status-3" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 5-6 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Rate your school/district's current inclusion policies and practices on a scale of 1-5, where 1 is Minimal and 5 is Exemplary.
+  </div>
+  
+  <fieldset style="border: none; padding: 0;">
+    <legend class="question-label">Physical inclusion (students with disabilities in general education classrooms):</legend>
+    <div class="rating-scale" role="radiogroup" aria-label="Rate physical inclusion from 1 to 5">
+      <label><input type="radio" name="rating-3-1" value="1" onchange="autoSave(); updateProgress(3)" aria-label="1 - Minimal"> <span>1 - Minimal</span></label>
+      <label><input type="radio" name="rating-3-1" value="2" onchange="autoSave(); updateProgress(3)" aria-label="2 - Developing"> <span>2 - Developing</span></label>
+      <label><input type="radio" name="rating-3-1" value="3" onchange="autoSave(); updateProgress(3)" aria-label="3 - Moderate"> <span>3 - Moderate</span></label>
+      <label><input type="radio" name="rating-3-1" value="4" onchange="autoSave(); updateProgress(3)" aria-label="4 - Strong"> <span>4 - Strong</span></label>
+      <label><input type="radio" name="rating-3-1" value="5" onchange="autoSave(); updateProgress(3)" aria-label="5 - Exemplary"> <span>5 - Exemplary</span></label>
+    </div>
+  </fieldset>
+  
+  <fieldset style="border: none; padding: 0;">
+    <legend class="question-label">Instructional inclusion (access to grade-level curriculum with supports):</legend>
+    <div class="rating-scale" role="radiogroup" aria-label="Rate instructional inclusion from 1 to 5">
+      <label><input type="radio" name="rating-3-2" value="1" onchange="autoSave(); updateProgress(3)" aria-label="1 - Minimal"> <span>1 - Minimal</span></label>
+      <label><input type="radio" name="rating-3-2" value="2" onchange="autoSave(); updateProgress(3)" aria-label="2 - Developing"> <span>2 - Developing</span></label>
+      <label><input type="radio" name="rating-3-2" value="3" onchange="autoSave(); updateProgress(3)" aria-label="3 - Moderate"> <span>3 - Moderate</span></label>
+      <label><input type="radio" name="rating-3-2" value="4" onchange="autoSave(); updateProgress(3)" aria-label="4 - Strong"> <span>4 - Strong</span></label>
+      <label><input type="radio" name="rating-3-2" value="5" onchange="autoSave(); updateProgress(3)" aria-label="5 - Exemplary"> <span>5 - Exemplary</span></label>
+    </div>
+  </fieldset>
+  
+  <fieldset style="border: none; padding: 0;">
+    <legend class="question-label">Social inclusion (meaningful interactions and relationships):</legend>
+    <div class="rating-scale" role="radiogroup" aria-label="Rate social inclusion from 1 to 5">
+      <label><input type="radio" name="rating-3-3" value="1" onchange="autoSave(); updateProgress(3)" aria-label="1 - Minimal"> <span>1 - Minimal</span></label>
+      <label><input type="radio" name="rating-3-3" value="2" onchange="autoSave(); updateProgress(3)" aria-label="2 - Developing"> <span>2 - Developing</span></label>
+      <label><input type="radio" name="rating-3-3" value="3" onchange="autoSave(); updateProgress(3)" aria-label="3 - Moderate"> <span>3 - Moderate</span></label>
+      <label><input type="radio" name="rating-3-3" value="4" onchange="autoSave(); updateProgress(3)" aria-label="4 - Strong"> <span>4 - Strong</span></label>
+      <label><input type="radio" name="rating-3-3" value="5" onchange="autoSave(); updateProgress(3)" aria-label="5 - Exemplary"> <span>5 - Exemplary</span></label>
+    </div>
+  </fieldset>
+  
+  <label for="response-3-barrier" class="question-label">Identify ONE barrier to full inclusion in your setting:</label>
+  <textarea id="response-3-barrier" onkeyup="autoSave(); updateProgress(3)" placeholder="Describe a specific barrier..." aria-required="true"></textarea>
+  
+  <label for="response-3-solution" class="question-label">Propose a policy solution to address this barrier:</label>
+  <textarea id="response-3-solution" onkeyup="autoSave(); updateProgress(3)" placeholder="What policy change would remove this barrier?"></textarea>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 4 -->
+<!-- ========================================= -->
+<section id="activity-4" class="activity-section" role="region" aria-labelledby="activity-4-title">
+  <div class="activity-header">
+    <h3 id="activity-4-title" class="activity-title">Activity 4: Program of Study - Flexible Pathways</h3>
+    <span id="status-4" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 6-8 minutes</div>
+  
+  <div class="scenario-box" role="article" aria-labelledby="scenario-4-heading">
+    <h4 id="scenario-4-heading" style="color: #0066cc; margin-top: 0;"><span aria-hidden="true">💡</span> Case:</h4>
+    <p>Jordan is a junior interested in automotive technology. He struggles with traditional academics but excels in hands-on learning. Current policies require him to take advanced math and science courses he's unlikely to pass, limiting his time for career-technical education.</p>
+  </div>
+  
+  <label for="response-4-options" class="question-label">What flexible program of study options could benefit Jordan?</label>
+  <textarea id="response-4-options" onkeyup="autoSave(); updateProgress(4)" placeholder="List specific program modifications or alternatives..." aria-required="true"></textarea>
+  
+  <label class="question-label" style="margin-bottom: 5px;">How could policies be adjusted to allow:</label>
+  
+  <label for="response-4-substitutions" style="font-weight: normal; margin-top: 15px; margin-bottom: 8px; font-size: 1em;">Credit substitutions (e.g., CTE courses for traditional requirements)?</label>
+  <textarea id="response-4-substitutions" onkeyup="autoSave(); updateProgress(4)" placeholder="Describe potential credit substitution policies..." aria-required="true"></textarea>
+  
+  <label for="response-4-workbased" style="font-weight: normal; margin-top: 15px; margin-bottom: 8px; font-size: 1em;">Work-based learning credits?</label>
+  <textarea id="response-4-workbased" onkeyup="autoSave(); updateProgress(4)" placeholder="How could work experiences count toward graduation?"></textarea>
+  
+  <label for="response-4-competency" style="font-weight: normal; margin-top: 15px; margin-bottom: 8px; font-size: 1em;">Competency-based assessments instead of seat time?</label>
+  <textarea id="response-4-competency" onkeyup="autoSave(); updateProgress(4)" placeholder="Describe competency-based alternatives..."></textarea>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 5 -->
+<!-- ========================================= -->
+<section id="activity-5" class="activity-section" role="region" aria-labelledby="activity-5-title">
+  <div class="activity-header">
+    <h3 id="activity-5-title" class="activity-title">Activity 5: Policy Advocacy Action Plan</h3>
+    <span id="status-5" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 6-8 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Develop an action plan to advocate for a specific policy change in your school or district.
+  </div>
+  
+  <label for="response-5-policy" class="question-label">Identify ONE policy that either supports or hinders transition success:</label>
+  <textarea id="response-5-policy" onkeyup="autoSave(); updateProgress(5)" placeholder="Describe the specific policy..." aria-required="true"></textarea>
+  
+  <label for="response-5-impact" class="question-label">Current impact on students:</label>
+  <textarea id="response-5-impact" onkeyup="autoSave(); updateProgress(5)" placeholder="How does this policy affect student outcomes?" aria-required="true"></textarea>
+  
+  <label for="response-5-maximize" class="question-label">If the policy is supportive, how will you maximize its implementation?</label>
+  <textarea id="response-5-maximize" onkeyup="autoSave(); updateProgress(5)" placeholder="Strategies to leverage supportive policies..."></textarea>
+  
+  <label for="response-5-change" class="question-label">If the policy is hindering, what specific change would you advocate for?</label>
+  <textarea id="response-5-change" onkeyup="autoSave(); updateProgress(5)" placeholder="Describe the needed policy change..."></textarea>
+  
+  <fieldset style="border: none; padding: 0;">
+    <legend class="question-label">Who are your potential allies in making this change? (Check all that apply)</legend>
+    
+    <div class="checkbox-group">
+      <label><input type="checkbox" id="check-5-1" onchange="autoSave(); updateProgress(5)"> Other teachers/specialists</label>
+      <label><input type="checkbox" id="check-5-2" onchange="autoSave(); updateProgress(5)"> School administrators</label>
+      <label><input type="checkbox" id="check-5-3" onchange="autoSave(); updateProgress(5)"> District leadership</label>
+      <label><input type="checkbox" id="check-5-4" onchange="autoSave(); updateProgress(5)"> Parents/families</label>
+      <label><input type="checkbox" id="check-5-5" onchange="autoSave(); updateProgress(5)"> Students</label>
+      <label><input type="checkbox" id="check-5-6" onchange="autoSave(); updateProgress(5)"> Community partners</label>
+      <label><input type="checkbox" id="check-5-7" onchange="autoSave(); updateProgress(5)"> School board members</label>
+    </div>
+  </fieldset>
+  
+  <label for="response-5-steps" class="question-label">Next steps (list 3 concrete actions you'll take):</label>
+  <textarea id="response-5-steps" onkeyup="autoSave(); updateProgress(5)" placeholder="1. 
+2. 
+3. "></textarea>
+</section>
+
+<!-- ========================================= -->
+<!-- EMAIL SECTION (appears when complete) -->
+<!-- ========================================= -->
+<section id="email-section" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px; margin: 30px auto; max-width: 900px; color: white;" role="region" aria-labelledby="email-heading">
+  <h3 id="email-heading" style="color: white; margin-top: 0;">
+    <span aria-hidden="true">📧</span> Email Your Responses
+  </h3>
+  <p><strong>Congratulations!</strong> You've completed all five activities. You can now email your responses to yourself for future reference.</p>
+  
+  <div style="background: white; padding: 20px; border-radius: 5px; margin-top: 20px;">
+    <label for="user-email" style="color: #333; font-weight: bold; display: block; margin-bottom: 10px;">Your Email Address:</label>
+    <input type="email" id="user-email" placeholder="yourname@email.com" style="width: 100%; max-width: 400px; padding: 12px; border: 2px solid #667eea; border-radius: 5px; font-size: 16px; margin-bottom: 15px;" aria-required="true">
+    
+    <button onclick="emailResponses()" style="background: #28a745; color: white; border: none; padding: 15px 30px; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer;" aria-label="Email my responses to me">
+      <span aria-hidden="true">📧</span> Email My Responses
+    </button>
+    
+    <div id="email-notice" style="background: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-top: 15px; display: none;" role="status" aria-live="polite"></div>
+  </div>
+  
+  <p style="margin-top: 20px; font-size: 14px;"><span aria-hidden="true">💡</span> <strong>Tip:</strong> Your email program will open with all responses pre-filled. Just click Send!</p>
+</section>
+
+<!-- ACCESSIBILITY INFORMATION -->
+<section role="contentinfo" aria-labelledby="accessibility-heading" style="background: #f0f4ff; padding: 20px; border-radius: 10px; margin: 30px auto; border: 2px solid #667eea; max-width: 900px;">
+  <h3 id="accessibility-heading" style="color: #667eea; margin-top: 0;">
+    <span aria-hidden="true">♿</span> Accessibility Information
+  </h3>
+  
+  <h4 style="color: #667eea; font-size: 1.1em; margin-top: 20px;">Screen Reader Optimization</h4>
+  <p>This interactive workbook has been optimized for screen reader accessibility and includes:</p>
+  <ul>
+    <li><strong>ARIA labels and roles</strong> for all interactive elements, forms, and sections</li>
+    <li><strong>Semantic HTML structure</strong> with proper heading hierarchy and fieldsets</li>
+    <li><strong>Form field labels and hints</strong> clearly associated with inputs</li>
+    <li><strong>Status updates</strong> announced via live regions for progress and feedback</li>
+    <li><strong>Keyboard accessibility</strong> for all interactive elements</li>
+    <li><strong>Descriptive labels</strong> for radio button groups and rating scales</li>
+  </ul>
+  
+  <h4 style="color: #667eea; font-size: 1.1em; margin-top: 20px;">How Auto-Save Works</h4>
+  <p>Your responses are automatically saved to your browser's local storage as you type. This means:</p>
+  <ul>
+    <li><strong>✓ You can leave and return</strong> - Your work will be here when you come back</li>
+    <li><strong>✓ No account needed</strong> - Everything saves locally in your browser</li>
+    <li><strong>⚠️ Browser-specific</strong> - Your work only saves on THIS browser on THIS device</li>
+    <li><strong>⚠️ Private browsing</strong> - Auto-save may not work in incognito/private mode</li>
+    <li><strong>⚠️ Clearing browser data</strong> - Clearing cookies/cache will delete saved work</li>
+  </ul>
+  
+  <h4 style="color: #667eea; font-size: 1.1em; margin-top: 20px;">Alternative Format Available</h4>
+  <p><strong>Word Document Version:</strong> A fully accessible Word document version of these activities is available for learners who prefer downloadable formats or need additional assistive technology support. Contact your instructor to request this format.</p>
+</section>
+
+<script>
+// Initialize completion status
+let completionStatus = {
+  1: false,
+  2: false,
+  3: false,
+  4: false,
+  5: false
+};
+
+// Auto-save function
+function autoSave() {
+  const formData = {
+    // Activity 1
+    policyImpact: document.querySelector('input[name="policy-impact"]:checked')?.value || '',
+    response1Example: document.getElementById('response-1-example').value,
+    response1Change: document.getElementById('response-1-change').value,
+    
+    // Activity 2
+    check2_1: document.getElementById('check-2-1').checked,
+    check2_2: document.getElementById('check-2-2').checked,
+    check2_3: document.getElementById('check-2-3').checked,
+    check2_4: document.getElementById('check-2-4').checked,
+    check2_5: document.getElementById('check-2-5').checked,
+    check2_6: document.getElementById('check-2-6').checked,
+    response2Questions: document.getElementById('response-2-questions').value,
+    response2Implications: document.getElementById('response-2-implications').value,
+    
+    // Activity 3
+    rating3_1: document.querySelector('input[name="rating-3-1"]:checked')?.value || '',
+    rating3_2: document.querySelector('input[name="rating-3-2"]:checked')?.value || '',
+    rating3_3: document.querySelector('input[name="rating-3-3"]:checked')?.value || '',
+    response3Barrier: document.getElementById('response-3-barrier').value,
+    response3Solution: document.getElementById('response-3-solution').value,
+    
+    // Activity 4
+    response4Options: document.getElementById('response-4-options').value,
+    response4Substitutions: document.getElementById('response-4-substitutions').value,
+    response4Workbased: document.getElementById('response-4-workbased').value,
+    response4Competency: document.getElementById('response-4-competency').value,
+    
+    // Activity 5
+    response5Policy: document.getElementById('response-5-policy').value,
+    response5Impact: document.getElementById('response-5-impact').value,
+    response5Maximize: document.getElementById('response-5-maximize').value,
+    response5Change: document.getElementById('response-5-change').value,
+    check5_1: document.getElementById('check-5-1').checked,
+    check5_2: document.getElementById('check-5-2').checked,
+    check5_3: document.getElementById('check-5-3').checked,
+    check5_4: document.getElementById('check-5-4').checked,
+    check5_5: document.getElementById('check-5-5').checked,
+    check5_6: document.getElementById('check-5-6').checked,
+    check5_7: document.getElementById('check-5-7').checked,
+    response5Steps: document.getElementById('response-5-steps').value
+  };
+  
+  localStorage.setItem('cluster4PolicyData', JSON.stringify(formData));
+  showSaveIndicator();
+}
+
+function showSaveIndicator() {
+  const indicator = document.getElementById('save-indicator');
+  indicator.classList.add('show');
+  setTimeout(() => indicator.classList.remove('show'), 2000);
+}
+
+function clearAllSavedData() {
+  if (confirm('Are you sure you want to clear ALL saved work? This cannot be undone.')) {
+    localStorage.removeItem('cluster4PolicyData');
+    location.reload();
+  }
+}
+
+// Load saved data
+function loadSavedData() {
+  const savedData = localStorage.getItem('cluster4PolicyData');
+  if (!savedData) return;
+  
+  try {
+    const formData = JSON.parse(savedData);
+    
+    // Activity 1
+    if (formData.policyImpact) {
+      const radio = document.querySelector(`input[name="policy-impact"][value="${formData.policyImpact}"]`);
+      if (radio) radio.checked = true;
+    }
+    document.getElementById('response-1-example').value = formData.response1Example || '';
+    document.getElementById('response-1-change').value = formData.response1Change || '';
+    
+    // Activity 2
+    document.getElementById('check-2-1').checked = formData.check2_1 || false;
+    document.getElementById('check-2-2').checked = formData.check2_2 || false;
+    document.getElementById('check-2-3').checked = formData.check2_3 || false;
+    document.getElementById('check-2-4').checked = formData.check2_4 || false;
+    document.getElementById('check-2-5').checked = formData.check2_5 || false;
+    document.getElementById('check-2-6').checked = formData.check2_6 || false;
+    document.getElementById('response-2-questions').value = formData.response2Questions || '';
+    document.getElementById('response-2-implications').value = formData.response2Implications || '';
+    
+    // Activity 3
+    if (formData.rating3_1) {
+      const radio = document.querySelector(`input[name="rating-3-1"][value="${formData.rating3_1}"]`);
+      if (radio) radio.checked = true;
+    }
+    if (formData.rating3_2) {
+      const radio = document.querySelector(`input[name="rating-3-2"][value="${formData.rating3_2}"]`);
+      if (radio) radio.checked = true;
+    }
+    if (formData.rating3_3) {
+      const radio = document.querySelector(`input[name="rating-3-3"][value="${formData.rating3_3}"]`);
+      if (radio) radio.checked = true;
+    }
+    document.getElementById('response-3-barrier').value = formData.response3Barrier || '';
+    document.getElementById('response-3-solution').value = formData.response3Solution || '';
+    
+    // Activity 4
+    document.getElementById('response-4-options').value = formData.response4Options || '';
+    document.getElementById('response-4-substitutions').value = formData.response4Substitutions || '';
+    document.getElementById('response-4-workbased').value = formData.response4Workbased || '';
+    document.getElementById('response-4-competency').value = formData.response4Competency || '';
+    
+    // Activity 5
+    document.getElementById('response-5-policy').value = formData.response5Policy || '';
+    document.getElementById('response-5-impact').value = formData.response5Impact || '';
+    document.getElementById('response-5-maximize').value = formData.response5Maximize || '';
+    document.getElementById('response-5-change').value = formData.response5Change || '';
+    document.getElementById('check-5-1').checked = formData.check5_1 || false;
+    document.getElementById('check-5-2').checked = formData.check5_2 || false;
+    document.getElementById('check-5-3').checked = formData.check5_3 || false;
+    document.getElementById('check-5-4').checked = formData.check5_4 || false;
+    document.getElementById('check-5-5').checked = formData.check5_5 || false;
+    document.getElementById('check-5-6').checked = formData.check5_6 || false;
+    document.getElementById('check-5-7').checked = formData.check5_7 || false;
+    document.getElementById('response-5-steps').value = formData.response5Steps || '';
+    
+    // Show restoration message
+    const banner = document.createElement('div');
+    banner.setAttribute('role', 'alert');
+    banner.style.cssText = 'background: #d4edda; border: 2px solid #c3e6cb; padding: 15px; border-radius: 10px; margin: 20px auto; max-width: 900px; text-align: center;';
+    banner.innerHTML = '<strong style="color: #155724;">✓ Your previous work was restored!</strong>';
+    document.body.insertBefore(banner, document.body.firstChild);
+    
+    setTimeout(() => {
+      banner.style.transition = 'opacity 0.5s';
+      banner.style.opacity = '0';
+      setTimeout(() => banner.remove(), 500);
+    }, 5000);
+  } catch (e) {
+    console.error('Failed to restore data:', e);
+  }
+}
+
+// Check if activity is complete
+function checkActivityComplete(activityNum) {
+  switch(activityNum) {
+    case 1:
+      return document.querySelector('input[name="policy-impact"]:checked') &&
+             document.getElementById('response-1-example').value.trim().length > 10 &&
+             document.getElementById('response-1-change').value.trim().length > 10;
+    case 2:
+      const anyChecked = document.getElementById('check-2-1').checked ||
+                        document.getElementById('check-2-2').checked ||
+                        document.getElementById('check-2-3').checked ||
+                        document.getElementById('check-2-4').checked ||
+                        document.getElementById('check-2-5').checked ||
+                        document.getElementById('check-2-6').checked;
+      return anyChecked &&
+             document.getElementById('response-2-questions').value.trim().length > 10 &&
+             document.getElementById('response-2-implications').value.trim().length > 10;
+    case 3:
+      return document.querySelector('input[name="rating-3-1"]:checked') &&
+             document.querySelector('input[name="rating-3-2"]:checked') &&
+             document.querySelector('input[name="rating-3-3"]:checked') &&
+             document.getElementById('response-3-barrier').value.trim().length > 10;
+    case 4:
+      return document.getElementById('response-4-options').value.trim().length > 10 &&
+             document.getElementById('response-4-substitutions').value.trim().length > 10;
+    case 5:
+      return document.getElementById('response-5-policy').value.trim().length > 10 &&
+             document.getElementById('response-5-impact').value.trim().length > 10;
+  }
+  return false;
+}
+
+// Update progress
+function updateProgress(activityNum) {
+  const isComplete = checkActivityComplete(activityNum);
+  completionStatus[activityNum] = isComplete;
+  
+  const statusBadge = document.getElementById(`status-${activityNum}`);
+  
+  if (isComplete) {
+    statusBadge.innerHTML = '<span aria-hidden="true">✓</span> Complete';
+    statusBadge.style.background = '#28a745';
+    statusBadge.style.color = 'white';
+  } else {
+    // Check if there's any input
+    const hasInput = checkHasInput(activityNum);
+    if (hasInput) {
+      statusBadge.innerHTML = '<span aria-hidden="true">⏳</span> In Progress';
+      statusBadge.style.background = '#ffc107';
+      statusBadge.style.color = '#333';
+    } else {
+      statusBadge.innerHTML = '<span aria-hidden="true">⭕</span> Not Started';
+      statusBadge.style.background = '#e0e0e0';
+      statusBadge.style.color = '#666';
+    }
+  }
+  
+  updateOverallProgress();
+}
+
+function checkHasInput(activityNum) {
+  switch(activityNum) {
+    case 1:
+      return document.querySelector('input[name="policy-impact"]:checked') ||
+             document.getElementById('response-1-example').value.trim() ||
+             document.getElementById('response-1-change').value.trim();
+    case 2:
+      return document.getElementById('check-2-1').checked ||
+             document.getElementById('check-2-2').checked ||
+             document.getElementById('check-2-3').checked ||
+             document.getElementById('check-2-4').checked ||
+             document.getElementById('check-2-5').checked ||
+             document.getElementById('check-2-6').checked ||
+             document.getElementById('response-2-questions').value.trim() ||
+             document.getElementById('response-2-implications').value.trim();
+    case 3:
+      return document.querySelector('input[name="rating-3-1"]:checked') ||
+             document.querySelector('input[name="rating-3-2"]:checked') ||
+             document.querySelector('input[name="rating-3-3"]:checked') ||
+             document.getElementById('response-3-barrier').value.trim() ||
+             document.getElementById('response-3-solution').value.trim();
+    case 4:
+      return document.getElementById('response-4-options').value.trim() ||
+             document.getElementById('response-4-substitutions').value.trim() ||
+             document.getElementById('response-4-workbased').value.trim() ||
+             document.getElementById('response-4-competency').value.trim();
+    case 5:
+      return document.getElementById('response-5-policy').value.trim() ||
+             document.getElementById('response-5-impact').value.trim() ||
+             document.getElementById('response-5-maximize').value.trim() ||
+             document.getElementById('response-5-change').value.trim() ||
+             document.getElementById('check-5-1').checked ||
+             document.getElementById('check-5-2').checked ||
+             document.getElementById('check-5-3').checked ||
+             document.getElementById('check-5-4').checked ||
+             document.getElementById('check-5-5').checked ||
+             document.getElementById('check-5-6').checked ||
+             document.getElementById('check-5-7').checked ||
+             document.getElementById('response-5-steps').value.trim();
+  }
+  return false;
+}
+
+// Update overall progress
+function updateOverallProgress() {
+  const completed = Object.values(completionStatus).filter(v => v === true).length;
+  const percentage = (completed / 5) * 100;
+  
+  const progressBar = document.getElementById('progress-bar');
+  progressBar.style.width = percentage + '%';
+  progressBar.textContent = Math.round(percentage) + '%';
+  progressBar.parentElement.setAttribute('aria-valuenow', Math.round(percentage));
+  
+  document.getElementById('completed-count').textContent = completed;
+  
+  if (completed === 5) {
+    document.getElementById('completion-banner').style.display = 'block';
+    document.getElementById('email-section').style.display = 'block';
+  } else {
+    document.getElementById('completion-banner').style.display = 'none';
+    document.getElementById('email-section').style.display = 'none';
+  }
+}
+
+// Email responses
+function emailResponses() {
+  const email = document.getElementById('user-email').value;
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  
+  // Collect all allies checked for Activity 5
+  const allies = [];
+  if (document.getElementById('check-5-1').checked) allies.push('Other teachers/specialists');
+  if (document.getElementById('check-5-2').checked) allies.push('School administrators');
+  if (document.getElementById('check-5-3').checked) allies.push('District leadership');
+  if (document.getElementById('check-5-4').checked) allies.push('Parents/families');
+  if (document.getElementById('check-5-5').checked) allies.push('Students');
+  if (document.getElementById('check-5-6').checked) allies.push('Community partners');
+  if (document.getElementById('check-5-7').checked) allies.push('School board members');
+  
+  // Collect factors for Activity 2
+  const factors = [];
+  if (document.getElementById('check-2-1').checked) factors.push("Maria's current academic performance levels");
+  if (document.getElementById('check-2-2').checked) factors.push('Post-school goals and family expectations');
+  if (document.getElementById('check-2-3').checked) factors.push('Impact on diploma options');
+  if (document.getElementById('check-2-4').checked) factors.push('Access to general education curriculum');
+  if (document.getElementById('check-2-5').checked) factors.push("ESSA's 1% cap");
+  if (document.getElementById('check-2-6').checked) factors.push('Supports available for standard assessment');
+  
+  const emailBody = `
+CLUSTER FOUR: POLICY - REFLECTION ACTIVITIES
+My Responses - ${new Date().toLocaleDateString()}
+
+========================================
+ACTIVITY 1: POLICY IMPACT ASSESSMENT
+========================================
+Most impactful policy area: ${document.querySelector('input[name="policy-impact"]:checked')?.value || 'Not selected'}
+
+Explanation and example:
+${document.getElementById('response-1-example').value}
+
+Policy change that would benefit students:
+${document.getElementById('response-1-change').value}
+
+========================================
+ACTIVITY 2: ASSESSMENT DECISION SCENARIO
+========================================
+Factors to consider:
+${factors.join(', ')}
+
+Key questions for IEP team:
+${document.getElementById('response-2-questions').value}
+
+How to explain implications to family:
+${document.getElementById('response-2-implications').value}
+
+========================================
+ACTIVITY 3: INCLUSION PRACTICES
+========================================
+Physical inclusion rating: ${document.querySelector('input[name="rating-3-1"]:checked')?.value || 'Not rated'}/5
+Instructional inclusion rating: ${document.querySelector('input[name="rating-3-2"]:checked')?.value || 'Not rated'}/5
+Social inclusion rating: ${document.querySelector('input[name="rating-3-3"]:checked')?.value || 'Not rated'}/5
+
+Barrier to full inclusion:
+${document.getElementById('response-3-barrier').value}
+
+Policy solution:
+${document.getElementById('response-3-solution').value}
+
+========================================
+ACTIVITY 4: FLEXIBLE PATHWAYS
+========================================
+Program options for Jordan:
+${document.getElementById('response-4-options').value}
+
+Credit substitution policies:
+${document.getElementById('response-4-substitutions').value}
+
+Work-based learning credits:
+${document.getElementById('response-4-workbased').value}
+
+Competency-based assessments:
+${document.getElementById('response-4-competency').value}
+
+========================================
+ACTIVITY 5: POLICY ADVOCACY ACTION PLAN
+========================================
+Target policy:
+${document.getElementById('response-5-policy').value}
+
+Current impact:
+${document.getElementById('response-5-impact').value}
+
+Maximizing supportive policies:
+${document.getElementById('response-5-maximize').value}
+
+Needed changes:
+${document.getElementById('response-5-change').value}
+
+Potential allies:
+${allies.join(', ')}
+
+Next steps:
+${document.getElementById('response-5-steps').value}
+
+========================================
+Remember: Policy is the foundation that enables all other predictors!
+`;
+  
+  // Create mailto link
+  const subject = 'Cluster Four: Policy - My Reflection Responses';
+  const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+  
+  window.location.href = mailtoLink;
+  
+  const notice = document.getElementById('email-notice');
+  notice.textContent = 'Email client opened! Your responses are ready to send.';
+  notice.style.display = 'block';
+  setTimeout(() => {
+    notice.style.display = 'none';
+  }, 5000);
+}
+
+// Load saved data and update all progress on page load
+window.addEventListener('DOMContentLoaded', function() {
+  loadSavedData();
+  for (let i = 1; i <= 5; i++) {
+    updateProgress(i);
+  }
+});
+</script>
+
+</body>
+</html>

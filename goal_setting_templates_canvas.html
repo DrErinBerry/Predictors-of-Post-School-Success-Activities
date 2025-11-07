@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal-Setting Templates - Cluster 2: Youth Skills</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 4px solid #667eea;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .intro-box {
+            background: #f0f4ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .intro-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .template-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .template-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: block;
+        }
+
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        .template-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .template-card p {
+            font-size: 0.95em;
+            opacity: 0.9;
+            color: white;
+        }
+
+        .template-section {
+            display: none;
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+
+        /* Show template when targeted */
+        .template-section:target {
+            display: block;
+        }
+
+        /* Show menu by default */
+        #template-menu {
+            display: grid;
+        }
+
+        /* Hide menu when any template is targeted */
+        .template-section:target ~ #template-menu {
+            display: none;
+        }
+
+        /* Alternative: show menu when explicitly targeted */
+        #menu-target:target ~ #template-menu {
+            display: grid;
+        }
+
+        #menu-target:target ~ .template-section {
+            display: none;
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-button {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background: #5a6268;
+            color: white;
+            text-decoration: none;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .smart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .smart-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .smart-letter {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .smart-word {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .smart-description {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .goal-steps {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #e0e0e0;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            margin: 10px 0;
+        }
+
+        .checkbox-item input[type="checkbox"],
+        .checkbox-item input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .helper-text {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .tip-box {
+            background: #fff8e1;
+            border-left: 5px solid #ffa726;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .benchmark-entry {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .print-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            margin: 10px 5px;
+            display: inline-block;
+        }
+
+        .print-button:hover {
+            background: #5568d3;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            
+            .template-selector,
+            .back-button,
+            .print-button {
+                display: none;
+            }
+
+            .template-section {
+                display: block !important;
+                page-break-after: always;
+            }
+
+            #template-menu {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .template-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .smart-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Goal-Setting Templates</h1>
+            <div class="subtitle">Cluster 2: Youth Skills - Structured Formats for Teaching Goal Development</div>
+            <div class="subtitle" style="font-size: 1em; color: #999;">Predictors of Post-School Success Training</div>
+        </div>
+
+        <div class="intro-box">
+            <h3>📋 Purpose</h3>
+            <p>These templates provide structured formats for teaching students how to set, work toward, and achieve meaningful goals. Goal setting is a critical predictor of post-school success, helping students develop self-determination skills and take ownership of their futures.</p>
+            <p style="margin-top: 10px;"><strong>Click on a template below to begin. You can print the template directly from your browser.</strong></p>
+        </div>
+
+        <!-- Hidden anchor for returning to menu -->
+        <div id="menu-target"></div>
+
+        <!-- TEMPLATE 1: STUDENT GOAL WORKSHEET -->
+        <div id="student-worksheet" class="template-section">
+            <a href="#menu-target" class="back-button">← Back to Templates</a>
+            
+            <h2 class="section-title">📝 My Goal-Setting Worksheet</h2>
+            
+            <div class="intro-box">
+                <p><strong>Student Instructions:</strong> This worksheet will help you create a goal that is meaningful to you and that you can actually achieve. Take your time and think carefully about what you really want to accomplish!</p>
+            </div>
+
+            <button onclick="window.print()" class="print-button">🖨️ Print This Template</button>
+
+            <div class="form-group">
+                <label for="student-name">My Name:</label>
+                <input type="text" id="student-name" placeholder="Your name">
+            </div>
+
+            <div class="form-group">
+                <label for="goal-date">Today's Date:</label>
+                <input type="date" id="goal-date">
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> Goals can be about school, work, independent living, relationships, health, hobbies, or anything else that matters to you!
+            </div>
+
+            <div class="form-group">
+                <label for="goal-area">What area of my life is this goal about?</label>
+                <select id="goal-area">
+                    <option value="">Choose an area...</option>
+                    <option value="employment">Employment/Career</option>
+                    <option value="education">Education/Training</option>
+                    <option value="independent-living">Independent Living</option>
+                    <option value="social">Social/Relationships</option>
+                    <option value="health">Health/Wellness</option>
+                    <option value="recreation">Recreation/Hobbies</option>
+                    <option value="financial">Financial/Money Management</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">STEP 1: Dream Big - My Long-Term Vision</h3>
+
+            <div class="form-group">
+                <label for="long-term-vision">Where do I want to be in 3-5 years?</label>
+                <textarea id="long-term-vision" placeholder="Describe your big dream or long-term goal..."></textarea>
+                <div class="helper-text">Example: "I want to work at a veterinary clinic and have my own apartment with my two cats."</div>
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">STEP 2: Make it SMART</h3>
+
+            <div class="smart-grid">
+                <div class="smart-box">
+                    <div class="smart-letter">S</div>
+                    <div class="smart-word">Specific</div>
+                    <div class="smart-description">Exactly what will I accomplish?</div>
+                </div>
+                <div class="smart-box">
+                    <div class="smart-letter">M</div>
+                    <div class="smart-word">Measurable</div>
+                    <div class="smart-description">How will I know I achieved it?</div>
+                </div>
+                <div class="smart-box">
+                    <div class="smart-letter">A</div>
+                    <div class="smart-word">Achievable</div>
+                    <div class="smart-description">Is it possible with my resources?</div>
+                </div>
+                <div class="smart-box">
+                    <div class="smart-letter">R</div>
+                    <div class="smart-word">Relevant</div>
+                    <div class="smart-description">Does it matter to my future?</div>
+                </div>
+                <div class="smart-box">
+                    <div class="smart-letter">T</div>
+                    <div class="smart-word">Time-bound</div>
+                    <div class="smart-description">When will I complete it?</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="smart-goal">My SMART Goal (what I will accomplish THIS YEAR):</label>
+                <textarea id="smart-goal" placeholder="Write your specific, measurable goal here..."></textarea>
+                <div class="helper-text">Example: "By June 2026, I will complete the veterinary assistant program at CareerTech and earn my certificate."</div>
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">STEP 3: Break It Down - Action Steps</h3>
+
+            <div class="form-group">
+                <label>What are 3-5 steps I need to take to reach my goal?</label>
+                <div class="goal-steps">
+                    <div style="margin: 15px 0;">
+                        <span class="step-number">1</span>
+                        <input type="text" id="step-1" placeholder="First step I need to take...">
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <span class="step-number">2</span>
+                        <input type="text" id="step-2" placeholder="Second step...">
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <span class="step-number">3</span>
+                        <input type="text" id="step-3" placeholder="Third step...">
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <span class="step-number">4</span>
+                        <input type="text" id="step-4" placeholder="Fourth step (if needed)...">
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <span class="step-number">5</span>
+                        <input type="text" id="step-5" placeholder="Fifth step (if needed)...">
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">STEP 4: Resources & Support</h3>
+
+            <div class="form-group">
+                <label for="who-helps">Who can help me reach this goal?</label>
+                <textarea id="who-helps" placeholder="List people who can support you (teachers, family, friends, counselors, etc.)"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="what-needs">What do I need to succeed? (resources, skills, information, etc.)</label>
+                <textarea id="what-needs" placeholder="List anything you'll need..."></textarea>
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">STEP 5: Tracking My Progress</h3>
+
+            <div class="form-group">
+                <label for="check-in-schedule">How often will I check my progress?</label>
+                <select id="check-in-schedule">
+                    <option value="">Choose frequency...</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="biweekly">Every two weeks</option>
+                    <option value="monthly">Monthly</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="tracking-method">How will I track my progress?</label>
+                <textarea id="tracking-method" placeholder="Describe your tracking method (checklist, journal, chart, app, etc.)"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="celebrate">How will I celebrate when I reach my goal?</label>
+                <input type="text" id="celebrate" placeholder="Plan your celebration!">
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">My Commitment</h3>
+
+            <div class="form-group">
+                <label for="why-matters">Why is this goal important to me?</label>
+                <textarea id="why-matters" placeholder="Explain why achieving this goal matters to you and your future..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="obstacles">What might get in my way, and how will I overcome obstacles?</label>
+                <textarea id="obstacles" placeholder="Think about potential challenges and your solutions..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="student-signature">My Signature:</label>
+                <input type="text" id="student-signature" placeholder="Type your name as your signature">
+            </div>
+
+            <div class="form-group">
+                <label for="goal-target-date">Target Completion Date:</label>
+                <input type="date" id="goal-target-date">
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button onclick="window.print()" class="print-button">🖨️ Print Completed Worksheet</button>
+            </div>
+        </div>
+
+        <!-- TEMPLATE 2: SMART GOAL REFERENCE -->
+        <div id="smart-reference" class="template-section">
+            <a href="#menu-target" class="back-button">← Back to Templates</a>
+            
+            <h2 class="section-title">✅ SMART Goal Framework Reference</h2>
+            
+            <div class="intro-box">
+                <p>Use this reference guide when teaching students about SMART goals or when evaluating goal quality. This page can be printed and displayed as a poster or given to students as a handout.</p>
+            </div>
+
+            <button onclick="window.print()" class="print-button">🖨️ Print Reference Guide</button>
+
+            <div style="margin: 30px 0;">
+                <div class="smart-box" style="margin-bottom: 20px;">
+                    <div class="smart-letter">S</div>
+                    <div class="smart-word">SPECIFIC</div>
+                    <div class="smart-description">The goal clearly states WHAT is to be achieved, by WHOM, WHERE, and WHEN.</div>
+                    
+                    <div style="margin-top: 15px; padding: 10px; background: #ffe6e6; border-radius: 5px;">
+                        <strong style="color: #d32f2f;">❌ Weak:</strong> "I want to get better at math."
+                    </div>
+                    <div style="margin-top: 10px; padding: 10px; background: #e6f7e6; border-radius: 5px;">
+                        <strong style="color: #388e3c;">✅ Strong:</strong> "By December 2025, I will improve my algebra grade from a C to a B by attending tutoring twice a week."
+                    </div>
+                </div>
+
+                <div class="smart-box" style="margin-bottom: 20px;">
+                    <div class="smart-letter">M</div>
+                    <div class="smart-word">MEASURABLE</div>
+                    <div class="smart-description">There is a clear way to determine IF and WHEN the goal has been achieved.</div>
+                    
+                    <div style="margin-top: 15px; padding: 10px; background: #ffe6e6; border-radius: 5px;">
+                        <strong style="color: #d32f2f;">❌ Weak:</strong> "I want to save money."
+                    </div>
+                    <div style="margin-top: 10px; padding: 10px; background: #e6f7e6; border-radius: 5px;">
+                        <strong style="color: #388e3c;">✅ Strong:</strong> "I will save $500 by putting $50 from each paycheck into my savings account."
+                    </div>
+                </div>
+
+                <div class="smart-box" style="margin-bottom: 20px;">
+                    <div class="smart-letter">A</div>
+                    <div class="smart-word">ACHIEVABLE</div>
+                    <div class="smart-description">The goal is realistic given the student's resources, skills, support, and timeframe.</div>
+                    
+                    <div style="margin-top: 15px; padding: 10px; background: #ffe6e6; border-radius: 5px;">
+                        <strong style="color: #d32f2f;">❌ Weak:</strong> "I will become a licensed physician by next month."
+                    </div>
+                    <div style="margin-top: 10px; padding: 10px; background: #e6f7e6; border-radius: 5px;">
+                        <strong style="color: #388e3c;">✅ Strong:</strong> "I will complete my CNA certification program within 6 months while working part-time."
+                    </div>
+                </div>
+
+                <div class="smart-box" style="margin-bottom: 20px;">
+                    <div class="smart-letter">R</div>
+                    <div class="smart-word">RELEVANT</div>
+                    <div class="smart-description">The goal aligns with the student's long-term vision and post-school outcomes.</div>
+                    
+                    <div style="margin-top: 15px; padding: 10px; background: #ffe6e6; border-radius: 5px;">
+                        <strong style="color: #d32f2f;">❌ Weak:</strong> "I will learn to juggle." (when student wants to be an accountant)
+                    </div>
+                    <div style="margin-top: 10px; padding: 10px; background: #e6f7e6; border-radius: 5px;">
+                        <strong style="color: #388e3c;">✅ Strong:</strong> "I will complete a basic accounting course to prepare for my career goal."
+                    </div>
+                </div>
+
+                <div class="smart-box" style="margin-bottom: 20px;">
+                    <div class="smart-letter">T</div>
+                    <div class="smart-word">TIME-BOUND</div>
+                    <div class="smart-description">The goal includes a specific deadline or timeframe for completion.</div>
+                    
+                    <div style="margin-top: 15px; padding: 10px; background: #ffe6e6; border-radius: 5px;">
+                        <strong style="color: #d32f2f;">❌ Weak:</strong> "Someday I'll get my driver's license."
+                    </div>
+                    <div style="margin-top: 10px; padding: 10px; background: #e6f7e6; border-radius: 5px;">
+                        <strong style="color: #388e3c;">✅ Strong:</strong> "I will earn my driver's license by my 18th birthday in March 2026."
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <h4 style="margin-bottom: 10px;">💡 Teaching Tip:</h4>
+                <p><strong>A good SMART goal answers these questions:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li><strong>What</strong> exactly will be accomplished?</li>
+                    <li><strong>How</strong> will I know when I've achieved it?</li>
+                    <li><strong>Is it possible</strong> with my current resources and support?</li>
+                    <li><strong>Why</strong> does this goal matter to my future?</li>
+                    <li><strong>When</strong> will I complete this goal?</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TEMPLATE 3: PROGRESS MONITORING -->
+        <div id="progress-monitor" class="template-section">
+            <a href="#menu-target" class="back-button">← Back to Templates</a>
+            
+            <h2 class="section-title">📊 Goal Progress Monitoring Log</h2>
+            
+            <div class="intro-box">
+                <p>Regular check-ins help students stay on track and adjust their approach as needed. Use this template for weekly, biweekly, or monthly progress monitoring.</p>
+            </div>
+
+            <button onclick="window.print()" class="print-button">🖨️ Print Monitoring Log</button>
+
+            <div class="form-group">
+                <label for="progress-student">Student Name:</label>
+                <input type="text" id="progress-student" placeholder="Student name">
+            </div>
+
+            <div class="form-group">
+                <label for="progress-goal">Goal Being Monitored:</label>
+                <textarea id="progress-goal" placeholder="State the SMART goal..." style="min-height: 80px;"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="progress-target">Target Completion Date:</label>
+                <input type="date" id="progress-target">
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">Check-In #1</h3>
+
+            <div class="benchmark-entry">
+                <div class="form-group">
+                    <label for="checkin1-date">Check-In Date:</label>
+                    <input type="date" id="checkin1-date">
+                </div>
+
+                <div class="form-group">
+                    <label for="checkin1-progress">Progress Made Since Last Check-In:</label>
+                    <textarea id="checkin1-progress" placeholder="What steps have been completed? What progress has been made?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkin1-challenges">Challenges or Obstacles:</label>
+                    <textarea id="checkin1-challenges" placeholder="What's getting in the way?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkin1-solutions">Solutions/Adjustments:</label>
+                    <textarea id="checkin1-solutions" placeholder="How will we address challenges?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkin1-next">Next Steps Before Next Check-In:</label>
+                    <textarea id="checkin1-next" placeholder="What will the student work on?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Overall Progress Rating:</label>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <label><input type="radio" name="progress1" value="0-25"> 0-25%</label>
+                        <label><input type="radio" name="progress1" value="26-50"> 26-50%</label>
+                        <label><input type="radio" name="progress1" value="51-75"> 51-75%</label>
+                        <label><input type="radio" name="progress1" value="76-100"> 76-100%</label>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">Check-In #2</h3>
+
+            <div class="benchmark-entry">
+                <div class="form-group">
+                    <label for="checkin2-date">Check-In Date:</label>
+                    <input type="date" id="checkin2-date">
+                </div>
+
+                <div class="form-group">
+                    <label for="checkin2-progress">Progress Made Since Last Check-In:</label>
+                    <textarea id="checkin2-progress" placeholder="What steps have been completed? What progress has been made?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkin2-challenges">Challenges or Obstacles:</label>
+                    <textarea id="checkin2-challenges" placeholder="What's getting in the way?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkin2-solutions">Solutions/Adjustments:</label>
+                    <textarea id="checkin2-solutions" placeholder="How will we address challenges?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkin2-next">Next Steps Before Next Check-In:</label>
+                    <textarea id="checkin2-next" placeholder="What will the student work on?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Overall Progress Rating:</label>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <label><input type="radio" name="progress2" value="0-25"> 0-25%</label>
+                        <label><input type="radio" name="progress2" value="26-50"> 26-50%</label>
+                        <label><input type="radio" name="progress2" value="51-75"> 51-75%</label>
+                        <label><input type="radio" name="progress2" value="76-100"> 76-100%</label>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">Check-In #3</h3>
+
+            <div class="benchmark-entry">
+                <div class="form-group">
+                    <label for="checkin3-date">Check-In Date:</label>
+                    <input type="date" id="checkin3-date">
+                </div>
+
+                <div class="form-group">
+                    <label for="checkin3-progress">Progress Made Since Last Check-In:</label>
+                    <textarea id="checkin3-progress" placeholder="What steps have been completed? What progress has been made?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkin3-challenges">Challenges or Obstacles:</label>
+                    <textarea id="checkin3-challenges" placeholder="What's getting in the way?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkin3-solutions">Solutions/Adjustments:</label>
+                    <textarea id="checkin3-solutions" placeholder="How will we address challenges?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="checkin3-next">Next Steps Before Next Check-In:</label>
+                    <textarea id="checkin3-next" placeholder="What will the student work on?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Overall Progress Rating:</label>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <label><input type="radio" name="progress3" value="0-25"> 0-25%</label>
+                        <label><input type="radio" name="progress3" value="26-50"> 26-50%</label>
+                        <label><input type="radio" name="progress3" value="51-75"> 51-75%</label>
+                        <label><input type="radio" name="progress3" value="76-100"> 76-100%</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> Add more check-in sections as needed. Regular monitoring helps identify problems early and celebrate successes along the way!
+            </div>
+        </div>
+
+        <!-- TEMPLATE 4: GOAL REFLECTION -->
+        <div id="reflection" class="template-section">
+            <a href="#menu-target" class="back-button">← Back to Templates</a>
+            
+            <h2 class="section-title">💭 Goal Reflection & Next Steps</h2>
+            
+            <div class="intro-box">
+                <p>Reflecting on completed goals helps students recognize their growth, learn from challenges, and set meaningful new goals. Use this template when a goal has been completed (or when it's time to revise/abandon a goal).</p>
+            </div>
+
+            <button onclick="window.print()" class="print-button">🖨️ Print Reflection Sheet</button>
+
+            <div class="form-group">
+                <label for="reflect-student">Student Name:</label>
+                <input type="text" id="reflect-student" placeholder="Student name">
+            </div>
+
+            <div class="form-group">
+                <label for="reflect-date">Reflection Date:</label>
+                <input type="date" id="reflect-date">
+            </div>
+
+            <div class="form-group">
+                <label for="reflect-goal">Goal I Worked On:</label>
+                <textarea id="reflect-goal" placeholder="State the goal you're reflecting on..." style="min-height: 80px;"></textarea>
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">Reflection Questions</h3>
+
+            <div class="form-group">
+                <label>Did I achieve my goal?</label>
+                <div style="margin: 10px 0;">
+                    <div class="checkbox-item">
+                        <input type="radio" name="achieved" value="yes" id="achieved-yes">
+                        <label for="achieved-yes">Yes, completely</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="radio" name="achieved" value="partial" id="achieved-partial">
+                        <label for="achieved-partial">Partially</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="radio" name="achieved" value="no" id="achieved-no">
+                        <label for="achieved-no">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="reflect-proud">What am I most proud of about my work toward this goal?</label>
+                <textarea id="reflect-proud" placeholder="Share your successes and what you did well..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="reflect-learned">What did I learn about myself while working on this goal?</label>
+                <textarea id="reflect-learned" placeholder="What did you discover about your strengths, interests, or needs?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="reflect-challenges">What challenges did I face?</label>
+                <textarea id="reflect-challenges" placeholder="What made it hard to reach this goal?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="reflect-differently">What would I do differently next time?</label>
+                <textarea id="reflect-differently" placeholder="What did you learn that will help you with future goals?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="reflect-helped">Who or what helped me most?</label>
+                <textarea id="reflect-helped" placeholder="People, resources, strategies that supported you..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="reflect-skills">What new skills did I develop?</label>
+                <textarea id="reflect-skills" placeholder="What can you do now that you couldn't do before?"></textarea>
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">Looking Forward</h3>
+
+            <div class="form-group">
+                <label for="reflect-connection">How does achieving (or working toward) this goal help me reach my long-term dreams?</label>
+                <textarea id="reflect-connection" placeholder="Connect this goal to your bigger vision..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="reflect-next">What should my next goal be?</label>
+                <textarea id="reflect-next" placeholder="Based on this experience, what do you want to work on next?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="reflect-support">What support will I need for my next goal?</label>
+                <textarea id="reflect-support" placeholder="People, resources, accommodations, etc."></textarea>
+            </div>
+
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;">Celebration</h3>
+
+            <div class="form-group">
+                <label for="reflect-celebrate">How did (or will) I celebrate this accomplishment?</label>
+                <textarea id="reflect-celebrate" placeholder="It's important to acknowledge your hard work!"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="reflect-share">Who do I want to share this success with?</label>
+                <textarea id="reflect-share" placeholder="Family, friends, teachers, mentors..."></textarea>
+            </div>
+        </div>
+
+        <!-- Template Selection Menu (shown by default) -->
+        <div id="template-menu" class="template-selector">
+            <a href="#student-worksheet" class="template-card">
+                <h3>📝 Student Goal Worksheet</h3>
+                <p>Help students develop their own SMART goals with guided questions and progress tracking</p>
+            </a>
+
+            <a href="#smart-reference" class="template-card">
+                <h3>✅ SMART Goal Reference</h3>
+                <p>Visual guide with examples of strong vs. weak goals for each SMART criterion</p>
+            </a>
+
+            <a href="#progress-monitor" class="template-card">
+                <h3>📊 Progress Monitoring</h3>
+                <p>Track student progress toward goals with regular check-ins and adjustments</p>
+            </a>
+
+            <a href="#reflection" class="template-card">
+                <h3>💭 Goal Reflection</h3>
+                <p>Help students reflect on achieved goals and set new ones</p>
+            </a>
+        </div>
+
+        <div class="intro-box" style="margin-top: 40px;">
+            <h3>💡 Implementation Tips</h3>
+            <p><strong>Start with Student Interests:</strong> Goals are more meaningful when they connect to things students care about</p>
+            <p><strong>Use Visual Supports:</strong> Create visual representations of goals to make abstract concepts concrete</p>
+            <p><strong>Model the Process:</strong> Share your own goals and goal-setting process with students</p>
+            <p><strong>Celebrate Small Wins:</strong> Break big goals into tiny steps and celebrate each accomplishment</p>
+            <p><strong>Make it Real:</strong> Connect goal-setting to real-world activities for authentic contexts</p>
+            <p><strong>Connect to IEPs:</strong> Help students see the link between personal goals and IEP transition goals</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cluster 2 Interactive Reflection Activities - Youth Skills</title>
+    <style>
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+        .save-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .save-indicator.show {
+            opacity: 1;
+        }
+        body {
+            font-family: -apple-system, Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+        .activity-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 900px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+        .activity-title {
+            color: #667eea;
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .status-badge {
+            padding: 8px 16px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .scenario-box {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #0066cc;
+        }
+        .warning-box {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #ffc107;
+        }
+        .tip-box {
+            background: #d1f2eb;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #20c997;
+        }
+        .question-label {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="text"], input[type="email"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .time-estimate {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .bullet-list {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        .bullet-list li {
+            margin: 8px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+
+<!-- AUTO-SAVE INDICATOR -->
+<div id="save-indicator" class="save-indicator" role="status" aria-live="polite" aria-atomic="true">
+    <span aria-hidden="true">✓</span> Auto-saved
+</div>
+
+<!-- AUTO-SAVE INFO BANNER -->
+<section role="region" aria-labelledby="autosave-heading" style="background: #d1ecf1; border: 2px solid #bee5eb; padding: 15px; border-radius: 10px; margin-bottom: 20px; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <h2 id="autosave-heading" style="color: #0c5460; margin-top: 0; font-size: 1.2em;">
+    <span aria-hidden="true">💾</span> Auto-Save Enabled
+  </h2>
+  <p style="color: #0c5460; margin: 5px 0;">Your work is automatically saved to your browser as you type! You can safely leave and return later. Your progress will be restored when you come back to this page on the same browser.</p>
+  <p style="color: #0c5460; margin: 5px 0; font-size: 14px;"><strong>Note:</strong> Auto-save only works on THIS browser on THIS device. Switching browsers or devices will start fresh.</p>
+  <button onclick="clearSavedData()" style="background: #17a2b8; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 14px; margin-top: 5px;" aria-label="Clear all saved work and start over">
+    <span aria-hidden="true">🗑️</span> Clear My Saved Work & Start Over
+  </button>
+</section>
+
+<!-- PROGRESS INDICATOR BAR -->
+<section role="region" aria-labelledby="progress-heading" style="position: sticky; top: 0; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; z-index: 100; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <h2 id="progress-heading" style="color: #667eea; margin-top: 0; font-size: 1.3em;">
+    <span aria-hidden="true">📊</span> Your Progress
+  </h2>
+  <div style="background: #e0e0e0; height: 30px; border-radius: 15px; overflow: hidden;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Overall completion progress">
+    <div id="progress-bar" style="background: linear-gradient(90deg, #667eea, #764ba2); width: 0%; height: 100%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+      0%
+    </div>
+  </div>
+  <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px;">
+    <span><span aria-hidden="true">✓</span> Completed: <strong id="completed-count" aria-live="polite">0</strong> of 5</span>
+    <span><span aria-hidden="true">📧</span> Email ready when all complete</span>
+  </div>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 1: YOUTH SKILLS SELF-ASSESSMENT -->
+<!-- ========================================= -->
+<section id="activity-1" class="activity-section" role="region" aria-labelledby="activity-1-title">
+  <div class="activity-header">
+    <h3 id="activity-1-title" class="activity-title">Activity 1: Youth Skills Self-Assessment</h3>
+    <span id="status-1" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 5-7 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Rate your program's current implementation of each youth skills predictor.
+  </div>
+  
+  <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <h4 style="margin-top: 0;">Rating Scale:</h4>
+    <ul class="bullet-list">
+      <li><strong>1</strong> = Minimal or no implementation</li>
+      <li><strong>2</strong> = Some implementation, but inconsistent</li>
+      <li><strong>3</strong> = Moderate implementation with room for growth</li>
+      <li><strong>4</strong> = Strong implementation with minor gaps</li>
+      <li><strong>5</strong> = Exemplary implementation with fidelity</li>
+    </ul>
+  </div>
+  
+  <table role="table" aria-label="Youth skills predictor ratings">
+    <thead>
+      <tr>
+        <th scope="col">Youth Skills Predictor</th>
+        <th scope="col" style="width: 150px;">Your Rating (1-5)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Community Experiences</strong><br>Students participate in real-world activities outside of school settings</td>
+        <td>
+          <label for="rating-1-1" class="sr-only">Rate Community Experiences from 1 to 5</label>
+          <select id="rating-1-1" onchange="autoSave(); updateProgress(1)" aria-required="true">
+            <option value="">--</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Self-Determination/Self-Advocacy</strong><br>Students make choices, solve problems, and speak up for themselves</td>
+        <td>
+          <label for="rating-1-2" class="sr-only">Rate Self-Determination and Self-Advocacy from 1 to 5</label>
+          <select id="rating-1-2" onchange="autoSave(); updateProgress(1)" aria-required="true">
+            <option value="">--</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Goal Setting</strong><br>Students develop and track short- and long-term goals</td>
+        <td>
+          <label for="rating-1-3" class="sr-only">Rate Goal Setting from 1 to 5</label>
+          <select id="rating-1-3" onchange="autoSave(); updateProgress(1)" aria-required="true">
+            <option value="">--</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Social Skills</strong><br>Students practice effective communication and cooperation</td>
+        <td>
+          <label for="rating-1-4" class="sr-only">Rate Social Skills from 1 to 5</label>
+          <select id="rating-1-4" onchange="autoSave(); updateProgress(1)" aria-required="true">
+            <option value="">--</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Travel Skills</strong><br>Students learn to navigate their community independently</td>
+        <td>
+          <label for="rating-1-5" class="sr-only">Rate Travel Skills from 1 to 5</label>
+          <select id="rating-1-5" onchange="autoSave(); updateProgress(1)" aria-required="true">
+            <option value="">--</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Technology Skills</strong><br>Students use technology functionally to accomplish goals</td>
+        <td>
+          <label for="rating-1-6" class="sr-only">Rate Technology Skills from 1 to 5</label>
+          <select id="rating-1-6" onchange="autoSave(); updateProgress(1)" aria-required="true">
+            <option value="">--</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <label for="response-1-strength" class="question-label">Based on your ratings, which predictor is your program's greatest strength?</label>
+  <textarea id="response-1-strength" onkeyup="autoSave(); updateProgress(1)" placeholder="Identify your strongest predictor and briefly explain why..." aria-required="true" aria-describedby="strength-hint"></textarea>
+  <span id="strength-hint" class="sr-only">Provide at least 20 characters explaining your program's strongest youth skills predictor.</span>
+  
+  <label for="response-1-growth" class="question-label">Which predictor represents your greatest opportunity for growth?</label>
+  <textarea id="response-1-growth" onkeyup="autoSave(); updateProgress(1)" placeholder="Identify your area for growth and note 1-2 barriers..." aria-required="true" aria-describedby="growth-hint"></textarea>
+  <span id="growth-hint" class="sr-only">Provide at least 20 characters identifying your area for growth and noting barriers.</span>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 2: COMMUNITY EXPERIENCES PLANNING -->
+<!-- ========================================= -->
+<section id="activity-2" class="activity-section" role="region" aria-labelledby="activity-2-title">
+  <div class="activity-header">
+    <h3 id="activity-2-title" class="activity-title">Activity 2: Community Experiences Planning</h3>
+    <span id="status-2" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 7-10 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Design a community-based learning experience for a specific student or group.
+  </div>
+  
+  <div class="tip-box" role="note">
+    <strong><span aria-hidden="true">💡</span> Remember:</strong> Community experiences are activities that occur outside of school where students apply academic, social, and general work behaviors with planned, intentional learning outcomes.
+  </div>
+  
+  <label for="response-2-students" class="question-label">Student(s) age/grade level:</label>
+  <input type="text" id="response-2-students" onkeyup="autoSave(); updateProgress(2)" placeholder="e.g., 10th grade, ages 15-16" aria-required="true">
+  
+  <label for="response-2-setting" class="question-label">Identify the community setting(s) you'll use:</label>
+  <p style="margin-bottom: 10px;">Examples: grocery store, library, bank, restaurant, gym, workplace, park</p>
+  <textarea id="response-2-setting" onkeyup="autoSave(); updateProgress(2)" placeholder="List 1-2 specific community settings..." aria-required="true" aria-describedby="setting-hint"></textarea>
+  <span id="setting-hint" class="sr-only">List 1 to 2 specific community settings. Provide at least 20 characters.</span>
+  
+  <label for="response-2-outcomes" class="question-label">What are the planned learning outcomes?</label>
+  <p style="margin-bottom: 10px;">What specific skills will students practice or demonstrate?</p>
+  <textarea id="response-2-outcomes" onkeyup="autoSave(); updateProgress(2)" placeholder="Examples:
+- Navigate using public transportation
+- Make purchases independently
+- Ask for assistance appropriately
+- Follow multi-step directions in an unfamiliar environment" aria-required="true" aria-describedby="outcomes-hint"></textarea>
+  <span id="outcomes-hint" class="sr-only">Describe specific skills students will practice or demonstrate. Provide at least 20 characters.</span>
+  
+  <label for="response-2-prep" class="question-label">How will you prepare students beforehand?</label>
+  <p style="margin-bottom: 10px;">What classroom instruction or preparation is needed?</p>
+  <textarea id="response-2-prep" onkeyup="autoSave(); updateProgress(2)" placeholder="Describe pre-teaching activities, materials, or practice..." aria-required="true" aria-describedby="prep-hint"></textarea>
+  <span id="prep-hint" class="sr-only">Describe pre-teaching activities, materials, or practice. Provide at least 20 characters.</span>
+  
+  <label for="response-2-assessment" class="question-label">How will you assess skill attainment?</label>
+  <p style="margin-bottom: 10px;">How will you observe and document progress?</p>
+  <textarea id="response-2-assessment" onkeyup="autoSave(); updateProgress(2)" placeholder="Describe your observation method, data collection, or documentation strategy..." aria-required="true" aria-describedby="assessment-hint"></textarea>
+  <span id="assessment-hint" class="sr-only">Describe your observation method, data collection, or documentation strategy. Provide at least 20 characters.</span>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 3: SELF-ADVOCACY SCENARIO ANALYSIS -->
+<!-- ========================================= -->
+<section id="activity-3" class="activity-section" role="region" aria-labelledby="activity-3-title">
+  <div class="activity-header">
+    <h3 id="activity-3-title" class="activity-title">Activity 3: Self-Advocacy Scenario Analysis</h3>
+    <span id="status-3" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 7-10 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Read the scenario and identify how to support the student's self-advocacy development.
+  </div>
+  
+  <div class="scenario-box" role="article" aria-labelledby="scenario-3-heading">
+    <h4 id="scenario-3-heading" style="color: #0066cc; margin-top: 0;">
+      <span aria-hidden="true">📋</span> Scenario: Jamie's College Accommodations
+    </h4>
+    <p>Jamie is a high school senior with a learning disability who has been accepted to a local community college. Throughout high school, Jamie's teachers have arranged all accommodations (extended time, note-taking support, quiet testing environment). Jamie has never had to request accommodations independently or explain their disability to instructors.</p>
+    <p>Now Jamie is nervous about starting college. When asked about needed accommodations, Jamie says, "I don't know... my teachers always just knew what I needed." Jamie has never attended an IEP meeting and doesn't know what supports are most helpful or why.</p>
+  </div>
+  
+  <label for="response-3-skills" class="question-label">What self-advocacy skills does Jamie need to develop before college?</label>
+  <p style="margin-bottom: 10px;">List 3-4 specific skills:</p>
+  <textarea id="response-3-skills" onkeyup="autoSave(); updateProgress(3)" placeholder="Example: Understanding their disability and how it impacts learning..." aria-required="true" aria-describedby="skills-hint"></textarea>
+  <span id="skills-hint" class="sr-only">List 3 to 4 specific self-advocacy skills. Provide at least 20 characters.</span>
+  
+  <label for="response-3-sequence" class="question-label">Design a learning sequence to build Jamie's self-advocacy:</label>
+  <p style="margin-bottom: 10px;">Outline 4-5 steps, moving from teacher-supported to student-led:</p>
+  <textarea id="response-3-sequence" onkeyup="autoSave(); updateProgress(3)" placeholder="Step 1: 
+Step 2: 
+Step 3: 
+Step 4: 
+Step 5: " aria-required="true" aria-describedby="sequence-hint"></textarea>
+  <span id="sequence-hint" class="sr-only">Outline 4 to 5 steps moving from teacher-supported to student-led. Provide at least 50 characters.</span>
+  
+  <label for="response-3-practice" class="question-label">What opportunities can you create for Jamie to practice before graduation?</label>
+  <textarea id="response-3-practice" onkeyup="autoSave(); updateProgress(3)" placeholder="List specific practice opportunities in school, work, or community settings..." aria-required="true" aria-describedby="practice-hint"></textarea>
+  <span id="practice-hint" class="sr-only">List specific practice opportunities. Provide at least 20 characters.</span>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 4: GOAL-SETTING FRAMEWORK APPLICATION -->
+<!-- ========================================= -->
+<section id="activity-4" class="activity-section" role="region" aria-labelledby="activity-4-title">
+  <div class="activity-header">
+    <h3 id="activity-4-title" class="activity-title">Activity 4: Goal-Setting Framework Application</h3>
+    <span id="status-4" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 8-10 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Practice teaching the goal-setting process using a structured framework.
+  </div>
+  
+  <div style="background: #f0f8ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <h4 style="margin-top: 0;">Structured Goal-Setting Process:</h4>
+    <ol class="bullet-list">
+      <li>Establish long-term goals first (Where do I want to be in 1, 3, 5 years?)</li>
+      <li>Break long-term goals into manageable short-term steps</li>
+      <li>Set benchmarks to measure progress</li>
+      <li>Create a timeline for achievement</li>
+      <li>Identify resources and supports needed</li>
+      <li>Regularly review and adjust as needed</li>
+    </ol>
+  </div>
+  
+  <label for="response-4-student" class="question-label">Choose a student (use initials only) and their long-term post-school goal:</label>
+  <input type="text" id="response-4-student" onkeyup="autoSave(); updateProgress(4)" placeholder="e.g., Student A.B. - Goal: Work in retail and live in an apartment" aria-required="true">
+  
+  <label for="response-4-steps" class="question-label">Help break this long-term goal into 3-4 short-term steps they can accomplish this school year:</label>
+  <textarea id="response-4-steps" onkeyup="autoSave(); updateProgress(4)" placeholder="Short-term step 1:
+
+Short-term step 2:
+
+Short-term step 3:
+
+Short-term step 4:" aria-required="true" aria-describedby="steps-hint"></textarea>
+  <span id="steps-hint" class="sr-only">Break the long-term goal into 3 to 4 short-term steps. Provide at least 50 characters.</span>
+  
+  <label for="response-4-benchmarks" class="question-label">For ONE short-term step, identify specific benchmarks to measure progress:</label>
+  <textarea id="response-4-benchmarks" onkeyup="autoSave(); updateProgress(4)" placeholder="Which step: 
+
+Benchmark 1:
+Benchmark 2:
+Benchmark 3:" aria-required="true" aria-describedby="benchmarks-hint"></textarea>
+  <span id="benchmarks-hint" class="sr-only">Identify specific benchmarks to measure progress for one step. Provide at least 30 characters.</span>
+  
+  <label for="response-4-ownership" class="question-label">How will you help this student take ownership of tracking their own progress?</label>
+  <textarea id="response-4-ownership" onkeyup="autoSave(); updateProgress(4)" placeholder="Describe the tools, check-ins, or self-monitoring strategies you'll use..." aria-required="true" aria-describedby="ownership-hint"></textarea>
+  <span id="ownership-hint" class="sr-only">Describe tools, check-ins, or self-monitoring strategies. Provide at least 20 characters.</span>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 5: SKILLS INTEGRATION ACTION PLAN -->
+<!-- ========================================= -->
+<section id="activity-5" class="activity-section" role="region" aria-labelledby="activity-5-title">
+  <div class="activity-header">
+    <h3 id="activity-5-title" class="activity-title">Activity 5: Skills Integration Action Plan</h3>
+    <span id="status-5" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 8-10 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Design an activity that integrates multiple youth skills predictors simultaneously.
+  </div>
+  
+  <div class="tip-box" role="note">
+    <strong><span aria-hidden="true">💡</span> Key Concept:</strong> Youth skills are naturally interconnected. Teaching one skill often leads to improvements in other areas. Look for authentic activities that address multiple predictors at once.
+  </div>
+  
+  <label for="response-5-activity" class="question-label">Describe an activity or project that students will complete:</label>
+  <p style="margin-bottom: 10px;">Examples: Job shadowing experience, community service project, independent errands, postsecondary campus visit</p>
+  <textarea id="response-5-activity" onkeyup="autoSave(); updateProgress(5)" placeholder="Describe the activity in detail..." aria-required="true" aria-describedby="activity-hint"></textarea>
+  <span id="activity-hint" class="sr-only">Describe the activity in detail. Provide at least 30 characters.</span>
+  
+  <fieldset style="border: 2px solid #e0e0e0; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <legend class="question-label">Which youth skills predictors does this activity address? Check ALL that apply and explain how:</legend>
+    
+    <div style="margin: 15px 0;">
+      <div style="display: block; margin: 10px 0;">
+        <label>
+          <input type="checkbox" id="check-5-1" onchange="autoSave(); updateProgress(5)" aria-describedby="explain-5-1"> 
+          <strong>Community Experiences</strong> - How?
+        </label>
+        <input type="text" id="explain-5-1" onkeyup="autoSave(); updateProgress(5)" style="margin-top: 5px;" placeholder="Briefly explain..." aria-label="Explain how this addresses Community Experiences">
+      </div>
+      
+      <div style="display: block; margin: 10px 0;">
+        <label>
+          <input type="checkbox" id="check-5-2" onchange="autoSave(); updateProgress(5)" aria-describedby="explain-5-2"> 
+          <strong>Self-Determination/Self-Advocacy</strong> - How?
+        </label>
+        <input type="text" id="explain-5-2" onkeyup="autoSave(); updateProgress(5)" style="margin-top: 5px;" placeholder="Briefly explain..." aria-label="Explain how this addresses Self-Determination and Self-Advocacy">
+      </div>
+      
+      <div style="display: block; margin: 10px 0;">
+        <label>
+          <input type="checkbox" id="check-5-3" onchange="autoSave(); updateProgress(5)" aria-describedby="explain-5-3"> 
+          <strong>Goal Setting</strong> - How?
+        </label>
+        <input type="text" id="explain-5-3" onkeyup="autoSave(); updateProgress(5)" style="margin-top: 5px;" placeholder="Briefly explain..." aria-label="Explain how this addresses Goal Setting">
+      </div>
+      
+      <div style="display: block; margin: 10px 0;">
+        <label>
+          <input type="checkbox" id="check-5-4" onchange="autoSave(); updateProgress(5)" aria-describedby="explain-5-4"> 
+          <strong>Social Skills</strong> - How?
+        </label>
+        <input type="text" id="explain-5-4" onkeyup="autoSave(); updateProgress(5)" style="margin-top: 5px;" placeholder="Briefly explain..." aria-label="Explain how this addresses Social Skills">
+      </div>
+      
+      <div style="display: block; margin: 10px 0;">
+        <label>
+          <input type="checkbox" id="check-5-5" onchange="autoSave(); updateProgress(5)" aria-describedby="explain-5-5"> 
+          <strong>Travel Skills</strong> - How?
+        </label>
+        <input type="text" id="explain-5-5" onkeyup="autoSave(); updateProgress(5)" style="margin-top: 5px;" placeholder="Briefly explain..." aria-label="Explain how this addresses Travel Skills">
+      </div>
+      
+      <div style="display: block; margin: 10px 0;">
+        <label>
+          <input type="checkbox" id="check-5-6" onchange="autoSave(); updateProgress(5)" aria-describedby="explain-5-6"> 
+          <strong>Technology Skills</strong> - How?
+        </label>
+        <input type="text" id="explain-5-6" onkeyup="autoSave(); updateProgress(5)" style="margin-top: 5px;" placeholder="Briefly explain..." aria-label="Explain how this addresses Technology Skills">
+      </div>
+    </div>
+  </fieldset>
+  
+  <label for="response-5-barrier" class="question-label">What is ONE barrier to implementing this activity and how will you address it?</label>
+  <textarea id="response-5-barrier" onkeyup="autoSave(); updateProgress(5)" placeholder="Barrier:
+
+Solution:" aria-required="true" aria-describedby="barrier-hint"></textarea>
+  <span id="barrier-hint" class="sr-only">Identify one barrier and its solution. Provide at least 20 characters.</span>
+  
+  <label for="response-5-timeline" class="question-label">When will you implement this activity? Set a specific timeline:</label>
+  <input type="text" id="response-5-timeline" onkeyup="autoSave(); updateProgress(5)" placeholder="e.g., Next semester, during March, before the end of the year" aria-required="true">
+</section>
+
+<!-- ========================================= -->
+<!-- EMAIL SECTION (appears when complete) -->
+<!-- ========================================= -->
+<section id="email-section" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px; margin: 30px auto; max-width: 900px; color: white;" role="region" aria-labelledby="email-heading">
+  <h3 id="email-heading" style="color: white; margin-top: 0;">
+    <span aria-hidden="true">🎉</span> All Activities Complete!
+  </h3>
+  <p>Great work! Enter your email address below to receive a copy of all your responses.</p>
+  
+  <div style="background: white; padding: 20px; border-radius: 5px;">
+    <label for="user-email" style="color: #333; font-weight: bold; display: block; margin-bottom: 10px;">Your Email Address:</label>
+    <input type="email" id="user-email" placeholder="your.email@example.com" style="width: 100%; max-width: 400px; padding: 12px; border: 2px solid #667eea; border-radius: 5px; font-size: 16px;" aria-required="true">
+    
+    <button onclick="emailResponses()" style="background: #28a745; color: white; border: none; padding: 15px 30px; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px;" aria-label="Email my responses to me">
+      <span aria-hidden="true">📧</span> Email My Responses to Me
+    </button>
+  </div>
+  
+  <p style="margin-top: 20px; font-size: 14px;"><span aria-hidden="true">💡</span> <strong>Tip:</strong> Your email program will open with all responses pre-filled. Just click Send!</p>
+</section>
+
+<!-- ========================================= -->
+<!-- COMPLETION MESSAGE -->
+<!-- ========================================= -->
+<section id="completion-message" style="display: none; background: #d4edda; border: 2px solid #c3e6cb; padding: 20px; border-radius: 10px; margin: 20px auto; max-width: 900px;" role="alert" aria-labelledby="completion-heading">
+  <h3 id="completion-heading" style="color: #155724; margin-top: 0;">
+    <span aria-hidden="true">✅</span> Email Sent!
+  </h3>
+  <p style="color: #155724;">Check your inbox for your responses. Now complete the graded Module 3 quiz to earn your professional development credit.</p>
+  <p style="color: #155724;"><strong>Next Steps:</strong></p>
+  <ul style="color: #155724;">
+    <li>Save this email for your records</li>
+    <li>Complete the Module 3 Assessment Quiz</li>
+    <li>Implement your action plans</li>
+    <li>Share strategies with colleagues</li>
+  </ul>
+</section>
+
+<!-- ACCESSIBILITY INFORMATION -->
+<section role="contentinfo" aria-labelledby="accessibility-heading" style="background: #f0f4ff; padding: 20px; border-radius: 10px; margin: 30px auto; border: 2px solid #667eea; max-width: 900px;">
+  <h3 id="accessibility-heading" style="color: #667eea; margin-top: 0;">
+    <span aria-hidden="true">♿</span> Accessibility Information
+  </h3>
+  
+  <h4 style="color: #667eea; font-size: 1.1em; margin-top: 20px;">Screen Reader Optimization</h4>
+  <p>This interactive workbook has been optimized for screen reader accessibility and includes:</p>
+  <ul>
+    <li><strong>ARIA labels and roles</strong> for all interactive elements, tables, and sections</li>
+    <li><strong>Semantic HTML structure</strong> with proper heading hierarchy</li>
+    <li><strong>Form field labels and hints</strong> clearly associated with inputs</li>
+    <li><strong>Status updates</strong> announced via live regions for progress and auto-save</li>
+    <li><strong>Keyboard accessibility</strong> for all interactive elements</li>
+    <li><strong>Descriptive button and field labels</strong> providing clear action context</li>
+    <li><strong>Table structure</strong> with proper headers for navigation</li>
+  </ul>
+  
+  <h4 style="color: #667eea; font-size: 1.1em; margin-top: 20px;">How Auto-Save Works</h4>
+  <p>Your responses are automatically saved to your browser's local storage as you type. This means:</p>
+  <ul>
+    <li><strong>✓ You can leave and return</strong> - Your work will be here when you come back</li>
+    <li><strong>✓ No account needed</strong> - Everything saves locally in your browser</li>
+    <li><strong>⚠️ Browser-specific</strong> - Your work only saves on THIS browser on THIS device</li>
+    <li><strong>⚠️ Private browsing</strong> - Auto-save may not work in incognito/private mode</li>
+    <li><strong>⚠️ Clearing browser data</strong> - Clearing cookies/cache will delete saved work</li>
+  </ul>
+  
+  <h4 style="color: #667eea; font-size: 1.1em; margin-top: 20px;">Alternative Format Available</h4>
+  <p><strong>Word Document Version:</strong> A fully accessible Word document version of these activities is available for learners who prefer downloadable formats or need additional assistive technology support. Contact your instructor to request this format.</p>
+</section>
+
+<script>
+const STORAGE_KEY = 'cluster2_autosave';
+let completionStatus = { 1: false, 2: false, 3: false, 4: false, 5: false };
+
+function autoSave() {
+  const data = {
+    'rating-1-1': document.getElementById('rating-1-1').value,
+    'rating-1-2': document.getElementById('rating-1-2').value,
+    'rating-1-3': document.getElementById('rating-1-3').value,
+    'rating-1-4': document.getElementById('rating-1-4').value,
+    'rating-1-5': document.getElementById('rating-1-5').value,
+    'rating-1-6': document.getElementById('rating-1-6').value,
+    'response-1-strength': document.getElementById('response-1-strength').value,
+    'response-1-growth': document.getElementById('response-1-growth').value,
+    'response-2-students': document.getElementById('response-2-students').value,
+    'response-2-setting': document.getElementById('response-2-setting').value,
+    'response-2-outcomes': document.getElementById('response-2-outcomes').value,
+    'response-2-prep': document.getElementById('response-2-prep').value,
+    'response-2-assessment': document.getElementById('response-2-assessment').value,
+    'response-3-skills': document.getElementById('response-3-skills').value,
+    'response-3-sequence': document.getElementById('response-3-sequence').value,
+    'response-3-practice': document.getElementById('response-3-practice').value,
+    'response-4-student': document.getElementById('response-4-student').value,
+    'response-4-steps': document.getElementById('response-4-steps').value,
+    'response-4-benchmarks': document.getElementById('response-4-benchmarks').value,
+    'response-4-ownership': document.getElementById('response-4-ownership').value,
+    'response-5-activity': document.getElementById('response-5-activity').value,
+    'check-5-1': document.getElementById('check-5-1').checked,
+    'check-5-2': document.getElementById('check-5-2').checked,
+    'check-5-3': document.getElementById('check-5-3').checked,
+    'check-5-4': document.getElementById('check-5-4').checked,
+    'check-5-5': document.getElementById('check-5-5').checked,
+    'check-5-6': document.getElementById('check-5-6').checked,
+    'explain-5-1': document.getElementById('explain-5-1').value,
+    'explain-5-2': document.getElementById('explain-5-2').value,
+    'explain-5-3': document.getElementById('explain-5-3').value,
+    'explain-5-4': document.getElementById('explain-5-4').value,
+    'explain-5-5': document.getElementById('explain-5-5').value,
+    'explain-5-6': document.getElementById('explain-5-6').value,
+    'response-5-barrier': document.getElementById('response-5-barrier').value,
+    'response-5-timeline': document.getElementById('response-5-timeline').value
+  };
+  
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  showSaveIndicator();
+}
+
+function restoreSavedData() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (!saved) return;
+  
+  try {
+    const data = JSON.parse(saved);
+    for (const key in data) {
+      const elem = document.getElementById(key);
+      if (elem) {
+        if (elem.type === 'checkbox') {
+          elem.checked = data[key];
+        } else {
+          elem.value = data[key];
+        }
+      }
+    }
+    for (let i = 1; i <= 5; i++) {
+      updateProgress(i);
+    }
+    
+    // Show restoration message
+    const banner = document.createElement('div');
+    banner.setAttribute('role', 'alert');
+    banner.style.cssText = 'background: #d4edda; border: 2px solid #c3e6cb; padding: 15px; border-radius: 10px; margin: 20px auto; max-width: 900px; text-align: center;';
+    banner.innerHTML = '<strong style="color: #155724;">✓ Your previous work was restored!</strong>';
+    document.body.insertBefore(banner, document.body.firstChild);
+    
+    setTimeout(() => {
+      banner.style.transition = 'opacity 0.5s';
+      banner.style.opacity = '0';
+      setTimeout(() => banner.remove(), 500);
+    }, 5000);
+  } catch (e) {
+    console.error('Failed to restore data:', e);
+  }
+}
+
+function showSaveIndicator() {
+  const indicator = document.getElementById('save-indicator');
+  indicator.classList.add('show');
+  setTimeout(() => indicator.classList.remove('show'), 2000);
+}
+
+function clearSavedData() {
+  if (confirm('Are you sure you want to clear ALL saved work? This cannot be undone.')) {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    } catch (e) {
+      alert('Error clearing data. Please try refreshing the page.');
+    }
+  }
+}
+
+function updateProgress(activityNum) {
+  let isComplete = false;
+  
+  switch(activityNum) {
+    case 1:
+      const allRatings = document.getElementById('rating-1-1').value && 
+                        document.getElementById('rating-1-2').value &&
+                        document.getElementById('rating-1-3').value &&
+                        document.getElementById('rating-1-4').value &&
+                        document.getElementById('rating-1-5').value &&
+                        document.getElementById('rating-1-6').value;
+      const text1 = document.getElementById('response-1-strength').value.trim().length > 20 &&
+                   document.getElementById('response-1-growth').value.trim().length > 20;
+      isComplete = allRatings && text1;
+      break;
+    case 2:
+      isComplete = document.getElementById('response-2-students').value.trim() &&
+                   document.getElementById('response-2-setting').value.trim().length > 20 &&
+                   document.getElementById('response-2-outcomes').value.trim().length > 20 &&
+                   document.getElementById('response-2-prep').value.trim().length > 20 &&
+                   document.getElementById('response-2-assessment').value.trim().length > 20;
+      break;
+    case 3:
+      isComplete = document.getElementById('response-3-skills').value.trim().length > 20 &&
+                   document.getElementById('response-3-sequence').value.trim().length > 50 &&
+                   document.getElementById('response-3-practice').value.trim().length > 20;
+      break;
+    case 4:
+      isComplete = document.getElementById('response-4-student').value.trim() &&
+                   document.getElementById('response-4-steps').value.trim().length > 50 &&
+                   document.getElementById('response-4-benchmarks').value.trim().length > 30 &&
+                   document.getElementById('response-4-ownership').value.trim().length > 20;
+      break;
+    case 5:
+      const anyChecked = document.getElementById('check-5-1').checked ||
+                        document.getElementById('check-5-2').checked ||
+                        document.getElementById('check-5-3').checked ||
+                        document.getElementById('check-5-4').checked ||
+                        document.getElementById('check-5-5').checked ||
+                        document.getElementById('check-5-6').checked;
+      isComplete = document.getElementById('response-5-activity').value.trim().length > 30 &&
+                   anyChecked &&
+                   document.getElementById('response-5-barrier').value.trim().length > 20 &&
+                   document.getElementById('response-5-timeline').value.trim();
+      break;
+  }
+  
+  completionStatus[activityNum] = isComplete;
+  
+  const statusElement = document.getElementById('status-' + activityNum);
+  if (isComplete) {
+    statusElement.innerHTML = '<span aria-hidden="true">✓</span> Complete';
+    statusElement.style.background = '#28a745';
+    statusElement.style.color = 'white';
+  } else {
+    const hasAnyInput = checkHasInput(activityNum);
+    if (hasAnyInput) {
+      statusElement.innerHTML = '<span aria-hidden="true">⏳</span> In Progress';
+      statusElement.style.background = '#ffc107';
+      statusElement.style.color = '#333';
+    } else {
+      statusElement.innerHTML = '<span aria-hidden="true">⭕</span> Not Started';
+      statusElement.style.background = '#e0e0e0';
+      statusElement.style.color = '#666';
+    }
+  }
+  
+  updateOverallProgress();
+}
+
+function checkHasInput(activityNum) {
+  switch(activityNum) {
+    case 1:
+      return document.getElementById('rating-1-1').value || 
+             document.getElementById('rating-1-2').value ||
+             document.getElementById('rating-1-3').value ||
+             document.getElementById('rating-1-4').value ||
+             document.getElementById('rating-1-5').value ||
+             document.getElementById('rating-1-6').value ||
+             document.getElementById('response-1-strength').value.trim() ||
+             document.getElementById('response-1-growth').value.trim();
+    case 2:
+      return document.getElementById('response-2-students').value.trim() ||
+             document.getElementById('response-2-setting').value.trim() ||
+             document.getElementById('response-2-outcomes').value.trim() ||
+             document.getElementById('response-2-prep').value.trim() ||
+             document.getElementById('response-2-assessment').value.trim();
+    case 3:
+      return document.getElementById('response-3-skills').value.trim() ||
+             document.getElementById('response-3-sequence').value.trim() ||
+             document.getElementById('response-3-practice').value.trim();
+    case 4:
+      return document.getElementById('response-4-student').value.trim() ||
+             document.getElementById('response-4-steps').value.trim() ||
+             document.getElementById('response-4-benchmarks').value.trim() ||
+             document.getElementById('response-4-ownership').value.trim();
+    case 5:
+      return document.getElementById('response-5-activity').value.trim() ||
+             document.getElementById('check-5-1').checked ||
+             document.getElementById('check-5-2').checked ||
+             document.getElementById('check-5-3').checked ||
+             document.getElementById('check-5-4').checked ||
+             document.getElementById('check-5-5').checked ||
+             document.getElementById('check-5-6').checked ||
+             document.getElementById('response-5-barrier').value.trim() ||
+             document.getElementById('response-5-timeline').value.trim();
+  }
+  return false;
+}
+
+function updateOverallProgress() {
+  const completed = Object.values(completionStatus).filter(v => v === true).length;
+  const percentage = (completed / 5) * 100;
+  
+  const progressBar = document.getElementById('progress-bar');
+  progressBar.style.width = percentage + '%';
+  progressBar.textContent = Math.round(percentage) + '%';
+  progressBar.setAttribute('aria-valuenow', Math.round(percentage));
+  
+  document.getElementById('completed-count').textContent = completed;
+  
+  if (completed === 5) {
+    document.getElementById('email-section').style.display = 'block';
+    document.getElementById('email-section').scrollIntoView({ behavior: 'smooth' });
+  } else {
+    document.getElementById('email-section').style.display = 'none';
+  }
+}
+
+function emailResponses() {
+  const email = document.getElementById('user-email').value;
+  
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  
+  let skillsChecked = '';
+  for(let i = 1; i <= 6; i++) {
+    if(document.getElementById('check-5-' + i).checked) {
+      const labels = ['Community Experiences', 'Self-Determination/Self-Advocacy', 'Goal Setting', 'Social Skills', 'Travel Skills', 'Technology Skills'];
+      skillsChecked += labels[i-1] + ': ' + document.getElementById('explain-5-' + i).value + '\n';
+    }
+  }
+  
+  const responses = `
+CLUSTER TWO: YOUTH SKILLS
+My Reflection Activity Responses
+Generated: ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
+
+========================================
+ACTIVITY 1: YOUTH SKILLS SELF-ASSESSMENT
+========================================
+Ratings:
+- Community Experiences: ${document.getElementById('rating-1-1').value}
+- Self-Determination/Self-Advocacy: ${document.getElementById('rating-1-2').value}
+- Goal Setting: ${document.getElementById('rating-1-3').value}
+- Social Skills: ${document.getElementById('rating-1-4').value}
+- Travel Skills: ${document.getElementById('rating-1-5').value}
+- Technology Skills: ${document.getElementById('rating-1-6').value}
+
+Greatest Strength:
+${document.getElementById('response-1-strength').value}
+
+Greatest Opportunity for Growth:
+${document.getElementById('response-1-growth').value}
+
+========================================
+ACTIVITY 2: COMMUNITY EXPERIENCES PLANNING
+========================================
+Student(s): ${document.getElementById('response-2-students').value}
+
+Community Setting(s):
+${document.getElementById('response-2-setting').value}
+
+Learning Outcomes:
+${document.getElementById('response-2-outcomes').value}
+
+Preparation:
+${document.getElementById('response-2-prep').value}
+
+Assessment Method:
+${document.getElementById('response-2-assessment').value}
+
+========================================
+ACTIVITY 3: SELF-ADVOCACY SCENARIO ANALYSIS
+========================================
+Skills Jamie Needs:
+${document.getElementById('response-3-skills').value}
+
+Learning Sequence:
+${document.getElementById('response-3-sequence').value}
+
+Practice Opportunities:
+${document.getElementById('response-3-practice').value}
+
+========================================
+ACTIVITY 4: GOAL-SETTING FRAMEWORK APPLICATION
+========================================
+Student & Goal:
+${document.getElementById('response-4-student').value}
+
+Short-Term Steps:
+${document.getElementById('response-4-steps').value}
+
+Benchmarks:
+${document.getElementById('response-4-benchmarks').value}
+
+Student Ownership Strategy:
+${document.getElementById('response-4-ownership').value}
+
+========================================
+ACTIVITY 5: SKILLS INTEGRATION ACTION PLAN
+========================================
+Activity Description:
+${document.getElementById('response-5-activity').value}
+
+Youth Skills Addressed:
+${skillsChecked}
+
+Barrier & Solution:
+${document.getElementById('response-5-barrier').value}
+
+Implementation Timeline:
+${document.getElementById('response-5-timeline').value}
+
+========================================
+NEXT STEPS
+========================================
+✓ Save this email for your records
+✓ Complete the Module 3 Assessment Quiz
+✓ Implement your action plans
+✓ Share strategies with colleagues
+
+Remember: Youth skills are interconnected - teaching one skill often improves others!
+`;
+
+  const subject = encodeURIComponent('My Cluster Two Module Responses - ' + new Date().toLocaleDateString());
+  const body = encodeURIComponent(responses);
+  const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+  
+  window.location.href = mailtoLink;
+  
+  document.getElementById('completion-message').style.display = 'block';
+  document.getElementById('completion-message').scrollIntoView({ behavior: 'smooth' });
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  restoreSavedData();
+  
+  if (!localStorage.getItem(STORAGE_KEY)) {
+    for (let i = 1; i <= 5; i++) {
+      updateProgress(i);
+    }
+  }
+});
+
+window.addEventListener('beforeunload', function(e) {
+  const hasInput = Object.values(completionStatus).some(status => status === true);
+  const allComplete = Object.values(completionStatus).every(status => status === true);
+  
+  if (hasInput && !allComplete) {
+    e.preventDefault();
+    e.returnValue = 'You have incomplete activities. Your work is auto-saved and will be here when you return to this page.';
+    return e.returnValue;
+  }
+});
+</script>
+
+</body>
+</html>

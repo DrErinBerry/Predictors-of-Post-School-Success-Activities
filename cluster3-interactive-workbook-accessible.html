@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cluster 3: Career Development - Interactive Activities</title>
+    <style>
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+        .save-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .save-indicator.show {
+            opacity: 1;
+        }
+        body {
+            font-family: -apple-system, Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+        .activity-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 900px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+        .activity-title {
+            color: #667eea;
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .status-badge {
+            padding: 8px 16px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .note {
+            background: #fff9e6;
+            border-left: 4px solid #FFB800;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .scenario-box {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #0066cc;
+        }
+        .question-label {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="text"], input[type="number"], input[type="email"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: inherit;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .time-estimate {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .radio-group, .checkbox-group {
+            margin: 15px 0 25px 0;
+        }
+        .radio-option, .checkbox-option {
+            margin: 10px 0;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+        }
+        .radio-option label, .checkbox-option label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+        }
+        .quiz-feedback {
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+        .quiz-feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .quiz-feedback.incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .progress-bar-container {
+            background: #e0e0e0;
+            height: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- AUTO-SAVE INDICATOR -->
+<div id="save-indicator" class="save-indicator" role="status" aria-live="polite" aria-atomic="true">
+    <span aria-hidden="true">✓</span> Auto-saved
+</div>
+
+<!-- AUTO-SAVE INFO BANNER -->
+<section role="region" aria-labelledby="autosave-heading" style="background: #d1ecf1; border: 2px solid #bee5eb; padding: 15px; border-radius: 10px; margin-bottom: 20px; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <h2 id="autosave-heading" style="color: #0c5460; margin-top: 0; font-size: 1.2em;">
+    <span aria-hidden="true">💾</span> Auto-Save Enabled
+  </h2>
+  <p style="color: #0c5460; margin: 5px 0;">Your work is automatically saved to your browser as you type! You can safely leave and return later. Your progress will be restored when you come back to this page on the same browser.</p>
+  <p style="color: #0c5460; margin: 5px 0; font-size: 14px;"><strong>Note:</strong> Auto-save only works on THIS browser on THIS device. Switching browsers or devices will start fresh.</p>
+  <button onclick="clearAllSavedData()" style="background: #17a2b8; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 14px; margin-top: 5px;" aria-label="Clear all saved work and start over">
+    <span aria-hidden="true">🗑️</span> Clear My Saved Work & Start Over
+  </button>
+</section>
+
+<!-- PROGRESS INDICATOR BAR -->
+<section role="region" aria-labelledby="progress-heading" style="position: sticky; top: 0; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; z-index: 100; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <h2 id="progress-heading" style="color: #667eea; margin-top: 0; font-size: 1.3em;">
+    <span aria-hidden="true">📊</span> Your Progress
+  </h2>
+  <div class="progress-bar-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Overall completion progress">
+    <div id="overall-progress-fill" class="progress-bar-fill" style="width: 0%">0%</div>
+  </div>
+  <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 14px;">
+    <span><span aria-hidden="true">✓</span> Completed: <strong id="completed-count" aria-live="polite">0</strong> of 6</span>
+    <span><span aria-hidden="true">📧</span> Email ready when all complete</span>
+  </div>
+</section>
+
+<!-- COMPLETION BANNER -->
+<section id="completion-banner" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; margin: 20px auto; max-width: 900px;" role="alert" aria-live="polite">
+  <h3 style="color: white; margin: 0 0 10px 0;"><span aria-hidden="true">🎉</span> Congratulations! All Activities Completed!</h3>
+  <p style="margin: 0;">You can now email yourself a copy of your responses using the button below.</p>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 1 -->
+<!-- ========================================= -->
+<section id="activity-1" class="activity-section" role="region" aria-labelledby="activity-1-title">
+  <div class="activity-header">
+    <h3 id="activity-1-title" class="activity-title">Activity 1: Build a SPIN Profile</h3>
+    <span id="status-1" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 8-10 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Before continuing with the video, let's practice building a SPIN profile. Think of one student you currently work with (or yourself when you were in high school).
+  </div>
+  
+  <h4 style="color: #667eea; margin-top: 25px;">Your Student's SPIN Profile</h4>
+  
+  <label for="strengths" class="question-label">S - Strengths: What are they good at? (Academic skills, personal qualities, talents)</label>
+  <textarea id="strengths" data-activity="1" placeholder="Example: Strong visual-spatial skills, creative, great with hands-on tasks, persistent when interested..." aria-required="true"></textarea>
+  
+  <label for="preferences" class="question-label">P - Preferences: What do they prefer?</label>
+  <p style="margin-left: 20px; color: #666; font-size: 0.95em;">Consider: Working alone or with others? Indoor or outdoor work? Hands-on or computer-based? Fast-paced or slower-paced?</p>
+  <textarea id="preferences" data-activity="1" placeholder="Example: Prefers working with small groups, likes outdoor activities, enjoys hands-on projects more than computer work..." aria-required="true"></textarea>
+  
+  <label for="interests" class="question-label">I - Interests: What are they interested in or curious about? (Hobbies, favorite subjects, career ideas)</label>
+  <textarea id="interests" data-activity="1" placeholder="Example: Loves animals, interested in mechanics, enjoys cooking, curious about technology..." aria-required="true"></textarea>
+  
+  <label for="needs" class="question-label">N - Needs: What supports or accommodations do they need to be successful?</label>
+  <textarea id="needs" data-activity="1" placeholder="Example: Visual schedules, extra processing time, quiet workspace for focus, step-by-step instructions..." aria-required="true"></textarea>
+  
+  <div class="note" role="note">
+    <strong>Save your SPIN profile - you'll use it again in Activity 6!</strong>
+  </div>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 2 -->
+<!-- ========================================= -->
+<section id="activity-2" class="activity-section" role="region" aria-labelledby="activity-2-title">
+  <div class="activity-header">
+    <h3 id="activity-2-title" class="activity-title">Activity 2: Occupational Course Accessibility Check</h3>
+    <span id="status-2" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 8-10 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Think about the occupational courses available in your school or district.
+  </div>
+  
+  <h4 style="color: #667eea; margin-top: 25px;">Current Occupational Courses</h4>
+  
+  <label for="course1" class="question-label">List 2-3 occupational courses available to students:</label>
+  <input type="text" id="course1" data-activity="2" placeholder="Course 1: (e.g., Automotive Technology, Culinary Arts, Welding)" aria-required="true">
+  <input type="text" id="course2" data-activity="2" placeholder="Course 2: (e.g., Health Sciences, Construction, Cosmetology)" aria-required="true">
+  <input type="text" id="course3" data-activity="2" placeholder="Course 3: (e.g., Information Technology, Agriculture, Business)" aria-required="true">
+  
+  <h4 style="color: #667eea; margin-top: 25px;">Accessibility Analysis</h4>
+  
+  <fieldset style="border: none; padding: 0;">
+    <legend class="question-label">Are students with disabilities currently enrolled?</legend>
+    
+    <div class="radio-group">
+      <div class="radio-option">
+        <strong style="display: block; margin-bottom: 8px;">Course 1:</strong>
+        <label><input type="radio" name="enrolled1" data-activity="2" value="yes" aria-label="Course 1: Yes"> Yes</label>
+        <label><input type="radio" name="enrolled1" data-activity="2" value="no" aria-label="Course 1: No"> No</label>
+        <label><input type="radio" name="enrolled1" data-activity="2" value="unsure" aria-label="Course 1: Not Sure"> Not Sure</label>
+      </div>
+      
+      <div class="radio-option">
+        <strong style="display: block; margin-bottom: 8px;">Course 2:</strong>
+        <label><input type="radio" name="enrolled2" data-activity="2" value="yes" aria-label="Course 2: Yes"> Yes</label>
+        <label><input type="radio" name="enrolled2" data-activity="2" value="no" aria-label="Course 2: No"> No</label>
+        <label><input type="radio" name="enrolled2" data-activity="2" value="unsure" aria-label="Course 2: Not Sure"> Not Sure</label>
+      </div>
+      
+      <div class="radio-option">
+        <strong style="display: block; margin-bottom: 8px;">Course 3:</strong>
+        <label><input type="radio" name="enrolled3" data-activity="2" value="yes" aria-label="Course 3: Yes"> Yes</label>
+        <label><input type="radio" name="enrolled3" data-activity="2" value="no" aria-label="Course 3: No"> No</label>
+        <label><input type="radio" name="enrolled3" data-activity="2" value="unsure" aria-label="Course 3: Not Sure"> Not Sure</label>
+      </div>
+    </div>
+  </fieldset>
+  
+  <label for="barriers" class="question-label">If you answered "No" for any course, what's the barrier?</label>
+  <p style="margin-left: 20px; color: #666; font-size: 0.95em;">Consider: Scheduling conflicts? Transportation? Staff assumptions about student abilities? Lack of accommodations? Physical accessibility? Other?</p>
+  <textarea id="barriers" data-activity="2" aria-describedby="barriers-hint"></textarea>
+  <span id="barriers-hint" class="sr-only">Describe any barriers preventing students with disabilities from enrolling in these courses.</span>
+  
+  <h4 style="color: #667eea; margin-top: 25px;">Action Planning</h4>
+  
+  <label for="barrier-address" class="question-label">Write down ONE specific barrier you could address this year:</label>
+  <textarea id="barrier-address" data-activity="2" aria-required="true"></textarea>
+  
+  <label for="barrier-how" class="question-label">How could you address this barrier?</label>
+  <textarea id="barrier-how" data-activity="2" aria-required="true"></textarea>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 3 -->
+<!-- ========================================= -->
+<section id="activity-3" class="activity-section" role="region" aria-labelledby="activity-3-title">
+  <div class="activity-header">
+    <h3 id="activity-3-title" class="activity-title">Activity 3: Paid Employment Reality Check</h3>
+    <span id="status-3" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 8-10 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Let's get real about paid employment for your students. Answer these questions honestly—this is for your professional reflection and planning.
+  </div>
+  
+  <h4 style="color: #667eea; margin-top: 25px;">Current Status</h4>
+  
+  <label for="employed-number" class="question-label">How many of your transition-age students (ages 16+) currently have paid employment?</label>
+  <input type="number" id="employed-number" data-activity="3" min="0" placeholder="Number of students" aria-required="true">
+  
+  <label for="employed-percentage" class="question-label">What percentage of your eligible students is that?</label>
+  <input type="number" id="employed-percentage" data-activity="3" min="0" max="100" placeholder="Percentage (0-100)" aria-required="true">
+  
+  <h4 style="color: #667eea; margin-top: 25px;">Gold Standard Assessment</h4>
+  
+  <p>Remember Program Characteristic #12: Employment training placements should offer opportunities for (1) working 30+ hours/week, (2) making minimum wage or higher with benefits, and (3) utilizing individualized supports and reasonable accommodations.</p>
+  
+  <fieldset style="border: none; padding: 0;">
+    <legend class="sr-only">Gold Standard Questions</legend>
+    
+    <div class="radio-group">
+      <div class="radio-option">
+        <strong style="display: block; margin-bottom: 8px;">Do any of your working students work 30+ hours per week?</strong>
+        <label><input type="radio" name="hours30" data-activity="3" value="yes" aria-label="30+ hours: Yes"> Yes</label>
+        <label><input type="radio" name="hours30" data-activity="3" value="no" aria-label="30+ hours: No"> No</label>
+        <label><input type="radio" name="hours30" data-activity="3" value="unsure" aria-label="30+ hours: Not Sure"> Not Sure</label>
+      </div>
+      
+      <div class="radio-option">
+        <strong style="display: block; margin-bottom: 8px;">Do all working students earn at least minimum wage or higher?</strong>
+        <label><input type="radio" name="minwage" data-activity="3" value="yes" aria-label="Minimum wage: Yes"> Yes</label>
+        <label><input type="radio" name="minwage" data-activity="3" value="no" aria-label="Minimum wage: No"> No</label>
+        <label><input type="radio" name="minwage" data-activity="3" value="unsure" aria-label="Minimum wage: Not Sure"> Not Sure</label>
+      </div>
+      
+      <div class="radio-option">
+        <strong style="display: block; margin-bottom: 8px;">Do working students receive individualized supports at their jobs?</strong>
+        <label><input type="radio" name="supports" data-activity="3" value="all" aria-label="Supports: Yes, all"> Yes, all</label>
+        <label><input type="radio" name="supports" data-activity="3" value="some" aria-label="Supports: Some"> Some</label>
+        <label><input type="radio" name="supports" data-activity="3" value="no" aria-label="Supports: No"> No</label>
+        <label><input type="radio" name="supports" data-activity="3" value="unsure" aria-label="Supports: Not Sure"> Not Sure</label>
+      </div>
+    </div>
+  </fieldset>
+  
+  <h4 style="color: #667eea; margin-top: 25px;">Goal Setting</h4>
+  
+  <label for="goal-number" class="question-label">By the end of this school year, how many more students could potentially have paid employment?</label>
+  <input type="number" id="goal-number" data-activity="3" min="0" placeholder="Goal number" aria-required="true">
+  
+  <label for="action-month" class="question-label">What's ONE action you'll take THIS MONTH to move toward that goal?</label>
+  <textarea id="action-month" data-activity="3" placeholder="Be specific! Example: Contact 3 local businesses about hosting student workers, meet with DRS counselor to discuss Pre-ETS, schedule job shadowing experiences..." aria-required="true"></textarea>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 4 -->
+<!-- ========================================= -->
+<section id="activity-4" class="activity-section" role="region" aria-labelledby="activity-4-title">
+  <div class="activity-header">
+    <h3 id="activity-4-title" class="activity-title">Activity 4: Work Study vs. Paid Employment - Knowledge Check</h3>
+    <span id="status-4" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 6-8 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Determine whether each scenario describes work study or paid employment. Click "Check Answer" after each scenario to see if you're correct.
+  </div>
+  
+  <!-- Scenario A -->
+  <div class="scenario-box" role="article">
+    <h4 style="color: #0066cc; margin-top: 0;"><span aria-hidden="true">📋</span> Scenario A: Maria</h4>
+    <p>Maria, a 17-year-old junior with an intellectual disability, works at Target stocking shelves 15 hours per week. She earns $12/hour (above minimum wage), and her paycheck comes directly from Target. A job coach from the school checks in once a week to help her problem-solve any challenges.</p>
+    
+    <fieldset style="border: none; padding: 0; margin: 15px 0;">
+      <legend class="sr-only">Is this work study or paid employment?</legend>
+      <div class="radio-group">
+        <label><input type="radio" name="scenario-a" data-activity="4" value="work-study"> Work Study</label>
+        <label><input type="radio" name="scenario-a" data-activity="4" value="paid-employment"> Paid Employment</label>
+      </div>
+    </fieldset>
+    
+    <button type="button" onclick="checkAnswer('a', 'paid-employment')" style="background: #667eea; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Check Answer</button>
+    <div id="feedback-a" class="quiz-feedback" role="alert"></div>
+  </div>
+  
+  <!-- Scenario B -->
+  <div class="scenario-box" role="article">
+    <h4 style="color: #0066cc; margin-top: 0;"><span aria-hidden="true">📋</span> Scenario B: James</h4>
+    <p>James, a 16-year-old sophomore with autism, works in the school office during 4th period. He files papers, delivers messages, and helps with photocopying. His special education teacher supervises him and teaches him workplace skills like time management and appropriate workplace communication. He earns high school credit for this experience but does not receive a paycheck.</p>
+    
+    <fieldset style="border: none; padding: 0; margin: 15px 0;">
+      <legend class="sr-only">Is this work study or paid employment?</legend>
+      <div class="radio-group">
+        <label><input type="radio" name="scenario-b" data-activity="4" value="work-study"> Work Study</label>
+        <label><input type="radio" name="scenario-b" data-activity="4" value="paid-employment"> Paid Employment</label>
+      </div>
+    </fieldset>
+    
+    <button type="button" onclick="checkAnswer('b', 'work-study')" style="background: #667eea; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Check Answer</button>
+    <div id="feedback-b" class="quiz-feedback" role="alert"></div>
+  </div>
+  
+  <!-- Scenario C -->
+  <div class="scenario-box" role="article">
+    <h4 style="color: #0066cc; margin-top: 0;"><span aria-hidden="true">📋</span> Scenario C: DeShawn</h4>
+    <p>DeShawn, an 18-year-old senior with a learning disability, works as a dishwasher at a local restaurant 20 hours per week. He earns minimum wage ($7.25/hour in Oklahoma) paid directly by the restaurant owner. A DRS-funded job coach helped him learn the job during his first month and now checks in monthly. DeShawn receives a W-2 at tax time.</p>
+    
+    <fieldset style="border: none; padding: 0; margin: 15px 0;">
+      <legend class="sr-only">Is this work study or paid employment?</legend>
+      <div class="radio-group">
+        <label><input type="radio" name="scenario-c" data-activity="4" value="work-study"> Work Study</label>
+        <label><input type="radio" name="scenario-c" data-activity="4" value="paid-employment"> Paid Employment</label>
+      </div>
+    </fieldset>
+    
+    <button type="button" onclick="checkAnswer('c', 'paid-employment')" style="background: #667eea; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Check Answer</button>
+    <div id="feedback-c" class="quiz-feedback" role="alert"></div>
+  </div>
+  
+  <!-- Scenario D -->
+  <div class="scenario-box" role="article">
+    <h4 style="color: #0066cc; margin-top: 0;"><span aria-hidden="true">📋</span> Scenario D: Alicia</h4>
+    <p>Alicia, a 17-year-old junior with a physical disability, participates in the school cafeteria program. She helps prepare and serve food during the lunch period as part of a structured learning program. Her transition teacher supervises her work and is teaching her food service skills. Alicia does not receive a paycheck—this is a class for which she receives credit.</p>
+    
+    <fieldset style="border: none; padding: 0; margin: 15px 0;">
+      <legend class="sr-only">Is this work study or paid employment?</legend>
+      <div class="radio-group">
+        <label><input type="radio" name="scenario-d" data-activity="4" value="work-study"> Work Study</label>
+        <label><input type="radio" name="scenario-d" data-activity="4" value="paid-employment"> Paid Employment</label>
+      </div>
+    </fieldset>
+    
+    <button type="button" onclick="checkAnswer('d', 'work-study')" style="background: #667eea; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Check Answer</button>
+    <div id="feedback-d" class="quiz-feedback" role="alert"></div>
+  </div>
+  
+  <label for="key-difference" class="question-label" style="margin-top: 30px;">In your own words, what's the KEY difference between work study and paid employment?</label>
+  <textarea id="key-difference" data-activity="4" placeholder="Think about: payment, supervision, purpose, who benefits..." aria-required="true"></textarea>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 5 -->
+<!-- ========================================= -->
+<section id="activity-5" class="activity-section" role="region" aria-labelledby="activity-5-title">
+  <div class="activity-header">
+    <h3 id="activity-5-title" class="activity-title">Activity 5: CTE Accessibility Brainstorm</h3>
+    <span id="status-5" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 6-8 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Think about one CTE program in your area that seems difficult to access for students with disabilities. Let's brainstorm accommodations!
+  </div>
+  
+  <label for="cte-program" class="question-label">Name the CTE program:</label>
+  <input type="text" id="cte-program" data-activity="5" placeholder="e.g., Welding, Nursing Assistant, Automotive Technology" aria-required="true">
+  
+  <label for="accommodation1" class="question-label">Accommodation #1 - Physical Accessibility:</label>
+  <p style="margin-left: 20px; color: #666; font-size: 0.95em;">How could you make the physical workspace more accessible?</p>
+  <textarea id="accommodation1" data-activity="5" placeholder="Example: Height-adjustable workbenches, wider aisles for wheelchair access, modified tools with larger grips..." aria-required="true"></textarea>
+  
+  <label for="accommodation2" class="question-label">Accommodation #2 - Instructional Modifications:</label>
+  <p style="margin-left: 20px; color: #666; font-size: 0.95em;">How could you modify instruction or materials?</p>
+  <textarea id="accommodation2" data-activity="5" placeholder="Example: Visual step-by-step guides, video demonstrations, hands-on practice with reduced time pressure..." aria-required="true"></textarea>
+  
+  <label for="accommodation3" class="question-label">Accommodation #3 - Assessment Adaptations:</label>
+  <p style="margin-left: 20px; color: #666; font-size: 0.95em;">How could students demonstrate mastery in different ways?</p>
+  <textarea id="accommodation3" data-activity="5" placeholder="Example: Performance-based assessment instead of written tests, extended time, oral responses..." aria-required="true"></textarea>
+  
+  <label for="additional-accommodations" class="question-label">What other accommodations or supports might help students succeed in this program?</label>
+  <textarea id="additional-accommodations" data-activity="5" aria-describedby="additional-hint"></textarea>
+  <span id="additional-hint" class="sr-only">Describe any additional accommodations, supports, or modifications that would help students with disabilities succeed in this CTE program.</span>
+</section>
+
+<!-- ========================================= -->
+<!-- ACTIVITY 6 -->
+<!-- ========================================= -->
+<section id="activity-6" class="activity-section" role="region" aria-labelledby="activity-6-title">
+  <div class="activity-header">
+    <h3 id="activity-6-title" class="activity-title">Activity 6: 4-Year Career Development Plan</h3>
+    <span id="status-6" class="status-badge" role="status" aria-live="polite">
+      <span aria-hidden="true">⭕</span> Not Started
+    </span>
+  </div>
+  
+  <div class="time-estimate">Estimated time: 12-15 minutes</div>
+  
+  <div class="instructions" role="note">
+    <strong>Instructions:</strong> Now let's put everything together! Using the SPIN profile you created in Activity 1, design a 4-year career development plan that incorporates all five predictors in this cluster.
+  </div>
+  
+  <div class="note" role="note">
+    <strong>Remember:</strong> The five Career Development predictors are: (1) Career Awareness, (2) Occupational Courses, (3) Paid Employment/Work Experience, (4) Work Study, and (5) Vocational Education/CTE
+  </div>
+  
+  <label for="spin-summary" class="question-label">Briefly summarize the SPIN profile from Activity 1:</label>
+  <p style="margin-left: 20px; color: #666; font-size: 0.95em;">What are this student's key strengths, preferences, interests, and needs?</p>
+  <textarea id="spin-summary" data-activity="6" placeholder="Quick summary of S, P, I, and N..." aria-required="true"></textarea>
+  
+  <h4 style="color: #667eea; margin-top: 30px;">4-Year Pathway</h4>
+  
+  <label for="grade9" class="question-label">9th Grade: Career Awareness</label>
+  <p style="margin-left: 20px; color: #666; font-size: 0.95em;">What career exploration activities would help this student learn about different jobs aligned with their SPIN profile?</p>
+  <p style="margin-left: 20px; color: #666; font-size: 0.9em;">Consider: Job shadows, career fairs, guest speakers, virtual workplace tours, interest inventories</p>
+  <textarea id="grade9" data-activity="6" aria-required="true"></textarea>
+  
+  <label for="grade10" class="question-label">10th Grade: Occupational Courses</label>
+  <p style="margin-left: 20px; color: #666; font-size: 0.95em;">What occupational course(s) should this student explore based on their SPIN profile?</p>
+  <p style="margin-left: 20px; color: #666; font-size: 0.9em;">Consider: Individual courses in career areas of interest, technology center courses, community college courses, online courses</p>
+  <textarea id="grade10" data-activity="6" aria-required="true"></textarea>
+  
+  <label for="grade11" class="question-label">11th Grade: Work Study</label>
+  <p style="margin-left: 20px; color: #666; font-size: 0.95em;">What work study placement would match this student's SPIN profile and help build workplace skills?</p>
+  <p style="margin-left: 20px; color: #666; font-size: 0.9em;">Consider: On-campus work (office, library, cafeteria) or community-based work study aligned with interests</p>
+  <textarea id="grade11" data-activity="6" aria-required="true"></textarea>
+  
+  <label for="grade12" class="question-label">12th Grade: Paid Employment & CTE</label>
+  <p style="margin-left: 20px; color: #666; font-size: 0.95em;">What paid job or CTE program is the goal for this student?</p>
+  <p style="margin-left: 20px; color: #666; font-size: 0.9em;">Consider: Part-time paid employment in field of interest, concentrated CTE program with industry credential, combination of both</p>
+  <textarea id="grade12" data-activity="6" aria-required="true"></textarea>
+  
+  <h4 style="color: #667eea; margin-top: 30px;">Reflection</h4>
+  
+  <label for="learned" class="question-label">What's the most important thing you learned by creating this pathway?</label>
+  <textarea id="learned" data-activity="6" aria-required="true"></textarea>
+  
+  <label for="support-needed" class="question-label">What support would this student need to successfully complete this pathway?</label>
+  <textarea id="support-needed" data-activity="6" aria-required="true"></textarea>
+  
+  <div class="note" role="note">
+    <strong>Congratulations!</strong> You've just created a comprehensive 4-year career development plan using all five predictors. This is exactly the kind of intentional, sequential planning that leads to post-school employment success.
+  </div>
+</section>
+
+<!-- ========================================= -->
+<!-- EMAIL SECTION (appears when complete) -->
+<!-- ========================================= -->
+<section id="email-section" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px; margin: 30px auto; max-width: 900px; color: white;" role="region" aria-labelledby="email-heading">
+  <h3 id="email-heading" style="color: white; margin-top: 0;">
+    <span aria-hidden="true">📧</span> Email Your Responses
+  </h3>
+  <p>Enter your email address to receive a copy of all your responses:</p>
+  
+  <div style="background: white; padding: 20px; border-radius: 5px;">
+    <label for="user-email" style="color: #333; font-weight: bold; display: block; margin-bottom: 10px;">Your Email Address:</label>
+    <input type="email" id="user-email" placeholder="your.email@example.com" style="width: 100%; max-width: 400px; padding: 12px; border: 2px solid #667eea; border-radius: 5px; font-size: 16px; margin-bottom: 15px;" aria-required="true">
+    
+    <button onclick="emailResponses()" style="background: #28a745; color: white; border: none; padding: 15px 30px; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer;" aria-label="Send responses to my email">
+      <span aria-hidden="true">📧</span> Send Responses to My Email
+    </button>
+    
+    <div id="email-notice" style="background: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-top: 15px; display: none;" role="status" aria-live="polite"></div>
+  </div>
+  
+  <p style="margin-top: 20px; font-size: 14px;"><span aria-hidden="true">💡</span> <strong>Tip:</strong> Your email program will open with all responses pre-filled. Just click Send!</p>
+</section>
+
+<!-- ACCESSIBILITY INFORMATION -->
+<section role="contentinfo" aria-labelledby="accessibility-heading" style="background: #f0f4ff; padding: 20px; border-radius: 10px; margin: 30px auto; border: 2px solid #667eea; max-width: 900px;">
+  <h3 id="accessibility-heading" style="color: #667eea; margin-top: 0;">
+    <span aria-hidden="true">♿</span> Accessibility Information
+  </h3>
+  
+  <h4 style="color: #667eea; font-size: 1.1em; margin-top: 20px;">Screen Reader Optimization</h4>
+  <p>This interactive workbook has been optimized for screen reader accessibility and includes:</p>
+  <ul>
+    <li><strong>ARIA labels and roles</strong> for all interactive elements, forms, and sections</li>
+    <li><strong>Semantic HTML structure</strong> with proper heading hierarchy</li>
+    <li><strong>Form field labels and hints</strong> clearly associated with inputs</li>
+    <li><strong>Status updates</strong> announced via live regions for progress and feedback</li>
+    <li><strong>Keyboard accessibility</strong> for all interactive elements</li>
+    <li><strong>Descriptive button and field labels</strong> providing clear action context</li>
+  </ul>
+  
+  <h4 style="color: #667eea; font-size: 1.1em; margin-top: 20px;">How Auto-Save Works</h4>
+  <p>Your responses are automatically saved to your browser's local storage as you type. This means:</p>
+  <ul>
+    <li><strong>✓ You can leave and return</strong> - Your work will be here when you come back</li>
+    <li><strong>✓ No account needed</strong> - Everything saves locally in your browser</li>
+    <li><strong>⚠️ Browser-specific</strong> - Your work only saves on THIS browser on THIS device</li>
+    <li><strong>⚠️ Private browsing</strong> - Auto-save may not work in incognito/private mode</li>
+    <li><strong>⚠️ Clearing browser data</strong> - Clearing cookies/cache will delete saved work</li>
+  </ul>
+  
+  <h4 style="color: #667eea; font-size: 1.1em; margin-top: 20px;">Alternative Format Available</h4>
+  <p><strong>Word Document Version:</strong> A fully accessible Word document version of these activities is available for learners who prefer downloadable formats or need additional assistive technology support. Contact your instructor to request this format.</p>
+</section>
+
+<script>
+// Auto-save functionality
+const formElements = document.querySelectorAll('input, textarea');
+
+formElements.forEach(element => {
+    // Load saved data on page load
+    const savedValue = localStorage.getItem(element.id || element.name);
+    if (savedValue && element.type !== 'radio') {
+        element.value = savedValue;
+    } else if (savedValue && element.type === 'radio' && element.value === savedValue) {
+        element.checked = true;
+    }
+    
+    // Save data and update progress on change
+    element.addEventListener('change', function() {
+        if (this.type === 'radio') {
+            localStorage.setItem(this.name, this.value);
+        } else {
+            localStorage.setItem(this.id, this.value);
+        }
+        showSaveIndicator();
+        updateProgress();
+    });
+    
+    // Save textarea data on input (while typing)
+    if (element.tagName === 'TEXTAREA' || element.type === 'text' || element.type === 'number' || element.type === 'email') {
+        element.addEventListener('input', function() {
+            localStorage.setItem(this.id, this.value);
+            showSaveIndicator();
+            updateProgress();
+        });
+    }
+});
+
+function showSaveIndicator() {
+    const indicator = document.getElementById('save-indicator');
+    indicator.classList.add('show');
+    setTimeout(() => indicator.classList.remove('show'), 2000);
+}
+
+function clearAllSavedData() {
+    if (confirm('Are you sure you want to clear ALL saved work? This cannot be undone.')) {
+        localStorage.clear();
+        location.reload();
+    }
+}
+
+// Update progress bars
+function updateProgress() {
+    const activityCounts = {
+        1: 4,  // 4 textareas
+        2: 9,  // 3 text inputs + 3 radio groups + 3 textareas
+        3: 7,  // 2 numbers + 3 radio groups + 2 textareas
+        4: 5,  // 4 radio groups + 1 textarea
+        5: 5,  // 1 text + 4 textareas
+        6: 8   // 8 textareas
+    };
+
+    let totalCompleted = 0;
+    let totalFields = 0;
+
+    // Calculate progress for each activity
+    for (let activityNum = 1; activityNum <= 6; activityNum++) {
+        const activityElements = document.querySelectorAll(`[data-activity="${activityNum}"]`);
+        let completed = 0;
+        let total = 0;
+
+        activityElements.forEach(element => {
+            if (element.type === 'radio') {
+                // Count radio groups (by name)
+                const radioName = element.name;
+                if (!element.hasAttribute('data-counted')) {
+                    total++;
+                    // Mark all radios in this group
+                    document.querySelectorAll(`[name="${radioName}"]`).forEach(r => r.setAttribute('data-counted', 'true'));
+                    if (document.querySelector(`[name="${radioName}"]:checked`)) {
+                        completed++;
+                    }
+                }
+            } else if (element.tagName === 'TEXTAREA' || element.tagName === 'INPUT') {
+                total++;
+                if (element.value.trim()) {
+                    completed++;
+                }
+            }
+        });
+
+        // Reset counted attributes
+        document.querySelectorAll('[data-counted="true"]').forEach(el => el.removeAttribute('data-counted'));
+
+        // Update status badge
+        const statusBadge = document.getElementById(`status-${activityNum}`);
+        const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+        
+        if (percentage === 100) {
+            statusBadge.innerHTML = '<span aria-hidden="true">✓</span> Complete';
+            statusBadge.style.background = '#28a745';
+            statusBadge.style.color = 'white';
+        } else if (completed > 0) {
+            statusBadge.innerHTML = '<span aria-hidden="true">⏳</span> In Progress';
+            statusBadge.style.background = '#ffc107';
+            statusBadge.style.color = '#333';
+        } else {
+            statusBadge.innerHTML = '<span aria-hidden="true">⭕</span> Not Started';
+            statusBadge.style.background = '#e0e0e0';
+            statusBadge.style.color = '#666';
+        }
+
+        totalCompleted += completed;
+        totalFields += total;
+    }
+
+    // Update overall progress
+    const overallPercentage = totalFields > 0 ? Math.round((totalCompleted / totalFields) * 100) : 0;
+    const overallFill = document.getElementById('overall-progress-fill');
+    const completedCount = document.getElementById('completed-count');
+    
+    overallFill.style.width = overallPercentage + '%';
+    overallFill.textContent = overallPercentage + '%';
+    overallFill.parentElement.setAttribute('aria-valuenow', overallPercentage);
+    
+    // Count completed activities
+    let activitiesCompleted = 0;
+    for (let i = 1; i <= 6; i++) {
+        const badge = document.getElementById(`status-${i}`);
+        if (badge && badge.textContent.includes('Complete')) {
+            activitiesCompleted++;
+        }
+    }
+    completedCount.textContent = activitiesCompleted;
+
+    // Show completion banner and email section when 100% complete
+    if (overallPercentage === 100) {
+        document.getElementById('completion-banner').style.display = 'block';
+        document.getElementById('email-section').style.display = 'block';
+    } else {
+        document.getElementById('completion-banner').style.display = 'none';
+        document.getElementById('email-section').style.display = 'none';
+    }
+}
+
+// Initialize progress on page load
+updateProgress();
+
+// Check quiz answers
+function checkAnswer(scenario, correctAnswer) {
+    const selectedAnswer = document.querySelector(`input[name="scenario-${scenario}"]:checked`);
+    const feedbackDiv = document.getElementById(`feedback-${scenario}`);
+    
+    if (!selectedAnswer) {
+        alert('Please select an answer before checking.');
+        return;
+    }
+    
+    const isCorrect = selectedAnswer.value === correctAnswer;
+    feedbackDiv.style.display = 'block';
+    
+    if (isCorrect) {
+        feedbackDiv.className = 'quiz-feedback correct';
+        if (scenario === 'a') {
+            feedbackDiv.innerHTML = '<strong>✓ Correct!</strong> This is paid employment because Maria receives competitive wages paid directly by the employer (Target).';
+        } else if (scenario === 'b') {
+            feedbackDiv.innerHTML = '<strong>✓ Correct!</strong> This is work study because it\'s a structured instructional program where James learns workplace skills and earns high school credit.';
+        } else if (scenario === 'c') {
+            feedbackDiv.innerHTML = '<strong>✓ Correct!</strong> This is paid employment because DeShawn earns competitive wages directly from the employer. The job coach support doesn\'t make it work study—it\'s an accommodation that supports success in paid employment.';
+        } else if (scenario === 'd') {
+            feedbackDiv.innerHTML = '<strong>✓ Correct!</strong> This is work study because it\'s a structured program where Alicia learns food service skills under teacher supervision. The focus is on instruction and skill development.';
+        }
+    } else {
+        feedbackDiv.className = 'quiz-feedback incorrect';
+        if (scenario === 'a') {
+            feedbackDiv.innerHTML = '<strong>✗ Not quite.</strong> This is paid employment because Maria receives competitive wages ($12/hour) paid directly by the employer (Target), not through the school.';
+        } else if (scenario === 'b') {
+            feedbackDiv.innerHTML = '<strong>✗ Not quite.</strong> This is work study because it\'s a structured program focused on teaching workplace skills, with supervision and high school credit—not paid competitive employment.';
+        } else if (scenario === 'c') {
+            feedbackDiv.innerHTML = '<strong>✗ Not quite.</strong> Even though a job coach is involved, this is paid employment because DeShawn earns minimum wage paid directly by the restaurant. Work study focuses on learning workplace skills; this is actual competitive employment with supports.';
+        } else if (scenario === 'd') {
+            feedbackDiv.innerHTML = '<strong>✗ Not quite.</strong> This is work study because Alicia is learning food service skills under teacher supervision as part of an instructional program. To be paid employment, she would need to receive competitive wages from the employer.';
+        }
+    }
+}
+
+// Email responses function
+function emailResponses() {
+    const email = document.getElementById('user-email').value;
+    
+    if (!email || !email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+
+    // Generate email content
+    let content = 'CLUSTER 3: CAREER DEVELOPMENT - INTERACTIVE ACTIVITIES\n';
+    content += 'Completed: ' + new Date().toLocaleDateString() + '\n';
+    content += '='.repeat(70) + '\n\n';
+    
+    // Activity 1
+    content += 'ACTIVITY 1: BUILD A SPIN PROFILE\n' + '-'.repeat(70) + '\n';
+    content += 'Strengths: ' + (document.getElementById('strengths').value || '[Not completed]') + '\n\n';
+    content += 'Preferences: ' + (document.getElementById('preferences').value || '[Not completed]') + '\n\n';
+    content += 'Interests: ' + (document.getElementById('interests').value || '[Not completed]') + '\n\n';
+    content += 'Needs: ' + (document.getElementById('needs').value || '[Not completed]') + '\n\n';
+    
+    // Activity 2
+    content += '\nACTIVITY 2: OCCUPATIONAL COURSE ACCESSIBILITY CHECK\n' + '-'.repeat(70) + '\n';
+    content += 'Course 1: ' + (document.getElementById('course1').value || '[Not completed]') + '\n';
+    content += 'Course 2: ' + (document.getElementById('course2').value || '[Not completed]') + '\n';
+    content += 'Course 3: ' + (document.getElementById('course3').value || '[Not completed]') + '\n\n';
+    
+    const enrolled1 = document.querySelector('input[name="enrolled1"]:checked');
+    const enrolled2 = document.querySelector('input[name="enrolled2"]:checked');
+    const enrolled3 = document.querySelector('input[name="enrolled3"]:checked');
+    content += 'Students with disabilities enrolled in Course 1: ' + (enrolled1 ? enrolled1.value : '[Not answered]') + '\n';
+    content += 'Students with disabilities enrolled in Course 2: ' + (enrolled2 ? enrolled2.value : '[Not answered]') + '\n';
+    content += 'Students with disabilities enrolled in Course 3: ' + (enrolled3 ? enrolled3.value : '[Not answered]') + '\n\n';
+    
+    content += 'Barriers: ' + (document.getElementById('barriers').value || '[Not completed]') + '\n\n';
+    content += 'Barrier to address: ' + (document.getElementById('barrier-address').value || '[Not completed]') + '\n\n';
+    content += 'How to address: ' + (document.getElementById('barrier-how').value || '[Not completed]') + '\n\n';
+    
+    // Activity 3
+    content += '\nACTIVITY 3: PAID EMPLOYMENT REALITY CHECK\n' + '-'.repeat(70) + '\n';
+    content += 'Number of students with paid employment: ' + (document.getElementById('employed-number').value || '[Not completed]') + '\n';
+    content += 'Percentage: ' + (document.getElementById('employed-percentage').value || '[Not completed]') + '%\n\n';
+    
+    const hours30 = document.querySelector('input[name="hours30"]:checked');
+    const minwage = document.querySelector('input[name="minwage"]:checked');
+    const supports = document.querySelector('input[name="supports"]:checked');
+    content += 'Students working 30+ hours: ' + (hours30 ? hours30.value : '[Not answered]') + '\n';
+    content += 'Students earning minimum wage+: ' + (minwage ? minwage.value : '[Not answered]') + '\n';
+    content += 'Students receiving supports: ' + (supports ? supports.value : '[Not answered]') + '\n\n';
+    
+    content += 'Goal for new students with employment: ' + (document.getElementById('goal-number').value || '[Not completed]') + '\n';
+    content += 'Action this month: ' + (document.getElementById('action-month').value || '[Not completed]') + '\n\n';
+    
+    // Activity 4
+    content += '\nACTIVITY 4: WORK STUDY VS. PAID EMPLOYMENT\n' + '-'.repeat(70) + '\n';
+    const scenarioA = document.querySelector('input[name="scenario-a"]:checked');
+    const scenarioB = document.querySelector('input[name="scenario-b"]:checked');
+    const scenarioC = document.querySelector('input[name="scenario-c"]:checked');
+    const scenarioD = document.querySelector('input[name="scenario-d"]:checked');
+    content += 'Scenario A (Maria at Target): ' + (scenarioA ? scenarioA.value : '[Not answered]') + '\n';
+    content += 'Scenario B (James in school office): ' + (scenarioB ? scenarioB.value : '[Not answered]') + '\n';
+    content += 'Scenario C (DeShawn at restaurant): ' + (scenarioC ? scenarioC.value : '[Not answered]') + '\n';
+    content += 'Scenario D (Alicia in cafeteria): ' + (scenarioD ? scenarioD.value : '[Not answered]') + '\n\n';
+    content += 'Key difference: ' + (document.getElementById('key-difference').value || '[Not completed]') + '\n\n';
+    
+    // Activity 5
+    content += '\nACTIVITY 5: CTE ACCESSIBILITY BRAINSTORM\n' + '-'.repeat(70) + '\n';
+    content += 'CTE Program: ' + (document.getElementById('cte-program').value || '[Not completed]') + '\n\n';
+    content += 'Accommodation 1: ' + (document.getElementById('accommodation1').value || '[Not completed]') + '\n\n';
+    content += 'Accommodation 2: ' + (document.getElementById('accommodation2').value || '[Not completed]') + '\n\n';
+    content += 'Accommodation 3: ' + (document.getElementById('accommodation3').value || '[Not completed]') + '\n\n';
+    content += 'Additional Accommodations: ' + (document.getElementById('additional-accommodations').value || '[Not completed]') + '\n\n';
+    
+    // Activity 6
+    content += '\nACTIVITY 6: 4-YEAR CAREER DEVELOPMENT PLAN\n' + '-'.repeat(70) + '\n';
+    content += 'SPIN Summary: ' + (document.getElementById('spin-summary').value || '[Not completed]') + '\n\n';
+    content += '9th Grade (Career Awareness): ' + (document.getElementById('grade9').value || '[Not completed]') + '\n\n';
+    content += '10th Grade (Occupational Courses): ' + (document.getElementById('grade10').value || '[Not completed]') + '\n\n';
+    content += '11th Grade (Work Study): ' + (document.getElementById('grade11').value || '[Not completed]') + '\n\n';
+    content += '12th Grade (Paid Employment & CTE): ' + (document.getElementById('grade12').value || '[Not completed]') + '\n\n';
+    content += 'Most important learning: ' + (document.getElementById('learned').value || '[Not completed]') + '\n\n';
+    content += 'Support needed: ' + (document.getElementById('support-needed').value || '[Not completed]') + '\n\n';
+    
+    // Create mailto link
+    const subject = encodeURIComponent('Cluster 3: Career Development - My Activity Responses');
+    const body = encodeURIComponent(content);
+    const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+    
+    // Open email client
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    const notice = document.getElementById('email-notice');
+    notice.textContent = 'Email client opened! Your responses are ready to send.';
+    notice.style.display = 'block';
+    setTimeout(() => {
+        notice.style.display = 'none';
+    }, 5000);
+}
+</script>
+
+</body>
+</html>

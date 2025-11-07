@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Development Progression Chart - Cluster 3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .intro {
+            padding: 30px 40px;
+            background: #f8f9ff;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .intro h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .spin-box {
+            background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .chart-section {
+            padding: 40px;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            border: 2px solid #333;
+        }
+        
+        .predictor-1 { background: #ff6b6b; }
+        .predictor-2 { background: #4ecdc4; }
+        .predictor-3 { background: #45b7d1; }
+        .predictor-4 { background: #f7b731; }
+        .predictor-5 { background: #5f27cd; }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        th {
+            padding: 20px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        th:first-child {
+            width: 15%;
+        }
+        
+        tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        tbody tr:hover {
+            background: #e3e8ff;
+            transition: background 0.3s ease;
+        }
+        
+        td {
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+            vertical-align: top;
+        }
+        
+        .age-level {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+            padding: 15px 20px !important;
+            background: linear-gradient(to right, #f0f4ff, transparent);
+        }
+        
+        .predictor-cell {
+            border-left: 5px solid;
+            padding-left: 15px !important;
+        }
+        
+        .cell-1 { border-left-color: #ff6b6b; }
+        .cell-2 { border-left-color: #4ecdc4; }
+        .cell-3 { border-left-color: #45b7d1; }
+        .cell-4 { border-left-color: #f7b731; }
+        .cell-5 { border-left-color: #5f27cd; }
+        
+        .activity-list {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .activity-list li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .icon {
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        .notes-section {
+            background: #fff9e6;
+            border-left: 5px solid #f7b731;
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 10px;
+        }
+        
+        .notes-section h3 {
+            color: #d68910;
+            margin-bottom: 15px;
+        }
+        
+        .footer {
+            background: #2d3748;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .header, thead {
+                background: #667eea !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            tbody tr {
+                page-break-inside: avoid;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            table {
+                font-size: 0.9em;
+            }
+            
+            th, td {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💼 Career Development Progression Chart</h1>
+            <p>Cluster Three: Building Pathways from Elementary Through Transition</p>
+        </div>
+        
+        <div class="intro">
+            <h2>Understanding Career Development Progression</h2>
+            <p>Career development is <strong>sequential and developmental</strong>, with each component building upon the previous one. This chart shows age-appropriate activities across five evidence-based predictors that lead to post-school employment success.</p>
+            
+            <div class="spin-box">
+                🌟 Remember: Throughout all stages, students are developing their SPIN Profile<br>
+                (Strengths • Preferences • Interests • Needs)
+            </div>
+        </div>
+        
+        <div class="chart-section">
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color predictor-1"></div>
+                    <strong>Career Awareness</strong>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color predictor-2"></div>
+                    <strong>Occupational Courses</strong>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color predictor-3"></div>
+                    <strong>Paid Employment/Work Experience</strong>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color predictor-4"></div>
+                    <strong>Work Study</strong>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color predictor-5"></div>
+                    <strong>Career-Technical Education</strong>
+                </div>
+            </div>
+            
+            <table role="table" aria-label="Career Development Progression by Grade Level">
+                <thead>
+                    <tr>
+                        <th scope="col">Age/Grade Level</th>
+                        <th scope="col">Career Awareness</th>
+                        <th scope="col">Occupational Courses</th>
+                        <th scope="col">Paid Employment/Work Experience</th>
+                        <th scope="col">Work Study</th>
+                        <th scope="col">Career-Technical Education</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- ELEMENTARY (Ages 5-11) -->
+                    <tr>
+                        <td class="age-level" rowspan="1">
+                            <strong>Elementary</strong><br>
+                            <small>(Ages 5-11)<br>K-5th Grade</small>
+                        </td>
+                        <td class="predictor-cell cell-1">
+                            <ul class="activity-list">
+                                <li><span class="icon">📚</span> Read books about different careers and workers</li>
+                                <li><span class="icon">🎨</span> "When I grow up" art projects and classroom sharing</li>
+                                <li><span class="icon">👥</span> Guest speakers (parents, community members) share their jobs</li>
+                                <li><span class="icon">🏫</span> Field trips to local businesses, fire stations, hospitals</li>
+                                <li><span class="icon">🎭</span> Role-play different careers during dramatic play</li>
+                                <li><span class="icon">💡</span> Learn about jobs in the school (principal, cafeteria, custodian)</li>
+                                <li><span class="icon">🌍</span> Explore how academic subjects connect to real-world jobs</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-2">
+                            <ul class="activity-list">
+                                <li><span class="icon">⏸️</span> <em>Not typically introduced at this level</em></li>
+                                <li><span class="icon">🎨</span> Focus on building foundational academic and social skills</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-3">
+                            <ul class="activity-list">
+                                <li><span class="icon">⏸️</span> <em>Not appropriate at this age</em></li>
+                                <li><span class="icon">🌱</span> Building work-readiness foundations through classroom responsibilities</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-4">
+                            <ul class="activity-list">
+                                <li><span class="icon">📋</span> Classroom jobs (line leader, paper passer, board eraser)</li>
+                                <li><span class="icon">🤝</span> Learning to follow directions and complete tasks</li>
+                                <li><span class="icon">⏰</span> Developing work habits: staying on task, finishing work</li>
+                                <li><span class="icon">🧹</span> Helping with classroom cleanup and organization</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-5">
+                            <ul class="activity-list">
+                                <li><span class="icon">⏸️</span> <em>Not introduced at this level</em></li>
+                                <li><span class="icon">🎯</span> Focus on general education and skill-building</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    
+                    <!-- MIDDLE SCHOOL (Ages 11-14) -->
+                    <tr>
+                        <td class="age-level">
+                            <strong>Middle School</strong><br>
+                            <small>(Ages 11-14)<br>6th-8th Grade</small>
+                        </td>
+                        <td class="predictor-cell cell-1">
+                            <ul class="activity-list">
+                                <li><span class="icon">🔍</span> Career interest inventories and aptitude assessments</li>
+                                <li><span class="icon">👨‍💼</span> Job shadowing experiences (half-day or full-day)</li>
+                                <li><span class="icon">🏢</span> Visit Oklahoma CareerTech Centers for career exploration</li>
+                                <li><span class="icon">📱</span> Use online career exploration tools (O*NET, Career OneStop)</li>
+                                <li><span class="icon">🎤</span> Guest speaker series from various career fields</li>
+                                <li><span class="icon">🧮</span> Teachers explicitly connect lessons to career applications</li>
+                                <li><span class="icon">📊</span> Begin developing SPIN profile documentation</li>
+                                <li><span class="icon">🎯</span> Participate in career fairs and industry tours</li>
+                                <li><span class="icon">💬</span> Family discussions about careers, education, and training</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-2">
+                            <ul class="activity-list">
+                                <li><span class="icon">🔧</span> Introductory exploratory courses (tech ed, family consumer science, art)</li>
+                                <li><span class="icon">💻</span> Basic computer and technology courses</li>
+                                <li><span class="icon">🎯</span> "Wheel" or rotation through different career areas</li>
+                                <li><span class="icon">📚</span> Pre-vocational courses introducing workplace concepts</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-3">
+                            <ul class="activity-list">
+                                <li><span class="icon">⏸️</span> <em>Generally not introduced yet</em></li>
+                                <li><span class="icon">🌱</span> Some students may have volunteer experiences or family business exposure</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-4">
+                            <ul class="activity-list">
+                                <li><span class="icon">📚</span> School-based jobs (library aide, office helper)</li>
+                                <li><span class="icon">🍽️</span> Cafeteria helper or recycling program assistant</li>
+                                <li><span class="icon">📝</span> Learning workplace behaviors: punctuality, responsibility</li>
+                                <li><span class="icon">🤝</span> Working with supervision, following multi-step directions</li>
+                                <li><span class="icon">⏱️</span> Understanding schedules and time management</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-5">
+                            <ul class="activity-list">
+                                <li><span class="icon">👁️</span> Introduction to CTE options through exploratory courses</li>
+                                <li><span class="icon">📋</span> Learning about CTE pathways available in high school</li>
+                                <li><span class="icon">🏫</span> Tours of high school and CareerTech programs</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    
+                    <!-- HIGH SCHOOL - 9TH GRADE -->
+                    <tr>
+                        <td class="age-level">
+                            <strong>High School</strong><br>
+                            <strong>9th Grade</strong><br>
+                            <small>(Ages 14-15)</small>
+                        </td>
+                        <td class="predictor-cell cell-1">
+                            <ul class="activity-list">
+                                <li><span class="icon">📋</span> Complete formal career interest inventories</li>
+                                <li><span class="icon">🎯</span> Identify 2-3 career clusters aligned with SPIN profile</li>
+                                <li><span class="icon">👥</span> Attend career fairs and college/career nights</li>
+                                <li><span class="icon">🔍</span> Research education requirements for careers of interest</li>
+                                <li><span class="icon">🏢</span> Extended job shadowing in areas of interest</li>
+                                <li><span class="icon">💼</span> Learn about workplace expectations and professional behavior</li>
+                                <li><span class="icon">📚</span> All teachers connect coursework to real-world careers</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-2">
+                            <ul class="activity-list">
+                                <li><span class="icon">🔧</span> Introductory occupational courses aligned with interests</li>
+                                <li><span class="icon">💻</span> Technology and digital literacy courses</li>
+                                <li><span class="icon">🏫</span> Begin exploring CareerTech center options</li>
+                                <li><span class="icon">🎨</span> Elective courses in career areas of interest</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-3">
+                            <ul class="activity-list">
+                                <li><span class="icon">🌱</span> <em>Early exploration phase</em></li>
+                                <li><span class="icon">🤝</span> Unpaid work sampling or informational interviews</li>
+                                <li><span class="icon">👨‍👩‍👦</span> Some students may have part-time jobs or family business work</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-4">
+                            <ul class="activity-list">
+                                <li><span class="icon">📚</span> Expanded school-based work (attendance office, media center)</li>
+                                <li><span class="icon">🧹</span> Campus maintenance or landscaping assistance</li>
+                                <li><span class="icon">⏰</span> Learning to manage work schedules with academics</li>
+                                <li><span class="icon">💼</span> Workplace readiness curriculum (soft skills, professionalism)</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-5">
+                            <ul class="activity-list">
+                                <li><span class="icon">🎯</span> Explore available CTE programs and pathways</li>
+                                <li><span class="icon">📋</span> Meet with counselor to plan 4-year CTE sequence</li>
+                                <li><span class="icon">🏫</span> May begin Level 1 courses in chosen pathway</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    
+                    <!-- HIGH SCHOOL - 10TH GRADE -->
+                    <tr>
+                        <td class="age-level">
+                            <strong>10th Grade</strong><br>
+                            <small>(Ages 15-16)</small>
+                        </td>
+                        <td class="predictor-cell cell-1">
+                            <ul class="activity-list">
+                                <li><span class="icon">🎯</span> Refine career goals based on experiences</li>
+                                <li><span class="icon">🔄</span> Update SPIN profile with new assessments and experiences</li>
+                                <li><span class="icon">🏢</span> Multiple workplace tours in target career field</li>
+                                <li><span class="icon">💬</span> Informational interviews with professionals</li>
+                                <li><span class="icon">🎓</span> Research post-secondary training requirements</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-2">
+                            <ul class="activity-list">
+                                <li><span class="icon">📚</span> Level 1-2 occupational courses in chosen career area</li>
+                                <li><span class="icon">🏫</span> CareerTech courses or dual enrollment options</li>
+                                <li><span class="icon">🔧</span> Hands-on skill development aligned with career goals</li>
+                                <li><span class="icon">💻</span> Industry-specific software or equipment training</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-3">
+                            <ul class="activity-list">
+                                <li><span class="icon">💼</span> Begin seeking part-time paid employment</li>
+                                <li><span class="icon">🏢</span> DRS Pre-ETS paid work experiences (if eligible)</li>
+                                <li><span class="icon">☀️</span> Summer youth employment programs (BEST STEP)</li>
+                                <li><span class="icon">🤝</span> Internships or co-op experiences (may be unpaid initially)</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-4">
+                            <ul class="activity-list">
+                                <li><span class="icon">🏫</span> More complex school-based work responsibilities</li>
+                                <li><span class="icon">🌍</span> May begin community-based work study placements</li>
+                                <li><span class="icon">📊</span> Evaluation of workplace behaviors and performance</li>
+                                <li><span class="icon">💼</span> Instruction in workplace problem-solving</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-5">
+                            <ul class="activity-list">
+                                <li><span class="icon">🎓</span> Enrolled in Level 1-2 CTE courses</li>
+                                <li><span class="icon">🏫</span> Regular attendance at CareerTech center (if applicable)</li>
+                                <li><span class="icon">📋</span> Working toward completer status in a pathway</li>
+                                <li><span class="icon">🏆</span> May participate in career skills competitions</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    
+                    <!-- HIGH SCHOOL - 11TH GRADE -->
+                    <tr>
+                        <td class="age-level">
+                            <strong>11th Grade</strong><br>
+                            <small>(Ages 16-17)</small>
+                        </td>
+                        <td class="predictor-cell cell-1">
+                            <ul class="activity-list">
+                                <li><span class="icon">🎯</span> Finalize post-school employment goals</li>
+                                <li><span class="icon">📝</span> Learn job application and interview skills</li>
+                                <li><span class="icon">📱</span> Create professional resume and references</li>
+                                <li><span class="icon">🔍</span> Research employers in chosen career field</li>
+                                <li><span class="icon">💼</span> Understand benefits, taxes, and workplace rights</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-2">
+                            <ul class="activity-list">
+                                <li><span class="icon">📚</span> Level 2-3 occupational courses</li>
+                                <li><span class="icon">🎓</span> Advanced skill development in career pathway</li>
+                                <li><span class="icon">🏆</span> Working toward industry certifications</li>
+                                <li><span class="icon">💻</span> May take college courses related to career field</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-3">
+                            <ul class="activity-list">
+                                <li><span class="icon">💰</span> <strong>PAID EMPLOYMENT is the priority!</strong></li>
+                                <li><span class="icon">💼</span> Part-time job (10-20 hours/week)</li>
+                                <li><span class="icon">🏢</span> Paid internships in field of interest</li>
+                                <li><span class="icon">☀️</span> Summer employment programs</li>
+                                <li><span class="icon">🤝</span> Supported employment with job coach if needed</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-4">
+                            <ul class="activity-list">
+                                <li><span class="icon">🌍</span> Community-based work study placements</li>
+                                <li><span class="icon">🏢</span> Work study in businesses related to career interests</li>
+                                <li><span class="icon">📊</span> Regular performance feedback and goal-setting</li>
+                                <li><span class="icon">🎯</span> Building stamina for longer work shifts</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-5">
+                            <ul class="activity-list">
+                                <li><span class="icon">🎓</span> Level 2-3 CTE concentrator status</li>
+                                <li><span class="icon">🏆</span> Preparing for industry certification exams</li>
+                                <li><span class="icon">💼</span> May have capstone or practicum experiences</li>
+                                <li><span class="icon">🎯</span> On track for CTE completer status by graduation</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    
+                    <!-- HIGH SCHOOL - 12TH GRADE -->
+                    <tr>
+                        <td class="age-level">
+                            <strong>12th Grade</strong><br>
+                            <small>(Ages 17-18)</small>
+                        </td>
+                        <td class="predictor-cell cell-1">
+                            <ul class="activity-list">
+                                <li><span class="icon">🎯</span> Apply for post-school employment or training</li>
+                                <li><span class="icon">📝</span> Complete multiple job applications</li>
+                                <li><span class="icon">💼</span> Practice interviewing skills with real employers</li>
+                                <li><span class="icon">🔍</span> Research career advancement opportunities</li>
+                                <li><span class="icon">🤝</span> Connect with DRS, BEST STEP for ongoing support</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-2">
+                            <ul class="activity-list">
+                                <li><span class="icon">📚</span> Level 3-4 advanced occupational courses</li>
+                                <li><span class="icon">🎓</span> Complete occupational training sequence</li>
+                                <li><span class="icon">💼</span> Apply coursework skills in authentic settings</li>
+                                <li><span class="icon">🏆</span> Demonstrate mastery of technical skills</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-3">
+                            <ul class="activity-list">
+                                <li><span class="icon">💰</span> <strong>Maintain or expand paid employment</strong></li>
+                                <li><span class="icon">📈</span> Increase work hours if possible (15-25/week)</li>
+                                <li><span class="icon">🎯</span> Seek promotions or new opportunities</li>
+                                <li><span class="icon">💼</span> Employment in career field if possible</li>
+                                <li><span class="icon">🔄</span> Transition current job to post-school employment</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-4">
+                            <ul class="activity-list">
+                                <li><span class="icon">🏢</span> Advanced community work study</li>
+                                <li><span class="icon">🎯</span> Working toward conversion to paid employment</li>
+                                <li><span class="icon">📊</span> Demonstrating competitive employment skills</li>
+                                <li><span class="icon">💼</span> Building employer relationships for post-school hiring</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-5">
+                            <ul class="activity-list">
+                                <li><span class="icon">🎓</span> Complete CTE pathway as a completer</li>
+                                <li><span class="icon">🏆</span> Earn industry-recognized credentials/certifications</li>
+                                <li><span class="icon">💼</span> Capstone projects or internships</li>
+                                <li><span class="icon">🎯</span> Use credentials for job applications</li>
+                                <li><span class="icon">📚</span> Plan for continued training if needed</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    
+                    <!-- TRANSITION YEARS (Ages 18-22) -->
+                    <tr>
+                        <td class="age-level">
+                            <strong>Transition Years</strong><br>
+                            <small>(Ages 18-22)<br>Post-High School</small>
+                        </td>
+                        <td class="predictor-cell cell-1">
+                            <ul class="activity-list">
+                                <li><span class="icon">🎯</span> Continue exploring career advancement opportunities</li>
+                                <li><span class="icon">📈</span> Learn about career ladders and promotion paths</li>
+                                <li><span class="icon">🎓</span> Identify continuing education needs</li>
+                                <li><span class="icon">💼</span> Network with professionals in career field</li>
+                                <li><span class="icon">🔍</span> Research employee benefits and workplace rights</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-2">
+                            <ul class="activity-list">
+                                <li><span class="icon">🎓</span> Post-secondary occupational training if needed</li>
+                                <li><span class="icon">💻</span> Community college career programs</li>
+                                <li><span class="icon">📚</span> Specialized certification programs</li>
+                                <li><span class="icon">🏫</span> Adult education or apprenticeship programs</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-3">
+                            <ul class="activity-list">
+                                <li><span class="icon">💰</span> <strong>Competitive integrated employment goal</strong></li>
+                                <li><span class="icon">💼</span> Full-time or substantial part-time employment</li>
+                                <li><span class="icon">📈</span> Career advancement within company</li>
+                                <li><span class="icon">🔄</span> Job changes to improve wages or opportunities</li>
+                                <li><span class="icon">🤝</span> Ongoing DRS support if needed</li>
+                                <li><span class="icon">🏆</span> Building work history and skills</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-4">
+                            <ul class="activity-list">
+                                <li><span class="icon">🎯</span> Transition work study to paid employment</li>
+                                <li><span class="icon">💼</span> If still needed, continued skill-building experiences</li>
+                                <li><span class="icon">📊</span> Focus on conversion to competitive employment</li>
+                                <li><span class="icon">🤝</span> Collaboration with DRS for job placement</li>
+                            </ul>
+                        </td>
+                        <td class="predictor-cell cell-5">
+                            <ul class="activity-list">
+                                <li><span class="icon">🎓</span> Additional certifications or credentials if beneficial</li>
+                                <li><span class="icon">📚</span> Continuing education in career field</li>
+                                <li><span class="icon">💼</span> Employer-sponsored training programs</li>
+                                <li><span class="icon">🏆</span> Building specialized expertise</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="notes-section">
+            <h3>⭐ Key Principles for Career Development Progression</h3>
+            <ul style="margin-left: 20px; line-height: 1.8;">
+                <li><strong>Sequential Development:</strong> Each predictor builds on the previous one, creating a comprehensive pathway from awareness to employment.</li>
+                <li><strong>The SPIN Profile Evolves:</strong> Students continuously develop their understanding of their Strengths, Preferences, Interests, and Needs through experiences.</li>
+                <li><strong>Paid Employment is Critical:</strong> Research shows paid employment of ANY kind during high school is the strongest predictor of post-school success.</li>
+                <li><strong>Age-Appropriate Activities:</strong> Activities should match developmental levels while still exposing students to authentic workplace experiences.</li>
+                <li><strong>Family Involvement:</strong> Families should be engaged at every stage, discussing careers and supporting exploration.</li>
+                <li><strong>Oklahoma Resources:</strong> Utilize CareerTech Centers, BEST STEP, DRS Pre-ETS, and other state programs to support career development.</li>
+                <li><strong>Individualization:</strong> Not all students will follow the same timeline—some may accelerate, others need more time at certain stages.</li>
+                <li><strong>Integration is Key:</strong> Career development should be embedded across all classes and school activities, not isolated to one program.</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Oklahoma State Department of Education</strong></p>
+            <p>Predictors of Post-School Success: Cluster Three - Career Development</p>
+            <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">
+                This chart is designed to help educators, families, and students plan comprehensive<br>
+                career development experiences from elementary school through transition to adult life.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
