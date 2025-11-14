@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Experience Planning Tool - Cluster 3: Career Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+            font-style: italic;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 6px;
+        }
+        
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        
+        .info-box ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .info-box li {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+        
+        .section {
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .section h2 {
+            color: #764ba2;
+            margin-bottom: 20px;
+            font-size: 24px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #764ba2;
+        }
+        
+        .form-group {
+            margin: 20px 0;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            font-size: 17px;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .checkbox-group {
+            margin: 15px 0;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 12px 0;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 12px;
+            margin-top: 4px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .experience-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .experience-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        
+        .experience-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        
+        .experience-card.selected {
+            border-color: #667eea;
+            background: #667eea10;
+        }
+        
+        .experience-card input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .experience-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+        
+        .experience-card p {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        .status-message {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+        
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        
+        .print-only {
+            display: none;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            
+            .button-group,
+            .no-print {
+                display: none !important;
+            }
+            
+            .print-only {
+                display: block;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .experience-type-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Work Experience Planning Tool</h1>
+            <p class="subtitle">Cluster 3: Career Development - Predictors of Post-School Success</p>
+        </header>
+
+        <div class="info-box">
+            <h3>📌 About This Tool</h3>
+            <p><strong>Purpose:</strong> This planning tool helps educators design comprehensive work-based learning experiences aligned with students' SPIN profiles (Strengths, Preferences, Interests, Needs).</p>
+            <p style="margin-top: 10px;"><strong>Remember:</strong> Paid employment during high school is the <strong>STRONGEST predictor</strong> of post-school employment success!</p>
+        </div>
+
+        <form id="workExperienceForm">
+            <!-- Student Information -->
+            <div class="section">
+                <h2>👤 Student Information</h2>
+                
+                <div class="form-group">
+                    <label for="studentName">Student Name (or Initials):</label>
+                    <input type="text" id="studentName" name="studentName" placeholder="Enter student name or initials">
+                </div>
+                
+                <div class="form-group">
+                    <label for="gradeLevel">Grade Level:</label>
+                    <select id="gradeLevel" name="gradeLevel">
+                        <option value="">Select grade level</option>
+                        <option value="9">9th Grade</option>
+                        <option value="10">10th Grade</option>
+                        <option value="11">11th Grade</option>
+                        <option value="12">12th Grade</option>
+                        <option value="transition">Post-Secondary Transition (18-21)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="currentDate">Planning Date:</label>
+                    <input type="text" id="currentDate" name="currentDate" placeholder="MM/DD/YYYY">
+                </div>
+            </div>
+
+            <!-- SPIN Profile -->
+            <div class="section">
+                <h2>🌟 Student SPIN Profile</h2>
+                <p style="margin-bottom: 20px; font-size: 16px; color: #666;">Document the student's Strengths, Preferences, Interests, and Needs to guide work experience planning.</p>
+                
+                <div class="form-group">
+                    <label for="strengths"><strong>S</strong>trengths - What does this student do well?</label>
+                    <textarea id="strengths" name="strengths" placeholder="E.g., Strong communication skills, attention to detail, works well with hands, punctual, follows multi-step directions..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="preferences"><strong>P</strong>references - What types of environments, activities, or conditions does the student prefer?</label>
+                    <textarea id="preferences" name="preferences" placeholder="E.g., Prefers structured routines, likes working independently, enjoys customer interaction, prefers indoor environments..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="interests"><strong>I</strong>nterests - What career fields, industries, or job types interest the student?</label>
+                    <textarea id="interests" name="interests" placeholder="E.g., Animals/veterinary, food service, retail, automotive, healthcare, technology, outdoor work..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="needs"><strong>N</strong>eeds - What supports, accommodations, or considerations are needed?</label>
+                    <textarea id="needs" name="needs" placeholder="E.g., Visual schedules, job coach support, modified work schedule, accessible transportation, assistive technology..."></textarea>
+                </div>
+            </div>
+
+            <!-- Experience Type Selection -->
+            <div class="section">
+                <h2>💼 Work Experience Type(s)</h2>
+                <p style="margin-bottom: 20px; font-size: 16px; color: #666;">Select the type(s) of work-based learning experiences to plan. Multiple types can be selected for a developmental progression.</p>
+                
+                <div class="experience-type-grid">
+                    <div class="experience-card">
+                        <input type="checkbox" id="jobShadowing" name="experienceTypes" value="jobShadowing">
+                        <label for="jobShadowing">
+                            <h4>Job Shadowing</h4>
+                            <p>Observing professionals in workplace settings to learn about career roles and requirements</p>
+                        </label>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <input type="checkbox" id="workSampling" name="experienceTypes" value="workSampling">
+                        <label for="workSampling">
+                            <h4>Work Sampling</h4>
+                            <p>Brief, hands-on trials of different job tasks to explore interests and abilities</p>
+                        </label>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <input type="checkbox" id="internship" name="experienceTypes" value="internship">
+                        <label for="internship">
+                            <h4>Internship</h4>
+                            <p>Structured work experience in a specific field, may be paid or unpaid, with learning objectives</p>
+                        </label>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <input type="checkbox" id="apprenticeship" name="experienceTypes" value="apprenticeship">
+                        <label for="apprenticeship">
+                            <h4>Apprenticeship</h4>
+                            <p>Formal training program combining on-the-job training with classroom instruction</p>
+                        </label>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <input type="checkbox" id="schoolBased" name="experienceTypes" value="schoolBased">
+                        <label for="schoolBased">
+                            <h4>School-Based Enterprise</h4>
+                            <p>Student-run business within the school providing real work experience</p>
+                        </label>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <input type="checkbox" id="paidEmployment" name="experienceTypes" value="paidEmployment">
+                        <label for="paidEmployment">
+                            <h4>⭐ Paid Employment</h4>
+                            <p><strong>STRONGEST PREDICTOR!</strong> Competitive pay (minimum wage+) from employer in community setting</p>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience Details -->
+            <div class="section">
+                <h2>📋 Experience Details</h2>
+                
+                <div class="form-group">
+                    <label for="targetIndustry">Target Industry/Career Field:</label>
+                    <input type="text" id="targetIndustry" name="targetIndustry" placeholder="E.g., Retail, Food Service, Healthcare, Technology, Manufacturing">
+                </div>
+                
+                <div class="form-group">
+                    <label for="potentialEmployers">Potential Employers/Worksites:</label>
+                    <textarea id="potentialEmployers" name="potentialEmployers" placeholder="List specific businesses, organizations, or locations being considered..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="timeline">Proposed Timeline:</label>
+                    <input type="text" id="timeline" name="timeline" placeholder="E.g., Spring 2025 semester, Summer 2025, Full school year">
+                </div>
+                
+                <div class="form-group">
+                    <label for="hours">Expected Hours/Schedule:</label>
+                    <input type="text" id="hours" name="hours" placeholder="E.g., 2 hours daily, 10 hours/week, 3 days/week after school">
+                </div>
+                
+                <div class="form-group">
+                    <label for="compensation">Compensation:</label>
+                    <select id="compensation" name="compensation">
+                        <option value="">Select compensation type</option>
+                        <option value="paid-competitive">Paid - Competitive wage (minimum wage or higher)</option>
+                        <option value="paid-stipend">Paid - Stipend or training wage</option>
+                        <option value="unpaid-credit">Unpaid - High school credit</option>
+                        <option value="unpaid-volunteer">Unpaid - Volunteer experience</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Program Characteristics -->
+            <div class="section">
+                <h2>✅ Program Characteristics Checklist</h2>
+                <p style="margin-bottom: 20px; font-size: 16px; color: #666;">Check all elements that will be included in this work experience plan:</p>
+                
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="char1" name="characteristics" value="char1">
+                        <label for="char1"><strong>Culturally Sensitive Placement:</strong> Work environment is respectful and appropriate for student's cultural background</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="char2" name="characteristics" value="char2">
+                        <label for="char2"><strong>Soft Skills Instruction:</strong> Teaching problem-solving, communication, responding to feedback, punctuality, professional behavior</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="char3" name="characteristics" value="char3">
+                        <label for="char3"><strong>Occupation-Specific Skills:</strong> Teaching technical skills specific to the job/industry</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="char4" name="characteristics" value="char4">
+                        <label for="char4"><strong>Transportation Training:</strong> Including use of public transportation, community safety, and travel independence</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="char5" name="characteristics" value="char5">
+                        <label for="char5"><strong>Job Performance Evaluations:</strong> Regular assessments by student, school staff, and employer</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="char6" name="characteristics" value="char6">
+                        <label for="char6"><strong>Job Acquisition Skills:</strong> Resume development, applications, interview practice, job search strategies</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="char7" name="characteristics" value="char7">
+                        <label for="char7"><strong>Job Retention Skills:</strong> Teaching how to maintain employment, communicate with supervisors, handle workplace issues</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="char8" name="characteristics" value="char8">
+                        <label for="char8"><strong>Integrated Setting:</strong> Community-based workplace with majority of co-workers without disabilities</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="char9" name="characteristics" value="char9">
+                        <label for="char9"><strong>Situational Assessment:</strong> Conducting vocational assessments to determine appropriate job matches</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="char10" name="characteristics" value="char10">
+                        <label for="char10"><strong>High School Credit:</strong> Process for students to earn academic credit for work experience</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="char11" name="characteristics" value="char11">
+                        <label for="char11"><strong>Adult Services Connection:</strong> Linking eligible students to Vocational Rehabilitation, DRS Pre-ETS, or other adult services</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="char12" name="characteristics" value="char12">
+                        <label for="char12"><strong>Individualized Supports:</strong> Job coaching, accommodations, assistive technology, or other supports as needed</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support & Accommodations -->
+            <div class="section">
+                <h2>🤝 Support & Accommodations Plan</h2>
+                
+                <div class="form-group">
+                    <label for="jobCoach">Job Coach/Support Person:</label>
+                    <input type="text" id="jobCoach" name="jobCoach" placeholder="Name and contact information">
+                </div>
+                
+                <div class="form-group">
+                    <label for="accommodations">Specific Accommodations Needed:</label>
+                    <textarea id="accommodations" name="accommodations" placeholder="E.g., Modified work schedule, visual task lists, check-in system, assistive technology, noise-reducing headphones, flexible break times..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="transportation">Transportation Plan:</label>
+                    <textarea id="transportation" name="transportation" placeholder="How will student travel to/from worksite? Who is responsible? Any training needed?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fadingPlan">Support Fading Plan:</label>
+                    <textarea id="fadingPlan" name="fadingPlan" placeholder="How will supports be gradually reduced to increase independence?"></textarea>
+                </div>
+            </div>
+
+            <!-- Learning Objectives -->
+            <div class="section">
+                <h2>🎯 Learning Objectives</h2>
+                <p style="margin-bottom: 20px; font-size: 16px; color: #666;">What specific skills or competencies should the student develop through this experience?</p>
+                
+                <div class="form-group">
+                    <label for="objectives">Measurable Learning Objectives:</label>
+                    <textarea id="objectives" name="objectives" placeholder="E.g., Student will independently complete assigned tasks with 90% accuracy; Student will communicate effectively with supervisor; Student will arrive on time for 95% of scheduled shifts..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="evaluation">How Will Progress Be Evaluated?</label>
+                    <textarea id="evaluation" name="evaluation" placeholder="Describe assessment methods, evaluation schedule, and success criteria..."></textarea>
+                </div>
+            </div>
+
+            <!-- Stakeholder Responsibilities -->
+            <div class="section">
+                <h2>👥 Stakeholder Responsibilities</h2>
+                
+                <div class="form-group">
+                    <label for="studentRole">Student Responsibilities:</label>
+                    <textarea id="studentRole" name="studentRole" placeholder="What is the student expected to do?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="schoolRole">School/Educator Responsibilities:</label>
+                    <textarea id="schoolRole" name="schoolRole" placeholder="What will the school/transition coordinator/teacher provide?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="employerRole">Employer Responsibilities:</label>
+                    <textarea id="employerRole" name="employerRole" placeholder="What will the employer/worksite supervisor provide?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="familyRole">Family Responsibilities:</label>
+                    <textarea id="familyRole" name="familyRole" placeholder="How will family members support this experience?"></textarea>
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="section">
+                <h2>📅 Action Steps & Timeline</h2>
+                
+                <div class="form-group">
+                    <label for="actionSteps">Specific Action Steps to Implement This Plan:</label>
+                    <textarea id="actionSteps" name="actionSteps" placeholder="List concrete steps with responsible parties and deadlines...
+
+Example:
+1. Contact potential employers (Coordinator - by 2/15)
+2. Complete situational assessment (Teacher & Student - by 3/1)
+3. Develop job accommodations plan (IEP team - by 3/15)
+4. Begin transportation training (by 4/1)
+5. Start work experience (target date: 4/15)"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="challenges">Potential Challenges & Solutions:</label>
+                    <textarea id="challenges" name="challenges" placeholder="What obstacles might arise? How will you address them?"></textarea>
+                </div>
+            </div>
+
+            <!-- Oklahoma Resources -->
+            <div class="section">
+                <h2>🏛️ Oklahoma Resources to Support This Plan</h2>
+                
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="resource1" name="oklahoma-resources" value="resource1">
+                        <label for="resource1"><strong>Oklahoma CareerTech:</strong> Connect with one of 29 technology centers for career exploration and skill training</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="resource2" name="oklahoma-resources" value="resource2">
+                        <label for="resource2"><strong>BEST STEP Program:</strong> Summer employment combining skill-building with paid work (ages 16-21 with disabilities)</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="resource3" name="oklahoma-resources" value="resource3">
+                        <label for="resource3"><strong>DRS Pre-ETS:</strong> Pre-Employment Transition Services from Oklahoma Department of Rehabilitation Services</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="resource4" name="oklahoma-resources" value="resource4">
+                        <label for="resource4"><strong>Oklahoma Works:</strong> Workforce development resources and employer connections</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="resource5" name="oklahoma-resources" value="resource5">
+                        <label for="resource5"><strong>Local Workforce Development Board:</strong> Connect with regional workforce initiatives and employer partnerships</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="resource6" name="oklahoma-resources" value="resource6">
+                        <label for="resource6"><strong>Oklahoma Edge/ICAP:</strong> Career planning resources and Individual Career Academic Planning tools</label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="additionalResources">Additional Resources or Partnerships:</label>
+                    <textarea id="additionalResources" name="additionalResources" placeholder="List other community resources, agencies, or partnerships that could support this experience..."></textarea>
+                </div>
+            </div>
+
+            <!-- Notes Section -->
+            <div class="section">
+                <h2>📝 Additional Notes</h2>
+                
+                <div class="form-group">
+                    <label for="notes">Additional Information or Considerations:</label>
+                    <textarea id="notes" name="notes" placeholder="Any other relevant information about this work experience plan..."></textarea>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="button-group no-print">
+                <button type="button" class="btn-primary" onclick="saveForm()">💾 Save My Work</button>
+                <button type="button" class="btn-success" onclick="emailForm()">📧 Email to Myself</button>
+                <button type="button" class="btn-secondary" onclick="window.print()">🖨️ Print Plan</button>
+                <button type="button" class="btn-secondary" onclick="clearForm()">🔄 Clear Form</button>
+            </div>
+
+            <div id="statusMessage" class="status-message"></div>
+
+            <div class="info-box no-print">
+                <h3>💡 Tips for Success</h3>
+                <ul>
+                    <li><strong>Start with the SPIN profile</strong> - Everything should align with student strengths, preferences, interests, and needs</li>
+                    <li><strong>Build progressively</strong> - Move from exploration (job shadowing) to experience (internships) to employment (paid work)</li>
+                    <li><strong>Focus on paid employment</strong> - It's the strongest predictor! Prioritize connecting students to competitive pay opportunities</li>
+                    <li><strong>Plan for fading supports</strong> - Goal is maximum independence, not permanent support</li>
+                    <li><strong>Document everything</strong> - Use this plan in IEP meetings, progress reports, and transition planning</li>
+                    <li><strong>Leverage partnerships</strong> - Oklahoma has excellent resources through CareerTech, BEST STEP, and DRS Pre-ETS</li>
+                </ul>
+            </div>
+        </form>
+
+        <div class="print-only" style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #ccc;">
+            <p style="font-size: 14px; color: #666;"><strong>Oklahoma State Department of Education - Special Education Services</strong></p>
+            <p style="font-size: 14px; color: #666;">Predictors of Post-School Success Training | Module 4: Cluster Three - Career Development</p>
+        </div>
+    </div>
+
+    <script>
+        // Set current date on page load
+        window.onload = function() {
+            const today = new Date();
+            const dateString = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+            document.getElementById('currentDate').value = dateString;
+            
+            // Load saved data if it exists
+            loadForm();
+            
+            // Add listeners to experience cards for visual feedback
+            const experienceCheckboxes = document.querySelectorAll('.experience-card input[type="checkbox"]');
+            experienceCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const card = this.closest('.experience-card');
+                    if (this.checked) {
+                        card.classList.add('selected');
+                    } else {
+                        card.classList.remove('selected');
+                    }
+                });
+            });
+        };
+
+        function saveForm() {
+            const formData = {};
+            const form = document.getElementById('workExperienceForm');
+            const inputs = form.querySelectorAll('input, textarea, select');
+            
+            inputs.forEach(input => {
+                if (input.type === 'checkbox') {
+                    if (!formData[input.name]) {
+                        formData[input.name] = [];
+                    }
+                    if (input.checked) {
+                        formData[input.name].push(input.value);
+                    }
+                } else {
+                    formData[input.id] = input.value;
+                }
+            });
+            
+            try {
+                localStorage.setItem('workExperiencePlan', JSON.stringify(formData));
+                showMessage('Your work experience plan has been saved!', 'success');
+            } catch (e) {
+                showMessage('Unable to save. Your browser may have storage disabled.', 'error');
+            }
+        }
+
+        function loadForm() {
+            try {
+                const savedData = localStorage.getItem('workExperiencePlan');
+                if (savedData) {
+                    const formData = JSON.parse(savedData);
+                    
+                    Object.keys(formData).forEach(key => {
+                        const element = document.getElementById(key);
+                        if (element) {
+                            element.value = formData[key];
+                        }
+                    });
+                    
+                    // Load checkboxes
+                    const checkboxInputs = document.querySelectorAll('input[type="checkbox"]');
+                    checkboxInputs.forEach(checkbox => {
+                        if (formData[checkbox.name] && formData[checkbox.name].includes(checkbox.value)) {
+                            checkbox.checked = true;
+                            // Trigger the visual feedback for experience cards
+                            const card = checkbox.closest('.experience-card');
+                            if (card) {
+                                card.classList.add('selected');
+                            }
+                        }
+                    });
+                }
+            } catch (e) {
+                console.log('No saved data found or error loading data');
+            }
+        }
+
+        function clearForm() {
+            if (confirm('Are you sure you want to clear all form data? This cannot be undone.')) {
+                document.getElementById('workExperienceForm').reset();
+                localStorage.removeItem('workExperiencePlan');
+                
+                // Remove selected class from experience cards
+                document.querySelectorAll('.experience-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                
+                // Reset date to today
+                const today = new Date();
+                const dateString = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+                document.getElementById('currentDate').value = dateString;
+                
+                showMessage('Form has been cleared.', 'success');
+            }
+        }
+
+        function emailForm() {
+            const studentName = document.getElementById('studentName').value || 'Student';
+            const subject = encodeURIComponent('Work Experience Plan - ' + studentName);
+            
+            let body = 'WORK EXPERIENCE PLANNING TOOL\n';
+            body += 'Cluster 3: Career Development\n';
+            body += '=' .repeat(50) + '\n\n';
+            
+            body += 'STUDENT INFORMATION\n';
+            body += '-'.repeat(30) + '\n';
+            body += 'Student: ' + (document.getElementById('studentName').value || 'N/A') + '\n';
+            body += 'Grade: ' + (document.getElementById('gradeLevel').value || 'N/A') + '\n';
+            body += 'Date: ' + (document.getElementById('currentDate').value || 'N/A') + '\n\n';
+            
+            body += 'SPIN PROFILE\n';
+            body += '-'.repeat(30) + '\n';
+            body += 'Strengths: ' + (document.getElementById('strengths').value || 'N/A') + '\n\n';
+            body += 'Preferences: ' + (document.getElementById('preferences').value || 'N/A') + '\n\n';
+            body += 'Interests: ' + (document.getElementById('interests').value || 'N/A') + '\n\n';
+            body += 'Needs: ' + (document.getElementById('needs').value || 'N/A') + '\n\n';
+            
+            body += 'EXPERIENCE DETAILS\n';
+            body += '-'.repeat(30) + '\n';
+            body += 'Target Industry: ' + (document.getElementById('targetIndustry').value || 'N/A') + '\n';
+            body += 'Timeline: ' + (document.getElementById('timeline').value || 'N/A') + '\n';
+            body += 'Hours: ' + (document.getElementById('hours').value || 'N/A') + '\n\n';
+            
+            body += 'LEARNING OBJECTIVES\n';
+            body += '-'.repeat(30) + '\n';
+            body += document.getElementById('objectives').value || 'N/A';
+            body += '\n\n';
+            
+            body += 'ACTION STEPS\n';
+            body += '-'.repeat(30) + '\n';
+            body += document.getElementById('actionSteps').value || 'N/A';
+            body += '\n\n';
+            
+            body += 'Generated by Work Experience Planning Tool\n';
+            body += 'Oklahoma State Department of Education\n';
+            body += 'Predictors of Post-School Success Training';
+            
+            const mailtoLink = 'mailto:?subject=' + subject + '&body=' + encodeURIComponent(body);
+            window.location.href = mailtoLink;
+            
+            showMessage('Opening your email client...', 'success');
+        }
+
+        function showMessage(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = 'status-message ' + type;
+            
+            setTimeout(() => {
+                statusDiv.className = 'status-message';
+            }, 5000);
+        }
+
+        // Auto-save every 2 minutes
+        setInterval(saveForm, 120000);
+    </script>
+</body>
+</html>
